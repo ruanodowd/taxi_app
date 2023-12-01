@@ -17,6 +17,15 @@ public class Location {
     }
     
     // getters
+    
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
+    }    
+    
     public List<Location> getNeighbouringLocations() {
         return neighbouringLocations;
     }
@@ -25,15 +34,16 @@ public class Location {
         return containedTaxis;
     }
     
-    // methods to add to lsit
+    // method to add to lsit
     public void addTaxi (Taxi taxi) {
         containedTaxis.add(taxi);
     }
 
-    public void generateNeighbouring(x, y) {
-        
+    // method to generate the neighbouring nodes
+    public void addNeighbourLocations(List<Location> locations) {
+        for (Location location: locations) {
+            neighbouringLocations.add(location);
+        }
     }
 
-
-    
 }
