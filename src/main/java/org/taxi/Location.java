@@ -8,6 +8,9 @@ public class Location {
     public Location(List<Location> neighbouringLocations, List<Taxi> containedTaxis) {
         this.neighbouringLocations = neighbouringLocations;
     }
+    
+
+
     public List<Location> getNeighbouringLocations() {
         return neighbouringLocations;
     }
