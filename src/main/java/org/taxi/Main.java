@@ -1,5 +1,7 @@
 package org.taxi;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main implements VehicleHiringTest{
@@ -37,6 +39,28 @@ public class Main implements VehicleHiringTest{
         throw new UnsupportedOperationException("Unimplemented method 'testGetVehiclesInRange'");
     }
 
-    public static createMap(){
+    public static void createMap(){
+        ArrayList<Location> mapLocations = new ArrayList<>();
+        Location Loc0a = new Location(0, 0);
+        Location Loc1a = new Location(1, 0);
+        Location Loc0b = new Location(0, 1);
+        Location Loc1b = new Location(1, 1);
+        Location[] list = {Loc1a, Loc0b};
+        Loc0a.addNeighbourLocations(Arrays.stream(list).toList());
+        list = new Location[]{Loc0a, Loc1b};
+        Loc1a.addNeighbourLocations(Arrays.stream(list).toList());
+        list = new Location[]{Loc0a, Loc1b};
+        Loc0b.addNeighbourLocations(Arrays.stream(list).toList());
+        list = new Location[]{Loc1b, Loc0a};
+        Loc1b.addNeighbourLocations(Arrays.stream(list).toList());
+
+        mapLocations.add(Loc0a);
+        mapLocations.add(Loc1a);
+        mapLocations.add(Loc0b);
+        mapLocations.add(Loc1b);
+        Map map = new Map(mapLocations);
+        //for (int i = 0; i < mapLocations.size(); i++) {
+        //    mapLocations.stream().filter(mapLocations.get(i).getX() == )
+        //}
     }
 }
