@@ -15,7 +15,8 @@ public class Location {
         this.x = x;
         this.y = y;
     }
-    
+    public Location(){
+    }
     // getters
     
     public int getX() {
@@ -38,12 +39,19 @@ public class Location {
     public void addTaxi (Taxi taxi) {
         containedTaxis.add(taxi);
     }
-
-    // method to generate the neighbouring nodes
-    public void addNeighbourLocations(List<Location> locations) {
-        for (Location location: locations) {
-            neighbouringLocations.add(location);
+    public void locationLink(Location neighbour){
+        if (!neighbouringLocations.contains(neighbour)){
+            neighbouringLocations.add(neighbour);
+            neighbour.linkNeighbourLocation(this);
         }
+    }
+    // method to generate the neighbouring nodes
+
+    public void linkNeighbourLocation(Location neighbour){
+        neighbouringLocations.add(neighbour);
+    }
+    public void linkNeighbourLocation(List<Location> locations) {
+        locations.forEach(location -> locationLink(location));
     }
 
 }
