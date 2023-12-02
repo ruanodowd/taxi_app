@@ -5,7 +5,6 @@ import java.util.List;
 public class Main implements VehicleHiringTest{
     public static void main(String[] args) {
         System.out.println("Hello world!");
-        Map.create2x2Map();
         new Map(3,3);
     }
 

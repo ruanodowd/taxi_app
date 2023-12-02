@@ -9,8 +9,8 @@ public class Map {
         this.nodes = nodes;
     }
 
-    public static Map create2x2Map(){
-        ArrayList<Location> mapLocations = new ArrayList<>();
+    public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)
+        this.nodes = new ArrayList<>();
         Location Loc0a = new Location(0, 0);
         Location Loc1a = new Location(1, 0);
         Location Loc0b = new Location(0, 1);
@@ -21,33 +21,31 @@ public class Map {
         Loc1a.linkNeighbourLocation(Arrays.stream(list).toList());
         list = new Location[]{Loc0a, Loc1b};
         Loc0b.linkNeighbourLocation(Arrays.stream(list).toList());
-        list = new Location[]{Loc1b, Loc0a};
+        list = new Location[]{Loc1a, Loc0b};
         Loc1b.linkNeighbourLocation(Arrays.stream(list).toList());
 
-        mapLocations.add(Loc0a);
-        mapLocations.add(Loc1a);
-        mapLocations.add(Loc0b);
-        mapLocations.add(Loc1b);
-        return new Map(mapLocations);
-        //for (int i = 0; i < mapLocations.size(); i++) {
-        //    mapLocations.stream().filter(mapLocations.get(i).getX() == )
-        //}
+        for (Location location : Arrays.asList(Loc0a, Loc1a, Loc0b, Loc1b)) {
+            nodes.add(location);
+        }
     }
 
-    public Map(int height, int width){//this does what we wanted it to do, dont ask me to explain it i honestly dont havea  clue
-        ArrayList<Location> mapLocations = new ArrayList<>();
-        mapLocations.add(new Location());
-        for (int i = 1; i < width; i++) {
-            mapLocations.add(i, new Location());
-            mapLocations.get(i).locationLink(mapLocations.get(i-1));
+    public Map(int height, int width){//this does what we wanted it to do,
+        /// dont ask me to explain it i honestly dont havea  clue i wrote it after a night out
+        this.nodes = new ArrayList<>();
+        nodes.add(new Location(0,0));
+        for (int x = 1; x < width; x++) {
+            nodes.add(x, new Location(x,0));
+            nodes.get(x).locationLink(nodes.get(x-1));
         }
-        for (int j = 1; j < height; j++) {
-            mapLocations.add(new Location());
-            mapLocations.get(width*j).locationLink(mapLocations.get(width*(j-1)));
-            for (int i = 1; i < width; i++) {
-                mapLocations.add(i, new Location());
-                mapLocations.get(i).locationLink(mapLocations.get((width*j)+i-1));
-                mapLocations.get(i).locationLink(mapLocations.get((width*j-1)+i));
+        for (int y = 1; y < height; y++) {
+            nodes.add(width*y, new Location(0,y));
+            nodes.get(width*y).locationLink(nodes.get(width*(y-1)));
+            for (int x = 1; x < width; x++) {
+                int rowStartIndex = width*y;
+                int indexNumber = rowStartIndex+x;
+                nodes.add(indexNumber, new Location(x, y));
+                nodes.get(indexNumber).locationLink(nodes.get((indexNumber-1)));
+                nodes.get(indexNumber).locationLink(nodes.get((rowStartIndex-width)+x));
             }
         }
     }
