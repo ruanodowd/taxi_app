@@ -39,17 +39,24 @@ public class Location {
     public void addTaxi (Taxi taxi) {
         containedTaxis.add(taxi);
     }
+    public void removeTaxi (Taxi taxi){
+
+    }
     public void locationLink(Location neighbour){
         if (!neighbouringLocations.contains(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
         }
     }
-    // method to generate the neighbouring nodes
-
     public void linkNeighbourLocation(Location neighbour){
         neighbouringLocations.add(neighbour);
     }
+    public boolean checklocationLink(Location neighbour){
+        return neighbouringLocations.contains(neighbour);
+    }
+    // method to generate the neighbouring nodes
+
+
     public void linkNeighbourLocation(List<Location> locations) {
         locations.forEach(location -> locationLink(location));
     }

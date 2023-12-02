@@ -8,4 +8,12 @@ public class Taxi {
         this. registrationNumber = registrationNumber;
         this.isFree = true;
     }
+
+    public Location getLocation(Map map){
+        return map.getLocationNodes()
+                .stream()
+                .filter(l -> l.getContainedTaxis().contains(this))
+                .toList()
+                .get(0);
+    }
 }

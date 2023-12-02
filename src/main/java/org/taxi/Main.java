@@ -16,6 +16,7 @@ public class Main implements VehicleHiringTest{
 
     @Override
     public boolean testMoveVehicle(String reg, Location loc) {
+
         return true;
     }
 
@@ -36,5 +37,7 @@ public class Main implements VehicleHiringTest{
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'testGetVehiclesInRange'");
     }
+
+    public static void showMap(Map map){}
 
 }

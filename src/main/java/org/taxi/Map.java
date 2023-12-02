@@ -9,6 +9,10 @@ public class Map {
         this.nodes = nodes;
     }
 
+    public ArrayList<Location> getLocationNodes() {
+        return nodes;
+    }
+
     public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)
         this.nodes = new ArrayList<>();
         Location Loc0a = new Location(0, 0);
