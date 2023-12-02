@@ -33,8 +33,8 @@ public class Map {
         }
     }
 
-    public Map(int height, int width){//this does what we wanted it to do,
-        /// dont ask me to explain it i honestly dont havea  clue i wrote it after a night out
+    public Map(int height, int width){
+        //this creates a map in a grid shape
         this.nodes = new ArrayList<>();
         nodes.add(new Location(0,0));
         for (int x = 1; x < width; x++) {

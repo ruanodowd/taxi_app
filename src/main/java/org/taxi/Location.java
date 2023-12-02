@@ -40,7 +40,7 @@ public class Location {
         containedTaxis.add(taxi);
     }
     public void removeTaxi (Taxi taxi){
-
+        //TODO delete a taxi from the location
     }
     public void locationLink(Location neighbour){
         if (!neighbouringLocations.contains(neighbour)){
@@ -52,9 +52,9 @@ public class Location {
         neighbouringLocations.add(neighbour);
     }
     public boolean checklocationLink(Location neighbour){
+        //checks if a location borders another, v useful for testing
         return neighbouringLocations.contains(neighbour);
     }
-    // method to generate the neighbouring nodes
 
 
     public void linkNeighbourLocation(List<Location> locations) {

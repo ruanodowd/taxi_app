@@ -16,7 +16,7 @@ public class Main implements VehicleHiringTest{
 
     @Override
     public boolean testMoveVehicle(String reg, Location loc) {
-
+        //todo ill do it-ruan
         return true;
     }
 
@@ -39,5 +39,5 @@ public class Main implements VehicleHiringTest{
     }
 
     public static void showMap(Map map){}
-
+        //TODO cli that showsd the grid with all taxis in it
 }

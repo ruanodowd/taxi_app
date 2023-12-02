@@ -9,7 +9,7 @@ public class Taxi {
         this.isFree = true;
     }
 
-    public Location getLocation(Map map){
+    public Location getLocation(Map map){//uses lambdas to get the location of the taxi
         return map.getLocationNodes()
                 .stream()
                 .filter(l -> l.getContainedTaxis().contains(this))
