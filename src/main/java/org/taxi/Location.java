@@ -35,21 +35,34 @@ public class Location {
         return containedTaxis;
     }
     
-    // method to add to lsit
+    // method to add to list
     public void addTaxi (Taxi taxi) {
         containedTaxis.add(taxi);
     }
     public void removeTaxi (Taxi taxi){
-        //TODO delete a taxi from the location
+        // hopefully this works for the remove functionality, need to test this - U
+        containedTaxis.remove(taxi);
     }
     public void locationLink(Location neighbour){
-        if (!neighbouringLocations.contains(neighbour)){
+        // my understanding 
+        // if neighbouringlocations dont contain neighbour
+            // add neighbour to the neighbouring locations 
+            // add this location to the neighbouring location 
+
+        // concerns - what if this one doesn't have the neighbouring location but another one has it. Then you are adding the this location to the other locations list again - U
+        // solution - do a check first before adding it in, I have added that in. - U 
+        // Note - might not be essential just a thought. 
+
+        // another change I just call the function (checklocationLink) to check if a location exists in the location's own neighbouringlocation list.
+        if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
         }
     }
     public void linkNeighbourLocation(Location neighbour){
-        neighbouringLocations.add(neighbour);
+        if (!checklocationLink(neighbour)){
+            neighbouringLocations.add(neighbour);
+        }
     }
     public boolean checklocationLink(Location neighbour){
         //checks if a location borders another, v useful for testing
