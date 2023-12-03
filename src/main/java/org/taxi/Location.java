@@ -57,12 +57,12 @@ public class Location {
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
-        }
+        } else {throw new IllegalArgumentException("Nodes already linked");}
     }
     public void linkNeighbourLocation(Location neighbour){
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
-        }
+        } else {throw new IllegalArgumentException("Nodes already linked");}
     }
     public boolean checklocationLink(Location neighbour){
         //checks if a location borders another, v useful for testing

@@ -4,13 +4,19 @@ import java.util.List;
 
 public class Main implements VehicleHiringTest{
     public static void main(String[] args) {
-        System.out.println("Hello world!");
-        new Map(3,3);
+        Map map = new Map(3,3);
+        addTaxiToMap("RAWR", map.getLocation(2,2));
+        addTaxiToMap("SKID", map.getLocation(2,2));
+        addTaxiToMap("ZOOM", map.getLocation(1,0));
+        showRectangularMap(map,3, 3);
     }
 
+    public static void addTaxiToMap(String reg, Location loc) {
+        loc.addTaxi(new Taxi(reg));
+    }
     @Override
     public boolean testAddToMap(String reg, Location loc) {
-        loc.addTaxi(new Taxi(reg));
+        //todo its more special than I thought
         return true;
     }
 
@@ -38,6 +44,14 @@ public class Main implements VehicleHiringTest{
         throw new UnsupportedOperationException("Unimplemented method 'testGetVehiclesInRange'");
     }
 
-    public static void showMap(Map map){}
-        //TODO cli that showsd the grid with all taxis in it
+    public static void showRectangularMap(Map map, int height, int width){
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                System.out.print(map.getLocation(x, y)
+                        .getContainedTaxis()
+                        .size() + " ");
+            }
+            System.out.print("\n");
+        }
+    }
 }

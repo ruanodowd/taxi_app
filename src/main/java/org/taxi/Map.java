@@ -13,6 +13,14 @@ public class Map {
         return nodes;
     }
 
+    public Location getLocation(int x,int y){
+        return nodes
+                .stream()
+                .filter(n -> x == n.getX() && y == n.getY())
+                .toList()
+                .get(0);
+    }
+
     public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)
         this.nodes = new ArrayList<>();
         Location Loc0a = new Location(0, 0);
