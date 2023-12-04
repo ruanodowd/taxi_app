@@ -39,10 +39,12 @@ public class Location {
     public void addTaxi (Taxi taxi) {
         containedTaxis.add(taxi);
     }
+    
     public void removeTaxi (Taxi taxi){
         // hopefully this works for the remove functionality, need to test this - U
         containedTaxis.remove(taxi);
     }
+
     public void locationLink(Location neighbour){
         // my understanding 
         // if neighbouringlocations dont contain neighbour

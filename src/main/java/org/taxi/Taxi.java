@@ -33,11 +33,13 @@ public class Taxi {
     
     // get the location of the taxi
     public Location getLocation(Map map){//uses lambdas to get the location of the taxi
-        return map.getLocationNodes()
-                .stream()
-                .filter(l -> l.getContainedTaxis().contains(this))
-                .toList()
-                .get(0);
-    }
+        try {
+            return map.getLocationNodes()
+                    .stream()
+                    .filter(l -> l.getContainedTaxis().contains(this))
+                    .toList()
+                    .get(0);    
+        } catch ()
+        
 
 }

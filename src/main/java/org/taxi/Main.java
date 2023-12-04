@@ -4,12 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Main implements VehicleHiringTest{
+    public Map map;
+    public Main(Map map) {
+        this.map = map;
+    }
+    
     public static void main(String[] args) {
-        Map map = new Map(3,3);
-        addTaxiToMap("RAWR", map.getLocation(2,2));
-        addTaxiToMap("SKID", map.getLocation(2,2));
-        addTaxiToMap("ZOOM", map.getLocation(1,0));
-        showRectangularMap(map,3, 3);
+        Map map = new Map(3, 3);
+        Main main = new Main(map);
+
+        main.testAddToMap("RAWR", map.getLocation(2,2));
+        main.testAddToMap("SKID", map.getLocation(2,2));
+        main.testAddToMap("ZOOM", map.getLocation(1,0));
+
+        main.testRemoveVehicle("RAWR");
+        System.out.println(TaxiBank.returnSpecificTaxi("RAWR"));
     }
 
     public static void addTaxiToMap(String reg, Location loc) {
@@ -20,6 +29,7 @@ public class Main implements VehicleHiringTest{
     public boolean testAddToMap(String reg, Location loc) {
         //todo its more special than I thought
         // the taxi bank will help with this - ushen
+        loc.addTaxi(new Taxi(reg));
         return true;
     }
 
@@ -31,9 +41,7 @@ public class Main implements VehicleHiringTest{
 
     @Override
     public boolean testRemoveVehicle(String reg) {
-        // what I want to do. Remove vehicle completely from the map. 
-        // there should only be one taxi with the registration in all the locations. 
-        // I can go into the taxi class - how to get all the taxi that exist? 
+        // return the taxi associated with the registration
         Taxi taxi = TaxiBank.returnSpecificTaxi(reg);
         
         
@@ -43,11 +51,8 @@ public class Main implements VehicleHiringTest{
         }
 
         // removes taxi from the location where it is. 
-        testGetVehicleLoc(reg).getContainedTaxis().remove(taxi);
+        testGetVehicleLoc(reg).removeTaxi(taxi);
         
-        // not sure if I need this code, maybe line above is enough.
-        //taxi.setPosition(null);
-
         return true;
     }
     
@@ -58,9 +63,7 @@ public class Main implements VehicleHiringTest{
             return null;
         }
         
-        // issue here. We should have a global map variable that we can pass in
-        // I'm putting in new map so that the code doesn't blow up.
-        return taxi.getLocation(new Map());
+        return taxi.getLocation(map);
     }
 
     @Override
@@ -85,7 +88,7 @@ public class Main implements VehicleHiringTest{
             for (int j = lowerYBound; j<= upperYBound; j++) {
                 // there's an issue here.I can't call getLocation directly. I need an instance of Map. 
                 // we need a global map. 
-                for (Taxi taxi: new Map().getLocation(i,j).getContainedTaxis()) {
+                for (Taxi taxi: map.getLocation(i,j).getContainedTaxis()) {
                     if (taxi.equals(null)) {
                         return null;
                     }
