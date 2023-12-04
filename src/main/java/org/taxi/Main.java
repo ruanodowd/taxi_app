@@ -14,7 +14,7 @@ public class Main implements VehicleHiringTest{
 
     public static void addTaxiToMap(String reg, Location loc) {
         // added the location parameter
-        loc.addTaxi(new Taxi(reg, loc));
+        loc.addTaxi(new Taxi(reg));
     }
     @Override
     public boolean testAddToMap(String reg, Location loc) {

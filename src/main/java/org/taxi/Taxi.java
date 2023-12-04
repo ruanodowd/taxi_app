@@ -3,16 +3,13 @@ package org.taxi;
 public class Taxi {
     private String registrationNumber;
     private boolean isFree;
-    private Location position;
 
     // when setting up a taxi, you need to have it's original location and reg 
     // this also adds it to the location taxi array 
     // this also adds it to the global taxi bank array
-    Taxi(String registrationNumber, Location postion){
+    Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
         this.isFree = true;
-        this.position  = postion;
-        position.addTaxi(this);
         TaxiBank.addtoBank(this);
     }
     
@@ -33,13 +30,6 @@ public class Taxi {
         this.isFree = isFree;
     }
 
-    public Location getPosition() {
-        return position;
-    }
-
-    public void setPosition(Location position) {
-        this.position = position;
-    }
     
     // get the location of the taxi
     public Location getLocation(Map map){//uses lambdas to get the location of the taxi
