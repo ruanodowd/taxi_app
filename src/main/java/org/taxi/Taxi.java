@@ -39,7 +39,9 @@ public class Taxi {
                     .filter(l -> l.getContainedTaxis().contains(this))
                     .toList()
                     .get(0);    
-        } catch ()
-        
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return null;
+        }
+    }
 
 }
