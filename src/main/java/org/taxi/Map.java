@@ -14,17 +14,15 @@ public class Map {
     }
 
     public Location getLocation(int x,int y){
-        Location node = nodes
+        try {
+            return nodes
                 .stream()
                 .filter(n -> x == n.getX() && y == n.getY())
                 .toList()
                 .get(0);
-
-        if (node.equals(null)) {
+        } catch (ArrayIndexOutOfBoundsException e) {
             return null;
         }
-
-        return node;
     }
 
     public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)

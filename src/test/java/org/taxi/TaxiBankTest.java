@@ -8,7 +8,7 @@ public class TaxiBankTest {
     @Test
     void checkForOne() {
         Taxi t1 = new Taxi("22/34/54");
-        Taxi firstTaxi = TaxiBank.getAllTaxis().get(0);
+        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("22/34/54");
 
         assertEquals(t1, firstTaxi);
     }
@@ -18,8 +18,8 @@ public class TaxiBankTest {
         Taxi t1 = new Taxi("1");
         Taxi t2 = new Taxi("2");
 
-        Taxi firstTaxi = TaxiBank.getAllTaxis().get(0);
-        Taxi secondTaxi = TaxiBank.getAllTaxis().get(1);
+        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("1");
+        Taxi secondTaxi = TaxiBank.returnSpecificTaxi("2");
 
         assertEquals(t1, firstTaxi);
         assertEquals(t2, secondTaxi);

@@ -8,7 +8,7 @@ public class Main implements VehicleHiringTest{
     public Main(Map map) {
         this.map = map;
     }
-    
+
     public static void main(String[] args) {
         Map map = new Map(3, 3);
         Main main = new Main(map);
@@ -16,8 +16,11 @@ public class Main implements VehicleHiringTest{
         main.testAddToMap("RAWR", map.getLocation(2,2));
         main.testAddToMap("SKID", map.getLocation(2,2));
         main.testAddToMap("ZOOM", map.getLocation(1,0));
-
+        showRectangularMap(map, 3, 3);
+        
         main.testRemoveVehicle("RAWR");
+        showRectangularMap(map, 3, 3);
+        
         System.out.println(TaxiBank.returnSpecificTaxi("RAWR"));
     }
 
@@ -71,8 +74,7 @@ public class Main implements VehicleHiringTest{
         // getting a list of registrations (ideally taxi objects however, return type suggests it's a string)
         List<String> taxis = new ArrayList<>();
 
-        // when we have the location we need to get all the taxi's from that location and all the neighbouring locations
-        for (Taxi taxi: loc.getContainedTaxis()) {
+                   for (Taxi taxi: loc.getContainedTaxis()) {
             taxis.add(taxi.getRegistrationNumber());
         }
 
@@ -86,14 +88,15 @@ public class Main implements VehicleHiringTest{
 
         for (int i = lowerXBound; i <= upperXBound; i++) {
             for (int j = lowerYBound; j<= upperYBound; j++) {
-                // there's an issue here.I can't call getLocation directly. I need an instance of Map. 
-                // we need a global map. 
-                for (Taxi taxi: map.getLocation(i,j).getContainedTaxis()) {
-                    if (taxi.equals(null)) {
-                        return null;
+                Location location = map.getLocation(i,j);
+                if (!(location == null)) {
+                    for (Taxi taxi: location.getContainedTaxis()) {
+                        String reg = taxi.getRegistrationNumber();
+                        if (!reg.equals(null)) {
+                            taxis.add(reg);
+                        }
                     }
-                    taxis.add(taxi.getRegistrationNumber());
-                }
+                } 
             }
         }
         return taxis;
