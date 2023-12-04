@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Map {
-    private ArrayList<Location> nodes;
+    private static ArrayList<Location> nodes;
     Map(ArrayList<Location> nodes){
-        this.nodes = nodes;
+        Map.nodes = nodes;
     }
 
     public ArrayList<Location> getLocationNodes() {
@@ -14,15 +14,21 @@ public class Map {
     }
 
     public Location getLocation(int x,int y){
-        return nodes
+        Location node = nodes
                 .stream()
                 .filter(n -> x == n.getX() && y == n.getY())
                 .toList()
                 .get(0);
+
+        if (node.equals(null)) {
+            return null;
+        }
+
+        return node;
     }
 
     public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)
-        this.nodes = new ArrayList<>();
+        Map.nodes = new ArrayList<>();
         Location Loc0a = new Location(0, 0);
         Location Loc1a = new Location(1, 0);
         Location Loc0b = new Location(0, 1);
@@ -43,7 +49,7 @@ public class Map {
 
     public Map(int height, int width){
         //this creates a map in a grid shape
-        this.nodes = new ArrayList<>();
+        Map.nodes = new ArrayList<>();
         nodes.add(new Location(0,0));
         for (int x = 1; x < width; x++) {
             nodes.add(x, new Location(x,0));
@@ -65,6 +71,4 @@ public class Map {
     public int countNodes(){
         return Math.toIntExact(nodes.size());
     }
-
-
 }
