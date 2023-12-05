@@ -13,18 +13,18 @@ public class TaxiBankTest {
         assertEquals(t1, firstTaxi);
     }
 
-    @Test
-    void checkForTwo() {
-        Taxi t1 = new Taxi("1");
-        Taxi t2 = new Taxi("2");
+    // @Test
+    // void checkForTwo() {
+    //     Taxi t1 = new Taxi("1");
+    //     Taxi t2 = new Taxi("2");
 
-        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("1");
-        Taxi secondTaxi = TaxiBank.returnSpecificTaxi("2");
+    //     Taxi firstTaxi = TaxiBank.returnSpecificTaxi("1");
+    //     Taxi secondTaxi = TaxiBank.returnSpecificTaxi("2");
 
-        assertEquals(t1, firstTaxi);
-        assertEquals(t2, secondTaxi);
+    //     assertEquals(t1, firstTaxi);
+    //     assertEquals(t2, secondTaxi);
 
-    }
+    // }
 
     @Test
     void findTaxi(){

@@ -2,6 +2,7 @@ package org.taxi;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main implements VehicleHiringTest{
     public Map map;
@@ -10,18 +11,106 @@ public class Main implements VehicleHiringTest{
     }
 
     public static void main(String[] args) {
-        Map map = new Map(3, 3);
+        Scanner scanner = new Scanner(System.in);
+        Map map = new Map(5, 5);
         Main main = new Main(map);
 
+        System.out.println("Welcome to Our Taxi App");
+
+        // username and password
+        System.out.print("Please enter your username: ");
+        String username = scanner.next();
+        System.out.print("Enter your password: ");
+        String password = scanner.next();
+        
+        if (username == null || password == null) {
+            System.out.println("Invalid input");
+            scanner.close();
+            return;
+        }
+        
+        System.out.println("Here's the current map");
         main.testAddToMap("RAWR", map.getLocation(2,2));
         main.testAddToMap("SKID", map.getLocation(2,2));
         main.testAddToMap("ZOOM", map.getLocation(1,0));
-        showRectangularMap(map, 3, 3);
+        showRectangularMap(map, 5, 5);
         
-        main.testRemoveVehicle("RAWR");
-        showRectangularMap(map, 3, 3);
         
-        System.out.println(TaxiBank.returnSpecificTaxi("RAWR"));
+        System.out.println("Welcome what do you want to do?");
+        System.out.println("1. Create new Taxi");
+        System.out.println("2. Move the taxi");
+        System.out.println("3. Remove the Taxi");
+        System.out.println("4. Get the Taxi Location");
+        System.out.println("5. Find nearby vehicles");
+        
+        int option = scanner.nextInt();
+
+        if (option == 1) {
+            System.out.print("Please enter the taxi registration: ");
+            String reg = scanner.next();
+            
+            System.out.print("Please enter the x location: ");
+            int x = scanner.nextInt();
+            System.out.print("Please enter the y location: ");
+            int y = scanner.nextInt();
+
+            main.testAddToMap(reg, map.getLocation(x, y));
+            System.out.println("Taxi is added to the location. Here's your new map");
+            showRectangularMap(map, 5, 5);
+        }
+        
+        else if (option == 2) {
+            System.out.print("Please enter the taxi registration: ");
+            String reg = scanner.next();
+            
+            System.out.print("Please enter the x location: ");
+            int x = scanner.nextInt();
+            System.out.print("Please enter the y location: ");
+            int y = scanner.nextInt();
+
+            main.testMoveVehicle(reg, map.getLocation(x, y));
+            System.out.println("Taxi is moved to the location. Here's your new map");
+            showRectangularMap(map, 5, 5);
+        }
+
+        else if (option == 3) {
+            System.out.print("Please enter the taxi registration: ");
+            String reg = scanner.next();
+
+            main.testRemoveVehicle(reg);
+            System.out.println("The taxi is removed from the map. Here's your new map");
+            showRectangularMap(map, 5, 5);
+        }
+        
+        else if (option == 4) {
+            System.out.print("Please enter the taxi registration: ");
+            String reg = scanner.next();
+
+            Location loc = main.testGetVehicleLoc(reg);
+
+            int x = loc.getX();
+            int y = loc.getY();
+
+
+            System.out.println("Taxi is found. It is at co-ordinate (" + x + "," + y + ")");
+        }
+
+        else if (option == 5) {
+            System.out.print("Please enter the x location: ");
+            int x = scanner.nextInt();
+            System.out.print("Please enter the y location: ");
+            int y = scanner.nextInt();
+            System.out.print("Please enter the radius");
+            int radius = scanner.nextInt();
+
+            List<String> regs = main.testGetVehiclesInRange(map.getLocation(x, y), radius);
+
+            System.out.println("Here are all the taxi registrations numbers near you!");
+            for (String reg : regs) {
+                System.out.println(reg);
+            }
+        }
+        scanner.close();
     }
 
     public static void addTaxiToMap(String reg, Location loc) {
@@ -38,7 +127,23 @@ public class Main implements VehicleHiringTest{
 
     @Override
     public boolean testMoveVehicle(String reg, Location loc) {
-        //todo ill do it-ruan
+        // what I need to do. When put the reg and location. 
+        // take the taxi from current location move it to the final location 
+
+        // find location 
+        Taxi taxi = TaxiBank.returnSpecificTaxi(reg);
+        if (taxi == null) {
+            return false;
+        }
+
+        taxi.getLocation(map);
+
+        // remove from location 
+        testRemoveVehicle(reg);
+
+        // add the taxi to the location 
+        loc.addTaxi(taxi);
+
         return true;
     }
 
@@ -54,8 +159,13 @@ public class Main implements VehicleHiringTest{
         }
 
         // removes taxi from the location where it is. 
-        testGetVehicleLoc(reg).removeTaxi(taxi);
+        Location loc = testGetVehicleLoc(reg);
+        if (loc == null) {
+            return false;
+        }
         
+        
+        loc.removeTaxi(taxi);
         return true;
     }
     

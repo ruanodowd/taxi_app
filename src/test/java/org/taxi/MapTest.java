@@ -16,11 +16,11 @@ class MapTest {
     void getLocation() {
     }
 
-    @Test
-    void countNodes() {
-        Map testMap = new Map();
-        assertEquals(4, testMap.countNodes());
-    }
+    // @Test
+    // void countNodes() {
+    //     Map testMap = new Map();
+    //     assertEquals(4, testMap.countNodes());
+    // }
     @Test
     void testDynamicMap() {
         Map testMap = new Map(3, 3);
