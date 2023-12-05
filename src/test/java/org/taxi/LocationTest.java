@@ -20,6 +20,4 @@ public class LocationTest {
         
         assertEquals(false, loc22.getContainedTaxis().contains(taxi));
     }
-
-
 }
