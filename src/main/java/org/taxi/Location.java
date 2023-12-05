@@ -46,7 +46,7 @@ public class Location {
     }
 
     public void locationLink(Location neighbour){
-        // my understanding 
+        // my understanding
         // if neighbouringlocations dont contain neighbour
             // add neighbour to the neighbouring locations 
             // add this location to the neighbouring location 

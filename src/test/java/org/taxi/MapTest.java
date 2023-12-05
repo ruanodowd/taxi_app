@@ -2,6 +2,8 @@ package org.taxi;
 
 import org.junit.jupiter.api.Test;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapTest {
@@ -16,6 +18,8 @@ class MapTest {
 
     @Test
     void countNodes() {
+        Map testMap = new Map();
+        assertEquals(4, testMap.countNodes());
     }
     @Test
     void testDynamicMap() {
@@ -27,11 +31,9 @@ class MapTest {
     @Test
     void testNodeLinkage(){
         Map testMap = new Map(3,3);
-        int count = 0;
-        for (int i = 0; i < 9; i++) {
-            testMap.getLocationNodes().stream()
-                    .forEach(l -> l.getNeighbouringLocations()
-                            .stream().count());
-        }
+        AtomicInteger count = new AtomicInteger();
+        testMap.getLocationNodes().stream()
+                .forEach(l -> count.addAndGet(l.getNeighbouringLocations().size()));
+        assertEquals(24, count.get());
     }
 }
