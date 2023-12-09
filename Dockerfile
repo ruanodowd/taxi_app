@@ -6,7 +6,7 @@ RUN mvn dependency:go-offline -B
 COPY src /app/src
 RUN mvn package -DskipTests
 
-FROM openjdk:21-jre-slim AS final
+FROM eclipse-temurin:21.0.1_12-jre-jammy AS final
 WORKDIR /app
 COPY --from=build /app/target/*.jar app.jar
 ENTRYPOINT ["java","-jar","app.jar"]
