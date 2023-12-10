@@ -10,9 +10,9 @@ name: Maven CI for testing branch
 
 on:
   push:
-    branches: [ "mai" ]
+    branches: [ "testing" ]
   pull_request:
-    branches: [ "main" ]
+    branches: [ "testing" ]
 
 jobs:
   build:
@@ -21,10 +21,10 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-    - name: Set up JDK 17
+    - name: Set up JDK 21
       uses: actions/setup-java@v3
       with:
-        java-version: '17'
+        java-version: '21'
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
