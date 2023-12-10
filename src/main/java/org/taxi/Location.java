@@ -9,7 +9,26 @@ public class Location {
     private int y;
     private List<Location> neighbouringLocations = new ArrayList<>();
     private List<Taxi> containedTaxis = new ArrayList<>();
-    
+
+    private Integer distance = Integer.MAX_VALUE;
+
+
+    private List<Location> pathway = new ArrayList<>();
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
+    }
+    public List<Location> getPathway() {
+        return pathway;
+    }
+
+    public void setPathway(List<Location> pathway) {
+        this.pathway = pathway;
+    }
+
     // constructor for location
     public Location(int x, int y) {
         this.x = x;
