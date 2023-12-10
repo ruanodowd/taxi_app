@@ -1,6 +1,7 @@
 package org.taxi;
 
 public class DoublyLinkedList<T> {
+    //implements Collection, Iterator
     private Node head;
     private Node current;
 
