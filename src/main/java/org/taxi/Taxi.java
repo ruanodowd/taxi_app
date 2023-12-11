@@ -4,9 +4,6 @@ public class Taxi {
     private String registrationNumber;
     private boolean isFree;
 
-    // when setting up a taxi, you need to have it's original location and reg 
-    // this also adds it to the location taxi array 
-    // this also adds it to the global taxi bank array
     Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
         this.isFree = true;
@@ -43,4 +40,12 @@ public class Taxi {
             return null;
         }
     }
+
+    public void setLocation(Map map, Location newLocation) {
+        Location loc = getLocation(map);
+        loc.getContainedTaxis().remove(this);
+
+        newLocation.addTaxi(this);
+    }
+
 }
