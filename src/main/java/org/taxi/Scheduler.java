@@ -7,6 +7,8 @@ import java.util.Optional;
 public class Scheduler {
     private Map map;
     private List<Booking> bookings;
+    // to keep track of observers
+    private List<Taxi> observers;
 
     public static void main(String[] args) {
         Map map = new Map(5,5);
@@ -32,6 +34,24 @@ public class Scheduler {
     public Scheduler(Map map) {
         this.map = map;
         this.bookings = new ArrayList<>();
+        this.observers = new ArrayList<>();
+    }
+
+    // attach taxi 
+    public void attach(Taxi taxi) {
+        observers.add(taxi);
+    }
+
+    // detach a taxi 
+    public void detach(Taxi taxi) {
+        observers.remove(taxi);
+    }
+
+    // notify observers for a change 
+    private void notifyObservers(Booking booking) {
+        for (Taxi taxi : observers) {
+            taxi.update(booking);
+        }
     }
 
     // to add a booking
@@ -55,10 +75,8 @@ public class Scheduler {
         // if assignedTaxi is present 
 
         assignedTaxi.ifPresent(taxi -> {
-            // set the taxi isFree to false 
-            taxi.setFree(false);
-            // assign the taxi to the booking
             booking.setTaxi(taxi);
+            notifyObservers(booking);
         });
     }
 
@@ -77,8 +95,8 @@ public class Scheduler {
     public void freeTaxi(Booking booking) {
         Taxi taxi = booking.getTaxi();
         if (taxi != null) {
-            taxi.setFree(true);
             booking.setTaxi(null);
+            notifyObservers(booking);
         }
     }
 
@@ -89,5 +107,9 @@ public class Scheduler {
 
     public List<Booking> getBookings() {
         return bookings;
+    }
+
+    public List<Taxi> getObservers() {
+        return observers;
     }   
 }

@@ -96,4 +96,44 @@ public class SchedulerTest {
         assertFalse(scheduler.getBookings().contains(booking), "Booking should be removed from the scheduler");
         assertTrue(taxi.isFree(), "Taxi should be free after booking cancellation");
     }
+
+    @Test
+    void testDetachTaxi() {
+        Taxi taxi = new Taxi("TEST");
+        scheduler.attach(taxi);
+        scheduler.detach(taxi);
+        assertFalse(scheduler.getObservers().contains(taxi));
+    }
+    
+    @Test
+    void testObserverNotification() {
+        Taxi taxi1 = new Taxi("RAWR");
+        Taxi taxi2 = new Taxi("BREE");
+        
+        // attaching taxi to location
+        Location loc1 = map.getLocation(2, 1);
+        loc1.addTaxi(taxi1);
+        Location loc2 = map.getLocation(3, 3);
+        loc2.addTaxi(taxi2);
+
+        scheduler.attach(taxi1);
+        scheduler.attach(taxi2);
+        Booking booking = new Booking(map.getLocation(1, 1));
+        scheduler.addBooking(booking);
+        assertFalse(taxi1.isFree());
+        assertTrue(taxi2.isFree());
+    }
+    
+    @Test
+    void testFindNearestAvailableTaxi() {
+        Taxi closeTaxi = new Taxi("CLOSE");
+        Taxi farTaxi = new Taxi("FAR");
+        map.getLocation(1, 1).addTaxi(closeTaxi);
+        map.getLocation(4, 4).addTaxi(farTaxi);
+        TaxiBank.addtoBank(closeTaxi);
+        TaxiBank.addtoBank(farTaxi);
+        Booking booking = new Booking(map.getLocation(1, 1));
+        scheduler.addBooking(booking);
+        assertEquals(closeTaxi, booking.getTaxi());
+    }
 }
