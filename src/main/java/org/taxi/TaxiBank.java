@@ -21,6 +21,10 @@ public class TaxiBank {
         }
         return null;
     }
+
+    public static void clear() {
+        allTaxis = new ArrayList<>(); 
+    }
     
 
 

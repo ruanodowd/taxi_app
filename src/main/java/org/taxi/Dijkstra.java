@@ -37,6 +37,13 @@ public class Dijkstra {
         }
         return nearestLocation;
     }
+
+    // added this - U
+    public static double calculateDistance(Map map, Location start, Location end) {
+        calculateRoute(map, start); 
+        return end.getDistance(); 
+    }
+
     private static void calculateMinimumDistance(Location finish, Integer weight, Location start){
         Integer startDistance = start.getDistance();
         if (startDistance + weight < finish.getDistance()){
