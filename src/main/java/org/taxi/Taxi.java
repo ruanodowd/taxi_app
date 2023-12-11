@@ -1,6 +1,6 @@
 package org.taxi;
 
-public class Taxi {
+public class Taxi implements Observer{
     private String registrationNumber;
     private boolean isFree;
 
@@ -27,7 +27,15 @@ public class Taxi {
         this.isFree = isFree;
     }
 
-    
+    // method to update state based on notification 
+    public void update (Booking booking) {
+        if (booking.getTaxi() != null && booking.getTaxi().equals(this)) {
+            // handles both free and assign
+            // if booking.getTaxi is null or the taxi is not equal to this taxi. Then isFree is set to true
+            this.isFree = booking.getTaxi() == null || !booking.getTaxi().equals(this);
+        }
+    }
+
     // get the location of the taxi
     public Location getLocation(Map map){//uses lambdas to get the location of the taxi
         try {
@@ -36,16 +44,22 @@ public class Taxi {
                     .filter(l -> l.getContainedTaxis().contains(this))
                     .toList()
                     .get(0);    
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | NullPointerException e) {
             return null;
         }
     }
 
     public void setLocation(Map map, Location newLocation) {
         Location loc = getLocation(map);
-        loc.getContainedTaxis().remove(this);
-
-        newLocation.addTaxi(this);
+        if (loc == null) {
+            newLocation.addTaxi(this);
+        }
+        
+        // scenario where you have it in a location already and don't want a taxi at two locations
+        else {
+            loc.getContainedTaxis().remove(this);
+            newLocation.addTaxi(this);
+        }
     }
 
 }

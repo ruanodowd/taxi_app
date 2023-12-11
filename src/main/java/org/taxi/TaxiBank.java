@@ -25,6 +25,12 @@ public class TaxiBank {
     public static void clear() {
         allTaxis = new ArrayList<>(); 
     }
+
+    public void attachAll(Scheduler scheduler) {
+        for (Taxi taxi: allTaxis) {
+            scheduler.attach(taxi);
+        }
+    }
     
 
 
