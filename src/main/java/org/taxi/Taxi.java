@@ -4,7 +4,7 @@ public class Taxi implements Observer{
     private String registrationNumber;
     private boolean isFree;
 
-    Taxi(String registrationNumber){
+    public Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
         this.isFree = true;
         TaxiBank.addtoBank(this);

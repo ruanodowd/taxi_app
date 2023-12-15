@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.taxi.Location;
+import org.taxi.Map;
+import org.taxi.Taxi;
 
 public class TaxiTest {
     private Taxi taxi;
