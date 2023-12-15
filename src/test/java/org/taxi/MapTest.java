@@ -1,6 +1,7 @@
 package org.taxi;
 
 import org.junit.jupiter.api.Test;
+import org.taxi.Map;
 
 import java.util.concurrent.atomic.AtomicInteger;
 

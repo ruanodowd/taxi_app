@@ -4,6 +4,9 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.taxi.Location;
+import org.taxi.Taxi;
+import org.taxi.TaxiBank;
 
 public class LocationTest {
 
