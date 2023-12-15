@@ -10,9 +10,9 @@ name: Maven CI for testing branch
 
 on:
   push:
-    branches: [ "testing" ]
+    branches: [ "development" ]
   pull_request:
-    branches: [ "testing" ]
+    branches: [ "testing", "main" ]
 
 jobs:
   build:
