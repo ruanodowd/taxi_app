@@ -6,11 +6,11 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Maven CI for testing branch
+name: Maven CI
 
 on:
   push:
-    branches: [ "development" ]
+    branches: [ "development", "testing", "main" ]
   pull_request:
     branches: [ "testing", "main" ]
 
