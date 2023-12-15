@@ -3,6 +3,8 @@ package org.taxi;
 public class Taxi implements Observer{
     private String registrationNumber;
     private boolean isFree;
+    private double rating = 0;
+    private int totalRatings = 0;
 
     Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
@@ -62,4 +64,22 @@ public class Taxi implements Observer{
         }
     }
 
+    // getters and setters for rating
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setTotalRatings(int totalRatings) {
+        this.totalRatings = totalRatings;
+    }
+
+    public double getRating() {
+        return rating;
+    }
+
+    public int getTotalRatings() {
+        return totalRatings;
+    }
+
+    
 }
