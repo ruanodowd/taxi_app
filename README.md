@@ -8,6 +8,7 @@ This project was written following principles and techniques learnt in
 Block 2 of LM173.
 <h3>Code coverage:</h3>
 ![coverage](.github/badges/jacoco.svg)
+<img src=".github/badges/jacoco.svg">
 <h3>Contributors</h3>
 <list><b><li>Ruan O'Dowd</li>
 <li>Ushen Wijayaratne</li></b></list>
