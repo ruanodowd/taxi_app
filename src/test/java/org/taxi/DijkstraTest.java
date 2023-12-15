@@ -1,9 +1,6 @@
 package org.taxi;
 
 import org.junit.jupiter.api.Test;
-import org.taxi.Dijkstra;
-import org.taxi.Location;
-import org.taxi.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
