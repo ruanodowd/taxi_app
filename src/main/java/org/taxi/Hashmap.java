@@ -1,88 +1,124 @@
 package org.taxi;
 
-public class Hashmap<K, V> {
-    private static class Entry<K, V> {
-        final K key;
-        V value;
-        Entry<K, V> next;
+public class Hashmap<K,V> {
 
-        public Entry(K key, V value, Entry<K, V> next) {
+    // creates each entry node
+    public class Entry<K,V> {
+        private final K key;
+        private V value;
+        private Entry<K,V> next;
+
+        public Entry(K key, V value) {
             this.key = key;
             this.value = value;
-            this.next = next;
+            this.next = null;
+        }
+
+        public K getKey() {
+            return key;
+        }
+
+        public V getValue() {
+            return value;
+        }
+
+        public void setValue(V value) {
+            this.value = value;
         }
     }
 
-    private Entry<K, V>[] table;
-    private int capacity;
-    private int size;
-    private static final int DEFAULT_CAPACITY = 10;
-    private static final double LOAD_FACTOR_THRESHOLD = 0.75;
+    // create the array element
+    private final int SIZE = 5;
+    private Entry<K,V> table[];
 
+    // create constructor 
     @SuppressWarnings("unchecked")
     public Hashmap() {
-        this.capacity = DEFAULT_CAPACITY;
-        this.table = new Entry[capacity];
-        this.size = 0;
+        table = new Entry[SIZE];
     }
 
     public void put(K key, V value) {
-        if (size >= capacity * LOAD_FACTOR_THRESHOLD) {
-            resize();
-        }
-        int index = key.hashCode() % capacity;
-        Entry<K, V> newEntry = new Entry<>(key, value, null);
+        // doesn't check for null for now
+        int hash = key.hashCode() % SIZE;
+        Entry<K, V> e = table[hash];
 
-        if (table[index] == null) {
-            table[index] = newEntry;
+        // if nothing at position set postion equal to new value
+        // else 
+            // check for existing key and update, then return
+            // if no entry found then add new value 
+
+        if (e == null) {
+            table[hash] = new Entry<K,V>(key, value);
         } else {
-            Entry<K, V> current = table[index];
-            while (current.next != null) {
-                if (current.key.equals(key)) {
-                    current.value = value;
+            // check for everything other than last
+            while (!(e.next == null)) {
+                if (e.key.equals(key)) {
+                    e.setValue(value);
                     return;
                 }
-                current = current.next;
+                e = e.next;
             }
-            if (current.key.equals(key)) {
-                current.value = value;
-            } else {
-                current.next = newEntry;
+
+            // check for last
+            if (e.key.equals(key)) {
+                e.setValue(value);
+                return;
             }
+
+            // add new entry
+            Entry<K,V> newValue = new Entry<K,V>(key, value);
+            e.next = newValue;
+            
         }
-        size++;
     }
 
     public V get(K key) {
-        int index = key.hashCode() % capacity;
-        Entry<K, V> entry = table[index];
+        int hash = key.hashCode() % SIZE;
+        Entry<K,V> e = table[hash];
 
-        while (entry != null) {
-            if (entry.key.equals(key)) {
-                return entry.value;
-            }
-            entry = entry.next;
+        // check if values are empty 
+        if (e == null) {
+            return null;
         }
 
+        // everything
+        while (!(e == null)) {
+            if (e.getKey().equals(key)) {
+                return e.getValue();
+            }
+            e = e.next;
+        }
+
+        // not found now
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    private void resize() {
-        int newCapacity = capacity * 2;
-        Entry<K, V>[] newTable = new Entry[newCapacity];
+    public void remove(K key) {
+        int hash = key.hashCode() % SIZE;
+        Entry<K,V> e = table[hash];
 
-        for (Entry<K, V> headNode : table) {
-            while (headNode != null) {
-                Entry<K, V> next = headNode.next;
-                int newIndex = headNode.key.hashCode() % newCapacity;
-                headNode.next = newTable[newIndex];
-                newTable[newIndex] = headNode;
-                headNode = next;
-            }
+        // if list is empty 
+        if (e == null) {
+            return;
         }
 
-        table = newTable;
-        capacity = newCapacity;
+        // if node to be removed is at the top
+        if (e.key.equals(key)) {
+            table[hash] = e.next;
+        }
+
+        Entry<K,V> prev = e;
+        e = e.next;
+
+        while (e != null) {
+            if (e.key.equals(key)) {
+                prev.next = e.next;
+                return;
+            }
+            prev = e;
+            e = e.next;
+        }
+
+        return;
     }
 }
