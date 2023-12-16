@@ -1,130 +1,201 @@
 package org.taxi;
 
-public class DoublyLinkedList<T> {
-    //implements Collection, Iterator
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class DoublyLinkedList<T> implements Collection<T> {
     private Node head;
-    private Node current;
+    private Node tail;
+    private int size;
 
     private class Node {
         T data;
         Node next;
         Node prev;
-    
-        public Node (T data) {
+
+        Node(T data) {
             this.data = data;
-            next = null;
-            prev = null;
         }
     }
 
     public DoublyLinkedList() {
         head = null;
-        current = null;
+        tail = null;
+        size = 0;
     }
 
+    @Override
+    public Iterator<T> iterator() {
+        return new Iterator<T>() {
+            private Node current = head;
+
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
+
+            @Override
+            public T next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                T data = current.data;
+                current = current.next;
+                return data;
+            }
+        };
+    }
+
+    @Override
+    public int size() {
+        return size;
+    }
+
+    @Override
     public boolean isEmpty() {
-        return head == null;
+        return size == 0;
     }
 
-    public void findFirst() {
-        current = head;
-    }
-
-    public void findNext() {
-        if (!isEmpty() && current.next != null) {
-            current = current.next;
-        }
-    }
-
-    public boolean isLast() {
-        return !isEmpty() && current.next != null;
-    }
-
-    public T retrieve() {
-        if (isEmpty()) {
-            System.out.println("List is empty, null will be returned");
-            return null;
-        } else {
-            return current.data;
-        }
-    }
-
-    public void update(T e) {
-        if (!isEmpty())
-            current.data = e;
-        else
-            System.out.println("List is empty, nothing to update");
-    }
-
-    public void add(T e) {
-        Node newNode = new Node(e);
-       
-        if(isEmpty()) {
-            head = current = newNode;
-        } else {
-            newNode.next = current.next;
-            newNode.prev = current;
-            if (current.next != null) {
-                current.next.prev = newNode;
-            }
-            current.next = newNode;
-            current = newNode;
-        }
-    }
-
-    public void remove(T e) {
-        if (!isEmpty()) {
-
-            boolean isFound = false;
-            // set pointer at first location
-            findFirst();
-
-            // if current is not set to the last location
-            while (!isLast()) {
-                // if current contains element, continue with current set to that. 
-                if (current.data.equals(e)) {
-                    isFound = true;
-                    break;
-                }
-
-                else {
-                    findNext();
-                }
-            }
-
-            if (!isFound) {
-                System.out.println("Element doesn't exist");
-            }
-
-            if (current.prev != null) {
-                current.prev.next = current.next;
-            } else {
-                head = current.next;
-            }
-           
-            if (current.next != null) {
-                current.next.prev = current.prev;
-            }
-           
-            current = current.prev;
-        } else {
-            System.out.println("List is empty, nothing to remove");
-        }
-    }
-
-    public boolean contains (T e) {
-        if (!isEmpty()) {
-            //set to start 
-            findFirst();
-
-            // check if contains element 
-            if (current.data.equals(e)) {
+    @Override
+    public boolean contains(Object o) {
+        for (T item : this) {
+            if (item.equals(o)) {
                 return true;
-            } else {
-                findNext();
             }
-
         }
         return false;
+    }
+
+    @Override
+    public Object[] toArray() {
+        Object[] array = new Object[size];
+        int i = 0;
+        for (T item : this) {
+            array[i++] = item;
+        }
+        return array;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public <E> E[] toArray(E[] a) {
+        if (a.length < size) {
+            a = (E[])java.lang.reflect.Array.newInstance(a.getClass().getComponentType(), size);
+        }
+        int i = 0;
+        Object[] result = a;
+        for (T item : this) {
+            result[i++] = item;
+        }
+
+        if (a.length > size) {
+            a[size] = null;
+        }
+
+        return a;
+    }
+
+    @Override
+    public boolean add(T e) {
+        Node newNode = new Node(e);
+        if (isEmpty()) {
+            head = tail = newNode;
+        } else {
+            tail.next = newNode;
+            newNode.prev = tail;
+            tail = newNode;
+        }
+        size++;
+        return true;
+    }
+
+    @Override
+    public boolean remove(Object o) {
+        if (isEmpty()) {
+            return false;
+        }
+
+        Node current = head;
+        while (current != null) {
+            if (current.data.equals(o)) {
+                if (current.prev != null) {
+                    current.prev.next = current.next;
+                } else {
+                    head = current.next;
+                }
+                if (current.next != null) {
+                    current.next.prev = current.prev;
+                } else {
+                    tail = current.prev;
+                }
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean containsAll(Collection<?> c) {
+        for (Object e : c) {
+            if (!contains(e)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean addAll(Collection<? extends T> c) {
+        for (T e : c) {
+            add(e);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean removeAll(Collection<?> c) {
+        boolean modified = false;
+        for (Object e : c) {
+            if (remove(e)) {
+                modified = true;
+            }
+        }
+        return modified;
+    }
+
+    @Override
+    public boolean retainAll(Collection<?> c) {
+        boolean modified = false;
+        Node current = head;
+        while (current != null) {
+            if (!c.contains(current.data)) {
+                Node next = current.next;
+                remove(current.data);
+                current = next;
+                modified = true;
+            } else {
+                current = current.next;
+            }
+        }
+        return modified;
+    }
+
+    @Override
+    public void clear() {
+        head = null;
+        tail = null;
+        size = 0;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (T item : this) {
+            sb.append(item).append(" ");
+        }
+        return sb.toString().trim();
     }
 }
