@@ -1,9 +1,12 @@
 package org.taxi;
 
-public class Hashmap<K,V> {
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
+public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
 
     // creates each entry node
-    public class Entry<K,V> {
+    public static class Entry<K, V> {
         private final K key;
         private V value;
         private Entry<K,V> next;
@@ -121,4 +124,55 @@ public class Hashmap<K,V> {
 
         return;
     }
+
+    // Implementing an iterator
+    @Override
+    public Iterator<Entry<K,V>> iterator() {
+        return new HashmapIterator();
+    }
+
+    private class HashmapIterator implements Iterator<Entry<K,V>> {
+        private int currentIndex = 0;
+        private Entry<K,V> currentEntry = null;
+        
+        public HashmapIterator() {
+            advanceToNextEntry();
+        }
+
+        @Override
+        public boolean hasNext() {
+            return currentEntry != null;
+        }
+
+        @Override
+        public Entry<K, V> next() {
+            if (!hasNext()) {
+                throw new NoSuchElementException();
+            }
+            Entry<K, V> entryToReturn = currentEntry;
+            advanceToNextEntry();
+            return entryToReturn;
+        }
+
+        private void advanceToNextEntry() {
+            // Continue from current entry if possible
+            if (currentEntry != null && currentEntry.next != null) {
+                currentEntry = currentEntry.next;
+                return;
+            }
+
+            // Move to the next bucket and find a non-null entry
+            while (currentIndex < SIZE) {
+                currentEntry = table[currentIndex++];
+                if (currentEntry != null) {
+                    return;
+                }
+            }
+
+            // No more entries
+            currentEntry = null;
+        }
+        
+    }
+
 }
