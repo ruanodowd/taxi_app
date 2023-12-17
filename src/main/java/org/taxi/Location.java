@@ -1,12 +1,13 @@
 package org.taxi;
 
-public class Location {
+public class Location implements Comparable<Location>{
     // attributes
     private int x;
     private int y;
+    private boolean visited = false;
     private ArrayList<Location> neighbouringLocations = new ArrayList<>();
     private ArrayList<Taxi> containedTaxis = new ArrayList<>();
-    private ArrayList<Location> pathway = new ArrayList<>();
+    private DoublyLinkedList<Location> pathway = new DoublyLinkedList<>();
 
     private Integer distance = Integer.MAX_VALUE;
 
@@ -18,11 +19,11 @@ public class Location {
     public void setDistance(Integer distance) {
         this.distance = distance;
     }
-    public ArrayList<Location> getPathway() {
+    public DoublyLinkedList<Location> getPathway() {
         return pathway;
     }
 
-    public void setPathway(ArrayList<Location> pathway) {
+    public void setPathway(DoublyLinkedList<Location> pathway) {
         this.pathway = pathway;
     }
 
@@ -49,6 +50,14 @@ public class Location {
 
     public ArrayList<Taxi> getContainedTaxis() {
         return containedTaxis;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
     
     // method to add to list
@@ -79,6 +88,11 @@ public class Location {
 
     public void linkNeighbourLocation(ArrayList<Location> locations) {
         locations.forEach(location -> locationLink(location));
+    }
+
+    @Override
+    public int compareTo(Location other) {
+        return this.distance.compareTo(other.distance);
     }
 
 }

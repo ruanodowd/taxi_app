@@ -1,16 +1,24 @@
 package org.taxi;
 
 import java.util.Arrays;
+import java.util.Comparator;
 
 public class PriorityQueue<T extends Comparable<T>> {
     private static final int DEFAULT_CAPACITY = 10;
     private T[] heap;
     private int size;
+    private Comparator<T> comparator;
 
     @SuppressWarnings("unchecked")
     public PriorityQueue() {
         heap = (T[]) new Comparable[DEFAULT_CAPACITY];
         size = 0;
+        this.comparator = null; // Natural ordering
+    }
+
+    public PriorityQueue(Comparator<T> comparator) {
+        this();
+        this.comparator = comparator;
     }
 
     public void add(T element) {
@@ -40,7 +48,7 @@ public class PriorityQueue<T extends Comparable<T>> {
 
     private void heapifyUp(int index) {
         T temp = heap[index];
-        while (index > 0 && temp.compareTo(heap[parent(index)]) < 0) {
+        while (index > 0 && compare(temp, heap[parent(index)]) < 0) {
             heap[index] = heap[parent(index)];
             index = parent(index);
         }
@@ -52,7 +60,7 @@ public class PriorityQueue<T extends Comparable<T>> {
         T temp = heap[index];
         while (kthChild(index, 1) < size) {
             child = minChild(index);
-            if (heap[child].compareTo(temp) < 0) {
+            if (compare(heap[child], temp) < 0) {
                 heap[index] = heap[child];
             } else {
                 break;
@@ -60,6 +68,14 @@ public class PriorityQueue<T extends Comparable<T>> {
             index = child;
         }
         heap[index] = temp;
+    }
+
+    private int compare(T a, T b) {
+        if (comparator != null) {
+            return comparator.compare(a, b);
+        } else {
+            return a.compareTo(b);
+        }
     }
 
     private int parent(int i) {
@@ -75,7 +91,7 @@ public class PriorityQueue<T extends Comparable<T>> {
         int k = 2;
         int pos = kthChild(i, k);
         while ((k <= 2) && (pos < size)) {
-            if (heap[pos].compareTo(heap[bestChild]) < 0) {
+            if (compare(heap[pos], heap[bestChild]) < 0) {
                 bestChild = pos;
             }
             pos = kthChild(i, ++k);

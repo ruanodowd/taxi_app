@@ -1,38 +1,26 @@
 package org.taxi;
 
+import java.util.Comparator;
+
 public class Dijkstra {
     static int weight = 1;
-    public static Map calculateRoute(Map map, Location start){
+     public static Map calculateRoute(Map map, Location start){
         start.setDistance(0);
-        ArrayList<Location> visitedNodes = new ArrayList<>();
-        ArrayList<Location> unvisitedNodes = new ArrayList<>();
+        PriorityQueue<Location> unvisitedNodes = new PriorityQueue<>(Comparator.comparingInt(Location::getDistance));
 
         unvisitedNodes.add(start);
 
-        while(unvisitedNodes.size() != 0){
-            Location locationPointer = getNearestLocation(unvisitedNodes);
-            unvisitedNodes.remove(locationPointer);
+        while (!unvisitedNodes.isEmpty()) {
+            Location locationPointer = unvisitedNodes.poll();
             for (Location adjacent: locationPointer.getNeighbouringLocations()){
-                if (!visitedNodes.contains(adjacent)){
+                if (!adjacent.isVisited()){
                     calculateMinimumDistance(adjacent, weight, locationPointer);
                     unvisitedNodes.add(adjacent);
                 }
             }
-            visitedNodes.add(locationPointer);
+            locationPointer.setVisited(true);
         }
         return map;
-    }
-    private static Location getNearestLocation(ArrayList<Location> unvisitedLocations){
-        Location nearestLocation = null;
-        int shortestDistance = Integer.MAX_VALUE;
-        for (Location location: unvisitedLocations) {
-            int locationDistance = weight;
-            if (shortestDistance > locationDistance) {
-                shortestDistance = locationDistance;
-                nearestLocation = location;
-            }
-        }
-        return nearestLocation;
     }
 
     public static double calculateDistance(Map map, Location start, Location end) {
@@ -44,8 +32,7 @@ public class Dijkstra {
         Integer startDistance = start.getDistance();
         if (startDistance + weight < finish.getDistance()){
             finish.setDistance(startDistance + weight);
-            ArrayList<Location> shortestPath = new ArrayList<>();
-            start.getPathway();
+            DoublyLinkedList<Location> shortestPath = new DoublyLinkedList<>(start.getPathway());
             shortestPath.add(start);
             finish.setPathway(shortestPath);
         }

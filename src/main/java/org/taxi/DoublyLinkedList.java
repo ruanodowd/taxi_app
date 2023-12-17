@@ -25,6 +25,13 @@ public class DoublyLinkedList<T> implements Collection<T> {
         size = 0;
     }
 
+    public DoublyLinkedList(Collection<T> collection) {
+        this(); // Call the default constructor to initialize the list
+        for (T item : collection) {
+            this.add(item);
+        }
+    }
+
     @Override
     public Iterator<T> iterator() {
         return new Iterator<T>() {
