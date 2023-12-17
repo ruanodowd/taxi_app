@@ -1,19 +1,16 @@
 package org.taxi;
-import java.util.ArrayList;
-import java.util.List;
-
 
 public class Location {
     // attributes
     private int x;
     private int y;
-    private List<Location> neighbouringLocations = new ArrayList<>();
-    private List<Taxi> containedTaxis = new ArrayList<>();
+    private ArrayList<Location> neighbouringLocations = new ArrayList<>();
+    private ArrayList<Taxi> containedTaxis = new ArrayList<>();
+    private ArrayList<Location> pathway = new ArrayList<>();
 
     private Integer distance = Integer.MAX_VALUE;
 
 
-    private List<Location> pathway = new ArrayList<>();
     public Integer getDistance() {
         return distance;
     }
@@ -21,11 +18,11 @@ public class Location {
     public void setDistance(Integer distance) {
         this.distance = distance;
     }
-    public List<Location> getPathway() {
+    public ArrayList<Location> getPathway() {
         return pathway;
     }
 
-    public void setPathway(List<Location> pathway) {
+    public void setPathway(ArrayList<Location> pathway) {
         this.pathway = pathway;
     }
 
@@ -46,11 +43,11 @@ public class Location {
         return y;
     }    
     
-    public List<Location> getNeighbouringLocations() {
+    public ArrayList<Location> getNeighbouringLocations() {
         return neighbouringLocations;
     }
 
-    public List<Taxi> getContainedTaxis() {
+    public ArrayList<Taxi> getContainedTaxis() {
         return containedTaxis;
     }
     
@@ -60,21 +57,10 @@ public class Location {
     }
     
     public void removeTaxi (Taxi taxi){
-        // hopefully this works for the remove functionality, need to test this - U
         containedTaxis.remove(taxi);
     }
 
     public void locationLink(Location neighbour){
-        // my understanding
-        // if neighbouringlocations dont contain neighbour
-            // add neighbour to the neighbouring locations 
-            // add this location to the neighbouring location 
-
-        // concerns - what if this one doesn't have the neighbouring location but another one has it. Then you are adding the this location to the other locations list again - U
-        // solution - do a check first before adding it in, I have added that in. - U 
-        // Note - might not be essential just a thought. 
-
-        // another change I just call the function (checklocationLink) to check if a location exists in the location's own neighbouringlocation list.
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
@@ -91,7 +77,7 @@ public class Location {
     }
 
 
-    public void linkNeighbourLocation(List<Location> locations) {
+    public void linkNeighbourLocation(ArrayList<Location> locations) {
         locations.forEach(location -> locationLink(location));
     }
 

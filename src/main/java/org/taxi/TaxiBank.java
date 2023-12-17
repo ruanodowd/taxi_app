@@ -1,5 +1,7 @@
 package org.taxi;
 
+import java.util.stream.Stream;
+
 public class TaxiBank {
     // storage feature using Hashmap
     private static Hashmap<String, Taxi> allTaxis = new Hashmap<>();
@@ -8,6 +10,10 @@ public class TaxiBank {
     // Note: This method's signature changes as Hashmap doesn't support getting all values as a List
     public static Iterable<Hashmap.Entry<String, Taxi>> getAllTaxis() {
         return allTaxis;
+    }
+
+    public static Stream<Taxi> getAllTaxisStream() {
+        return allTaxis.stream();
     }
 
     // be able to add to data structure

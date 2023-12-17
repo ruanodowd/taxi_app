@@ -1,6 +1,5 @@
 package org.taxi;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -182,9 +181,9 @@ public class Main implements VehicleHiringTest{
     @Override
     public List<String> testGetVehiclesInRange(Location loc, int r) {
         // getting a list of registrations (ideally taxi objects however, return type suggests it's a string)
-        List<String> taxis = new ArrayList<>();
+        ArrayList<String> taxis = new ArrayList<>();
 
-                   for (Taxi taxi: loc.getContainedTaxis()) {
+        for (Taxi taxi: loc.getContainedTaxis()) {
             taxis.add(taxi.getRegistrationNumber());
         }
 

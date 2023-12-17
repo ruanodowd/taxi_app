@@ -1,8 +1,5 @@
 package org.taxi;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-
 public class Dijkstra {
     static int weight = 1;
     public static Map calculateRoute(Map map, Location start){
@@ -38,7 +35,6 @@ public class Dijkstra {
         return nearestLocation;
     }
 
-    // added this - U
     public static double calculateDistance(Map map, Location start, Location end) {
         calculateRoute(map, start); 
         return end.getDistance(); 
@@ -48,7 +44,8 @@ public class Dijkstra {
         Integer startDistance = start.getDistance();
         if (startDistance + weight < finish.getDistance()){
             finish.setDistance(startDistance + weight);
-            LinkedList<Location> shortestPath = new LinkedList<>(start.getPathway());
+            ArrayList<Location> shortestPath = new ArrayList<>();
+            start.getPathway();
             shortestPath.add(start);
             finish.setPathway(shortestPath);
         }

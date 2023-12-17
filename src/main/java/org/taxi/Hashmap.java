@@ -2,6 +2,8 @@ package org.taxi;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
 
@@ -42,7 +44,7 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
 
     public void put(K key, V value) {
         // doesn't check for null for now
-        int hash = key.hashCode() % SIZE;
+        int hash = Math.abs(key.hashCode()) % SIZE;
         Entry<K, V> e = table[hash];
 
         // if nothing at position set postion equal to new value
@@ -75,7 +77,7 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
     }
 
     public V get(K key) {
-        int hash = key.hashCode() % SIZE;
+        int hash = Math.abs(key.hashCode()) % SIZE;
         Entry<K,V> e = table[hash];
 
         // check if values are empty 
@@ -96,7 +98,7 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
     }
 
     public void remove(K key) {
-        int hash = key.hashCode() % SIZE;
+        int hash = Math.abs(key.hashCode()) % SIZE;
         Entry<K,V> e = table[hash];
 
         // if list is empty 
@@ -172,6 +174,12 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
             currentEntry = null;
         }
         
+    }
+
+    // added the stream features
+    public Stream<V> stream() {
+        return StreamSupport.stream(this.spliterator(), false)
+                            .map(Entry::getValue);
     }
 
 }
