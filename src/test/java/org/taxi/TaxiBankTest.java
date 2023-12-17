@@ -13,8 +13,8 @@ public class TaxiBankTest {
 
     @Test
     void checkForOne() {
-        Taxi t1 = new Taxi("22/34/54");
-        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("22/34/54");
+        Taxi t1 = new Taxi("14223123/WW/299");
+        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("14223123/WW/299");
 
         assertEquals(t1, firstTaxi);
     }

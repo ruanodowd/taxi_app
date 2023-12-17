@@ -1,14 +1,12 @@
 package org.taxi;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 public class Scheduler {
     private Map map;
-    private List<Booking> bookings;
+    private ArrayList<Booking> bookings;
     // to keep track of observers
-    private List<Taxi> observers;
+    private ArrayList<Taxi> observers;
 
     public static void main(String[] args) {
         Map map = new Map(5,5);
@@ -81,7 +79,7 @@ public class Scheduler {
     }
 
     private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation) {
-        return TaxiBank.getAllTaxis().stream()
+        return TaxiBank.getAllTaxisStream()
                 .filter(Taxi::isFree)
                 .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
     }
@@ -105,11 +103,11 @@ public class Scheduler {
         return map;
     }
 
-    public List<Booking> getBookings() {
+    public ArrayList<Booking> getBookings() {
         return bookings;
     }
 
-    public List<Taxi> getObservers() {
+    public ArrayList<Taxi> getObservers() {
         return observers;
     }   
 }
