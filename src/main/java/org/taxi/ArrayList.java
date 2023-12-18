@@ -237,7 +237,7 @@ public class ArrayList<T> implements List<T> {
     }
 
     @Override
-    public <T> T[] toArray(T[] a) {
+    public <K> K[] toArray(K[] a) {
         // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
