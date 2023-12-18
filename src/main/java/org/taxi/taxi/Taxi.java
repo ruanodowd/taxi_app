@@ -4,6 +4,7 @@ import org.taxi.booking.Booking;
 import org.taxi.booking.Observer;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
+import org.taxi.map.Map;
 
 public class Taxi implements Observer {
     private String registrationNumber;
@@ -44,7 +45,7 @@ public class Taxi implements Observer {
     }
 
     // get the location of the taxi
-    public Location getLocation(GridMap map){//uses lambdas to get the location of the taxi
+    public Location getLocation(Map map){//uses lambdas to get the location of the taxi
         try {
             return map.getLocationNodes()
                     .stream()
