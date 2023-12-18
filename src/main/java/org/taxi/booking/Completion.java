@@ -1,4 +1,6 @@
-package org.taxi;
+package org.taxi.booking;
+
+import org.taxi.taxi.Taxi;
 
 public class Completion {
     private Taxi taxi;

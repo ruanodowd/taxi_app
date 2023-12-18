@@ -1,6 +1,11 @@
-package org.taxi;
+package org.taxi.taxi;
 
-public class Taxi implements Observer{
+import org.taxi.booking.Booking;
+import org.taxi.booking.Observer;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+
+public class Taxi implements Observer {
     private String registrationNumber;
     private boolean isFree;
     private double rating = 0;
@@ -39,7 +44,7 @@ public class Taxi implements Observer{
     }
 
     // get the location of the taxi
-    public Location getLocation(Map map){//uses lambdas to get the location of the taxi
+    public Location getLocation(GridMap map){//uses lambdas to get the location of the taxi
         try {
             return map.getLocationNodes()
                     .stream()
@@ -51,7 +56,7 @@ public class Taxi implements Observer{
         }
     }
 
-    public void setLocation(Map map, Location newLocation) {
+    public void setLocation(GridMap map, Location newLocation) {
         Location loc = getLocation(map);
         if (loc == null) {
             newLocation.addTaxi(this);

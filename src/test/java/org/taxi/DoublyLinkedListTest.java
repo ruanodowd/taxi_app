@@ -2,6 +2,8 @@ package org.taxi;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.taxi.datastructure.DoublyLinkedList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.Iterator;

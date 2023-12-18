@@ -1,17 +1,23 @@
 package org.taxi;
 
+import org.taxi.datastructure.ArrayList;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.taxi.Taxi;
+import org.taxi.taxi.TaxiBank;
+
 import java.util.List;
 import java.util.Scanner;
 
 public class Main implements VehicleHiringTest{
-    public Map map;
-    public Main(Map map) {
+    public GridMap map;
+    public Main(GridMap map) {
         this.map = map;
     }
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        Map map = new Map(5, 5);
+        GridMap map = new GridMap(5, 5);
         Main main = new Main(map);
 
         System.out.println("Welcome to Our Taxi App");
@@ -211,7 +217,7 @@ public class Main implements VehicleHiringTest{
         return taxis;
     }
 
-    public static void showRectangularMap(Map map, int height, int width){
+    public static void showRectangularMap(GridMap map, int height, int width){
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 System.out.print(map.getLocation(x, y)

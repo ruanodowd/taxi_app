@@ -1,4 +1,8 @@
-package org.taxi;
+package org.taxi.map;
+
+import org.taxi.datastructure.ArrayList;
+import org.taxi.datastructure.DoublyLinkedList;
+import org.taxi.taxi.Taxi;
 
 public class Location implements Comparable<Location>{
     // attributes

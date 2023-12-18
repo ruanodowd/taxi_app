@@ -1,6 +1,8 @@
 package org.taxi;
 
 import org.junit.jupiter.api.Test;
+import org.taxi.datastructure.Hashmap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HashmapTest {

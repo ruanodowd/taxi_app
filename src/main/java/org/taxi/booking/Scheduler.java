@@ -1,15 +1,22 @@
-package org.taxi;
+package org.taxi.booking;
+
+import org.taxi.taxi.Taxi;
+import org.taxi.taxi.TaxiBank;
+import org.taxi.datastructure.ArrayList;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.map.pathfinding.Dijkstra;
 
 import java.util.Optional;
 
 public class Scheduler {
-    private Map map;
+    private GridMap map;
     private ArrayList<Booking> bookings;
     // to keep track of observers
     private ArrayList<Taxi> observers;
 
     public static void main(String[] args) {
-        Map map = new Map(5,5);
+        GridMap map = new GridMap(5,5);
         Scheduler scheduler = new Scheduler(map);
         Booking booking = new Booking(map.getLocation(2, 2));
 
@@ -29,7 +36,7 @@ public class Scheduler {
     }
 
     // constructor
-    public Scheduler(Map map) {
+    public Scheduler(GridMap map) {
         this.map = map;
         this.bookings = new ArrayList<>();
         this.observers = new ArrayList<>();
@@ -85,8 +92,8 @@ public class Scheduler {
     }
 
     private int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
-        double distance1 = Dijkstra.calculateDistance(map, taxi1.getLocation(map), customerLocation);
-        double distance2 = Dijkstra.calculateDistance(map, taxi2.getLocation(map), customerLocation);
+        double distance1 = new Dijkstra().calculateDistance(map, taxi1.getLocation(map), customerLocation);
+        double distance2 = new Dijkstra().calculateDistance(map, taxi2.getLocation(map), customerLocation);
         return Double.compare(distance1, distance2);
     }
 
@@ -99,7 +106,7 @@ public class Scheduler {
     }
 
     // getters
-    public Map getMap() {
+    public GridMap getMap() {
         return map;
     }
 

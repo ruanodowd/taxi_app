@@ -4,14 +4,17 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.taxi.Taxi;
 
 public class TaxiTest {
     private Taxi taxi;
-    private Map map;
+    private GridMap map;
 
     @BeforeEach
     void setup() {
-        map = new Map(5, 5);
+        map = new GridMap(5, 5);
         taxi = new Taxi("RAWR");
     }
 

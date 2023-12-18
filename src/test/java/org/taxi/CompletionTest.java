@@ -4,6 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.taxi.booking.Completion;
+import org.taxi.taxi.Taxi;
 
 public class CompletionTest {
     private Taxi t1;

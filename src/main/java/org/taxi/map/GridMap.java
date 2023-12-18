@@ -1,16 +1,20 @@
-package org.taxi;
+package org.taxi.map;
 
-public class Map {
+import org.taxi.datastructure.ArrayList;
+
+public class GridMap implements Map {
     private static ArrayList<Location> nodes;
-    Map(ArrayList<Location> nodes){
-        Map.nodes = nodes;
+    GridMap(ArrayList<Location> nodes){
+        GridMap.nodes = nodes;
     }
 
+    @Override
     public ArrayList<Location> getLocationNodes() {
         return nodes;
     }
 
-    public Location getLocation(int x,int y){
+    @Override
+    public Location getLocation(int x, int y){
         try {
             return nodes
                 .stream()
@@ -42,9 +46,9 @@ public class Map {
     //     }
     // }
 
-    public Map(int height, int width){
+    public GridMap(int height, int width){
         //this creates a map in a grid shape
-        Map.nodes = new ArrayList<>();
+        GridMap.nodes = new ArrayList<>();
         nodes.add(new Location(0,0));
         for (int x = 1; x < width; x++) {
             nodes.add(x, new Location(x,0));
@@ -63,6 +67,7 @@ public class Map {
         }
     }
 
+    @Override
     public int countNodes(){
         return Math.toIntExact(nodes.size());
     }

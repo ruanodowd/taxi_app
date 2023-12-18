@@ -7,15 +7,21 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.taxi.booking.Booking;
+import org.taxi.booking.Scheduler;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.taxi.Taxi;
+import org.taxi.taxi.TaxiBank;
 
 public class SchedulerTest {
-    private Map map;
+    private GridMap map;
     private Scheduler scheduler;
 
 
     @BeforeEach
     void setup() {
-        map = new Map(5, 5);
+        map = new GridMap(5, 5);
         TaxiBank.clear();
         scheduler = new Scheduler(map);
     }

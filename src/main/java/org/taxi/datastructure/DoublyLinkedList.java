@@ -1,4 +1,4 @@
-package org.taxi;
+package org.taxi.datastructure;
 
 import java.util.Collection;
 import java.util.Iterator;

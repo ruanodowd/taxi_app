@@ -1,4 +1,7 @@
-package org.taxi;
+package org.taxi.booking;
+
+import org.taxi.taxi.Taxi;
+import org.taxi.map.Location;
 
 public class Booking {
     private Taxi allocatedTaxi;
