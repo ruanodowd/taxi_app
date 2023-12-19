@@ -98,6 +98,7 @@ public class CommandLine {
         try {
             Thread.sleep(1000);
             DoublyLinkedList<Location> route = booking.getDestination().getPathway();
+            route.add(booking.getDestination());
             showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), route);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
