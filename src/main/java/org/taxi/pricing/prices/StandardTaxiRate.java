@@ -18,7 +18,7 @@ public class StandardTaxiRate implements TaxiRate {
         this.priceCalculator = priceCalculator;
     }
 
-    public double calculatePrice(int distance) {
+    public double calculatePrice(double distance) {
         double price = initialCharge;
         if (distance > tariffBRange){
             price += (tariffB * (distance - tariffBRange));

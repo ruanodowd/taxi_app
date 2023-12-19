@@ -34,9 +34,7 @@ public class Dijkstra implements PathfindingMethod {
     public Map calculateRoute(Map map, Location start){
         start.setDistance(0);
         PriorityQueue<Location> unvisitedNodes = new PriorityQueue<>(Comparator.comparingInt(Location::getDistance));
-
         unvisitedNodes.add(start);
-
         while (!unvisitedNodes.isEmpty()) {
             Location locationPointer = unvisitedNodes.poll();
             for (Location adjacent: locationPointer.getNeighbouringLocations()){

@@ -6,8 +6,6 @@ public class PriceCalculator {
     TaxiRate partyBusRate;
     TaxiRate premiumTaxiRate;
     TaxiRate specialPremiumTaxiRate;
-
-
     TaxiRate standardTaxiRate;
     TaxiRate taxiRate;
 
@@ -20,7 +18,7 @@ public class PriceCalculator {
     public void setTaxiRateType(TaxiRate taxiRate){
         this.taxiRate = taxiRate;
     }
-    public double calculatePrice(int distance){
+    public double calculatePrice(double distance){
         return taxiRate.calculatePrice(distance);
     }
 

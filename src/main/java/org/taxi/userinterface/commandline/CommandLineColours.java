@@ -3,7 +3,8 @@ package org.taxi.userinterface.commandline;
 public class CommandLineColours {
     // Reset
     public static final String RESET = "\033[0m";  // Text Reset
-
+    // Flush
+    public static final String FLUSH = "\033[H\033[2J";
     // Regular Colors
     public static final String BLACK = "\033[0;30m";   // BLACK
     public static final String RED = "\033[0;31m";     // RED

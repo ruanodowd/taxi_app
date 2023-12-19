@@ -4,6 +4,15 @@ import org.taxi.datastructure.ArrayList;
 
 public class GridMap implements Map {
     private static ArrayList<Location> nodes;
+    int width;
+    int height;
+    public int getWidth() {
+        return width;
+    }
+    public int getHeight() {
+        return height;
+    }
+
     GridMap(ArrayList<Location> nodes){
         GridMap.nodes = nodes;
     }
@@ -47,6 +56,8 @@ public class GridMap implements Map {
     // }
 
     public GridMap(int height, int width){
+        this.height = height;
+        this.width = width;
         //this creates a map in a grid shape
         GridMap.nodes = new ArrayList<>();
         nodes.add(new Location(0,0));

@@ -18,26 +18,27 @@ public class Main implements VehicleHiringTest{
     public Main(GridMap map) {
         this.map = map;
     }
-
-    public static void main(String[] args) {
-        CommandLine cli = CommandLine.getCommandLine();
-        Map map = new GridMap(12,12);
-        Scheduler scheduler = new Scheduler(map);
-        Booking booking = new Booking(map.getLocation(6, 7));
-
-        Location loc = map.getLocation(0, 0);
-        Taxi taxi1 = new Taxi("RAWR");
-        loc.addTaxi(taxi1);
-
-        Location loc2 = map.getLocation(4, 3);
-        Taxi taxi2 = new Taxi("BREE");
-        loc2.addTaxi(taxi2);
-
-        scheduler.addBooking(booking);
-        System.out.println(booking.getTaxi().getRegistrationNumber());
-        cli.displayMap();
-        cli.showRouteMap(map, 12, 12, map.getLocation(6,7));
-    }
+//    public static void main(String[] args) {
+//        CommandLine cli = CommandLine.getCommandLine();
+//        Map map = new GridMap(12,12);
+//        Scheduler scheduler = new Scheduler(map);
+//        Location currentLocation = map.getLocation(2, 7);
+//        Location currentDestination = map.getLocation(10,10);
+//        Booking booking = new Booking(map, currentLocation, currentDestination, 1);
+//
+//        Location loc = map.getLocation(0, 0);
+//        Taxi taxi1 = new Taxi("RAWR");
+//        loc.addTaxi(taxi1);
+//
+//        Location loc2 = map.getLocation(4, 3);
+//        Taxi taxi2 = new Taxi("BREE");
+//        loc2.addTaxi(taxi2);
+//
+//        scheduler.addBooking(booking);
+//        System.out.println(booking.getTaxi().getRegistrationNumber());
+//        cli.displayMap();
+//        cli.showRouteMap(map, 12, 12, currentDestination);
+//    }
     public static void addTaxiToMap(String reg, Location loc) {
         // added the location parameter
         loc.addTaxi(new Taxi(reg));
