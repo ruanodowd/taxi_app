@@ -12,6 +12,6 @@ public class PartyBusRate implements TaxiRate {
     }
 
     public double calculatePrice(double distance) {
-        return bookingFee * (distance*tariff);
+        return bookingFee + (distance*tariff);
     }
 }
