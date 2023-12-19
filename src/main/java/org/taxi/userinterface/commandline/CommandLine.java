@@ -62,13 +62,14 @@ public class CommandLine {
         Map map = scheduler.getMap();
         Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
         scheduler.addBooking(booking);
-        System.out.println("The nearest taxi is " + booking.getDistance() +"km away");
+        System.out.println("The destination is " + booking.getDistance() +"km away");
         System.out.println("the taxi will cost " + booking.getPrice());
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
         System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
         String answer = scanner.nextLine();
         if (answer.contains("y")){
+            showTaxiEnrouteDisplay(booking);
             showTravellingDisplay(booking);
         } else {
             System.out.println("Route cancelled");
@@ -79,9 +80,13 @@ public class CommandLine {
     public void showTaxiEnrouteDisplay(Booking booking){
         System.out.println("showing enroute display");
         try {
-            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), booking.getTaxi()
-                    .getLocation(scheduler.getMap()));
+            DoublyLinkedList<Location> route = booking.getTaxi()
+                    .getLocation(scheduler.getMap())
+                    .getPathway().reverse();
+            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route);
+            System.out.println("first iter route map done");
         } catch (InterruptedException e) {
+            System.out.println("ERROR ENROUTE");
             throw new RuntimeException(e);
         }
 
@@ -90,7 +95,8 @@ public class CommandLine {
         System.out.println("picked up driver");
         try {
             Thread.sleep(1000);
-            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), booking.getCustomerLocation());
+            DoublyLinkedList<Location> route = booking.getDestination().getPathway();
+            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), route);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -122,10 +128,9 @@ public class CommandLine {
             System.out.print("\n");
         }
     }
-    public void showIterativeRouteMap(Map map, Location destination, Location start) throws InterruptedException {
+    public void showIterativeRouteMap(Map map, Location destination, DoublyLinkedList<Location> route) throws InterruptedException {
         int height = map.getHeight();
         int width = map.getWidth();
-        DoublyLinkedList<Location> route = destination.getPathway();
         for (Location currentLocation : route){
             currentLocation.setCovered(false);
         }
@@ -150,7 +155,6 @@ public class CommandLine {
                 System.out.print("\n");
             }
         }
-        return;
     }
     public void showRouteMap(Map map, Location destination, Location start){
         int height = map.getHeight();
