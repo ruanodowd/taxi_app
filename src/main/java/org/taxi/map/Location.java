@@ -5,17 +5,35 @@ import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.taxi.Taxi;
 
 public class Location implements Comparable<Location>{
-    // attributes
+    // co-ordinates
     private int x;
     private int y;
+    
+    // has the location been visited? 
     private boolean visited = false;
+    
+    //neighbouring locations
     private ArrayList<Location> neighbouringLocations = new ArrayList<>();
+    
+    // taxis contained 
     private ArrayList<Taxi> containedTaxis = new ArrayList<>();
+    
+    // storing the path between the start and the location
     private DoublyLinkedList<Location> pathway = new DoublyLinkedList<>();
-
+    
+    // Distance from start location to this location 
     private Integer distance = Integer.MAX_VALUE;
+    
+    // constructors for location
+    public Location(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
 
+    public Location(){
+    }
 
+    // getters and setters
     public Integer getDistance() {
         return distance;
     }
@@ -23,6 +41,7 @@ public class Location implements Comparable<Location>{
     public void setDistance(Integer distance) {
         this.distance = distance;
     }
+
     public DoublyLinkedList<Location> getPathway() {
         return pathway;
     }
@@ -30,15 +49,6 @@ public class Location implements Comparable<Location>{
     public void setPathway(DoublyLinkedList<Location> pathway) {
         this.pathway = pathway;
     }
-
-    // constructor for location
-    public Location(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
-    public Location(){
-    }
-    // getters
     
     public int getX() {
         return x;
@@ -69,16 +79,19 @@ public class Location implements Comparable<Location>{
         containedTaxis.add(taxi);
     }
     
+    // method to remove taxi 
     public void removeTaxi (Taxi taxi){
         containedTaxis.remove(taxi);
     }
 
+    // methods to link all the taxis from the neighbouring locations 
     public void locationLink(Location neighbour){
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
         } else {throw new IllegalArgumentException("Nodes already linked");}
     }
+
     public void linkNeighbourLocation(Location neighbour){
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);

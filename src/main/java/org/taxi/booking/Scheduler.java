@@ -1,6 +1,5 @@
 package org.taxi.booking;
 
-import org.taxi.map.Map;
 import org.taxi.taxi.Taxi;
 import org.taxi.taxi.TaxiBank;
 import org.taxi.datastructure.ArrayList;
@@ -11,13 +10,36 @@ import org.taxi.map.pathfinding.Dijkstra;
 import java.util.Optional;
 
 public class Scheduler {
-    private Map map;
+    private GridMap map;
+    
+    // to keep track of bookings
     private ArrayList<Booking> bookings;
+
     // to keep track of observers
     private ArrayList<Taxi> observers;
 
+    public static void main(String[] args) {
+        GridMap map = new GridMap(5,5);
+        Scheduler scheduler = new Scheduler(map);
+        Booking booking = new Booking(map.getLocation(2, 2));
+
+        Location loc = map.getLocation(0, 0);
+        Taxi taxi1 = new Taxi("RAWR");
+        loc.addTaxi(taxi1);
+        
+        Location loc2 = map.getLocation(4, 3);
+        Taxi taxi2 = new Taxi("BREE");
+        loc2.addTaxi(taxi2);
+
+
+        scheduler.addBooking(booking);
+        System.out.println(booking.getTaxi().getRegistrationNumber());
+
+
+    }
+
     // constructor
-    public Scheduler(Map map) {
+    public Scheduler(GridMap map) {
         this.map = map;
         this.bookings = new ArrayList<>();
         this.observers = new ArrayList<>();
@@ -48,7 +70,7 @@ public class Scheduler {
 
     public void cancelBooking(Booking booking) {
         bookings.remove(booking);
-        freeTaxi(booking);
+        endRide(booking);
     }
 
     private void assignTaxiToBooking(Booking booking) {
@@ -67,28 +89,32 @@ public class Scheduler {
     }
 
     private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation) {
-        map = new Dijkstra().calculateRoute(map, customerLocation);
-        return TaxiBank.getAllTaxisStream()
-                .filter(Taxi::isFree)
-                .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
-    }
+        new Dijkstra().calculateRoute(map, customerLocation);
 
+        return TaxiBank.getAllTaxisStream()
+        .filter(Taxi::isFree)
+        .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
+    }
+    
     private int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
         double distance1 = taxi1.getLocation(map).getDistance();
         double distance2 = taxi2.getLocation(map).getDistance();
         return Double.compare(distance1, distance2);
     }
 
-    public void freeTaxi(Booking booking) {
+    public void endRide(Booking booking) {
         Taxi taxi = booking.getTaxi();
         if (taxi != null) {
             booking.setTaxi(null);
             notifyObservers(booking);
         }
+
+        // remove completed booking from bookings 
+        bookings.remove(booking);
     }
 
     // getters
-    public Map getMap() {
+    public GridMap getMap() {
         return map;
     }
 

@@ -21,7 +21,7 @@ public class Main implements VehicleHiringTest{
 
     public static void main(String[] args) {
         CommandLine cli = CommandLine.getCommandLine();
-        Map map = new GridMap(12,12);
+        GridMap map = new GridMap(12,12);
         Scheduler scheduler = new Scheduler(map);
         Booking booking = new Booking(map.getLocation(6, 7));
 

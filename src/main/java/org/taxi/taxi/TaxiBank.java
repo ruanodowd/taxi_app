@@ -2,7 +2,6 @@ package org.taxi.taxi;
 
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.Hashmap;
-import org.taxi.taxi.Taxi;
 
 import java.util.stream.Stream;
 
@@ -11,11 +10,11 @@ public class TaxiBank {
     private static Hashmap<String, Taxi> allTaxis = new Hashmap<>();
 
     // be able to get all the taxis in terms of objects
-    // Note: This method's signature changes as Hashmap doesn't support getting all values as a List
     public static Iterable<Hashmap.Entry<String, Taxi>> getAllTaxis() {
         return allTaxis;
     }
 
+    // Return a stream of taxi objects
     public static Stream<Taxi> getAllTaxisStream() {
         return allTaxis.stream();
     }
