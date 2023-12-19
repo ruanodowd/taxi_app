@@ -40,7 +40,7 @@ public class CommandLine {
         clearScreen();
         System.out.println("Welcome to the Taxi App");
         System.out.println("Press any key to book");
-        System.out.println("-----------------------");
+        System.out.println("------------------------");
         scanner.nextLine();
         userLocationInputScreen();
     }
@@ -52,39 +52,54 @@ public class CommandLine {
         Location destination = processCoordinateString(scanner.nextLine());
         userBookingConfirmationScreen(from, destination, DEFAULT_TAXI);
     }
-    public void userBookingConfirmationScreen(Location location,Location destination, int taxiType){
-        Map map = scheduler.getMap();
-        Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
-        System.out.println("The nearest taxi is {not implemented}km away");
-        scheduler.addBooking(booking);
-        System.out.println("the taxi will cost " + booking.getPrice());
-        System.out.println("book taxi? (y/n)");
-        String answer = scanner.nextLine();
-        if (answer.contains("y")){
-            showEnrouteDisplay(booking);
-        } else {
-            System.out.println("Route cancelled");
-            scheduler.cancelBooking(booking);
-        }
-
-    }
     public Location processCoordinateString(String unprocessedCoordinates){
         String[] split = unprocessedCoordinates.split("\\D");
         int x = Integer.parseInt(split[0]);
         int y = Integer.parseInt(split[split.length-1]);
         return scheduler.getMap().getLocation(x, y);
     }
-    public void displayMap(){
+    public void userBookingConfirmationScreen(Location location,Location destination, int taxiType){
+        Map map = scheduler.getMap();
+        Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
+        scheduler.addBooking(booking);
+        System.out.println("The nearest taxi is " + booking.getDistance() +"km away");
+        System.out.println("the taxi will cost " + booking.getPrice());
+        System.out.println("book taxi? (y/n)");
+        String answer = scanner.nextLine();
+        if (answer.contains("y")){
+            showTravellingDisplay(booking);
+        } else {
+            System.out.println("Route cancelled");
+            scheduler.cancelBooking(booking);
+        }
 
     }
-    public void bookTaxi(int[] location, int[] destination, int taxiType){
+    public void showTravellingDisplay(Booking booking){
+        System.out.println("showing enroute display");
+
+        try {
+            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), booking.getCustomerLocation());
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
 
     }
-    public void showEnrouteDisplay(Booking booking){
-        System.out.println("showing entroute display");
-        showRouteMap(scheduler.getMap(), booking.getDestination());
+
+    public void completeRide(){
+        System.out.println("Ride is completed");
+        rateDriver();
     }
-    public void completeRide(){}
+    public void rateDriver(){
+        System.out.println("How many stars from 1-5 do you wish to rate your driver");
+        try {
+            Integer rating = scanner.nextInt();
+            if (rating > 5 || rating < 0){
+                throw new IllegalArgumentException("Womp Womp");
+            }
+        } catch (Exception e){
+            System.out.println("Please enter a number between 1 and 5");
+        }
+    }
     public void showRectangularMap(GridMap map, int height, int width){
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
@@ -95,13 +110,54 @@ public class CommandLine {
             System.out.print("\n");
         }
     }
-    public void showRouteMap(Map map, Location destination){
+    public void showIterativeRouteMap(Map map, Location destination, Location start) throws InterruptedException {
+        int height = map.getHeight();
+        int width = map.getWidth();
+        DoublyLinkedList<Location> route = destination.getPathway();
+        for (Location currentLocation : route){
+            currentLocation.setCovered(false);
+        }
+        for (Location currentLocation : route
+             ) {
+            clearScreen();
+            Thread.sleep(1000);
+            for (int y = 0; y < height; y++) {
+                for (int x = 0; x < width; x++) {
+                    Location location = map.getLocation(x, y);
+                    if (destination == map.getLocation(x, y)) {
+                        System.out.print("\uD83D\uDCCD ");
+                    } else if (currentLocation == map.getLocation(x, y)) {
+                        System.out.print("\uD83D\uDE95 ");
+                    } else if (route.contains(map.getLocation(x, y)) && !map.getLocation(x,y).isCovered()) {
+                        currentLocation.setCovered(true);
+                        System.out.print(CommandLineColours.GREEN +
+                                map.getLocation(x, y)
+                                        .getContainedTaxis()
+                                        .size() + "  "
+                                + CommandLineColours.RESET);
+                    } else {
+                        System.out.print(map.getLocation(x, y)
+                                .getContainedTaxis()
+                                .size() + "  ");
+                    }
+                }
+                System.out.print("\n");
+            }
+        }
+    }
+    public void showRouteMap(Map map, Location destination, Location start){
         int height = map.getHeight();
         int width = map.getWidth();
         DoublyLinkedList<Location> route = destination.getPathway();
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
-                if (route.contains(map.getLocation(x, y))){
+                if (destination == map.getLocation(x,y)){
+                    System.out.print("\uD83D\uDCCD ");
+                }
+                else if(start == map.getLocation(x, y)){
+                    System.out.print("\uD83D\uDE95 ");
+                }
+                else if (route.contains(map.getLocation(x, y))){
                     System.out.print(CommandLineColours.GREEN +
                             map.getLocation(x, y)
                                     .getContainedTaxis()

@@ -13,6 +13,15 @@ public class Location implements Comparable<Location>{
     private ArrayList<Taxi> containedTaxis = new ArrayList<>();
     private DoublyLinkedList<Location> pathway = new DoublyLinkedList<>();
 
+    public boolean isCovered() {
+        return covered;
+    }
+
+    public void setCovered(boolean covered) {
+        this.covered = covered;
+    }
+
+    private boolean covered;
     private Integer distance = Integer.MAX_VALUE;
 
 

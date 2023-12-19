@@ -15,6 +15,7 @@ import org.taxi.userinterface.commandline.CommandLine;
 
 public class Main implements VehicleHiringTest{
     public GridMap map;
+
     public Main(GridMap map) {
         this.map = map;
     }

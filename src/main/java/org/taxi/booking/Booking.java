@@ -23,7 +23,7 @@ public class Booking {
         this.currentLocation = currentLocation;
         this.destination = destination;
         this.distance = new Dijkstra().calculateDistance(map, currentLocation, destination);
-        ActualMain.priceCalculator.setTaxiRateType(ActualMain.priceCalculator.getStandardTaxiRate());
+        ActualMain.priceCalculator.setTaxiRateType(ActualMain.priceCalculator.getStandardTaxiRate());//revise:this needs to change
         this.price = ActualMain.priceCalculator.calculatePrice(distance);
     }
 
@@ -51,10 +51,6 @@ public class Booking {
 
     public Map getMap() {
         return map;
-    }
-
-    public Location getCurrentLocation() {
-        return currentLocation;
     }
 
     public void setCurrentLocation(Location currentLocation) {
