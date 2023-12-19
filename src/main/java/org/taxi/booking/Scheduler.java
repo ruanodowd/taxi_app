@@ -5,7 +5,6 @@ import org.taxi.taxi.Taxi;
 import org.taxi.taxi.TaxiBank;
 import org.taxi.datastructure.ArrayList;
 import org.taxi.map.Location;
-import org.taxi.map.GridMap;
 import org.taxi.map.pathfinding.Dijkstra;
 
 import java.util.Optional;
@@ -48,7 +47,7 @@ public class Scheduler {
 
     public void cancelBooking(Booking booking) {
         bookings.remove(booking);
-        freeTaxi(booking);
+        endRide(booking);
     }
 
     private void assignTaxiToBooking(Booking booking) {
@@ -78,12 +77,13 @@ public class Scheduler {
         return Double.compare(distance1, distance2);
     }
 
-    public void freeTaxi(Booking booking) {
+    public void endRide(Booking booking) {
         Taxi taxi = booking.getTaxi();
         if (taxi != null) {
             booking.setTaxi(null);
             notifyObservers(booking);
         }
+        //remove completed booking from bookings
     }
 
     // getters

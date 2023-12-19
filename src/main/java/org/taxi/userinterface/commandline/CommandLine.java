@@ -64,6 +64,8 @@ public class CommandLine {
         scheduler.addBooking(booking);
         System.out.println("The nearest taxi is " + booking.getDistance() +"km away");
         System.out.println("the taxi will cost " + booking.getPrice());
+        System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
+        System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
         String answer = scanner.nextLine();
         if (answer.contains("y")){
@@ -74,10 +76,20 @@ public class CommandLine {
         }
 
     }
-    public void showTravellingDisplay(Booking booking){
+    public void showTaxiEnrouteDisplay(Booking booking){
         System.out.println("showing enroute display");
-
         try {
+            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), booking.getTaxi()
+                    .getLocation(scheduler.getMap()));
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+    public void showTravellingDisplay(Booking booking){
+        System.out.println("picked up driver");
+        try {
+            Thread.sleep(1000);
             showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), booking.getCustomerLocation());
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
@@ -119,8 +131,8 @@ public class CommandLine {
         }
         for (Location currentLocation : route
              ) {
-            clearScreen();
             Thread.sleep(1000);
+            clearScreen();
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
                     Location location = map.getLocation(x, y);
@@ -130,20 +142,15 @@ public class CommandLine {
                         System.out.print("\uD83D\uDE95 ");
                     } else if (route.contains(map.getLocation(x, y)) && !map.getLocation(x,y).isCovered()) {
                         currentLocation.setCovered(true);
-                        System.out.print(CommandLineColours.GREEN +
-                                map.getLocation(x, y)
-                                        .getContainedTaxis()
-                                        .size() + "  "
-                                + CommandLineColours.RESET);
+                        System.out.print("\uD83D\uDFE9 ");
                     } else {
-                        System.out.print(map.getLocation(x, y)
-                                .getContainedTaxis()
-                                .size() + "  ");
+                        System.out.print("⬛ ");
                     }
                 }
                 System.out.print("\n");
             }
         }
+        return;
     }
     public void showRouteMap(Map map, Location destination, Location start){
         int height = map.getHeight();
