@@ -2,11 +2,13 @@ package org.taxi.userinterface.commandline;
 
 import org.taxi.ActualMain;
 import org.taxi.booking.Booking;
+import org.taxi.booking.Completion;
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
+import org.taxi.taxi.Taxi;
 
 import java.util.Scanner;
 
@@ -18,6 +20,7 @@ public class CommandLine {
     int DEFAULT_TAXI = 1;
 
     private Scheduler scheduler;
+    
     public Scheduler getScheduler() {
         return scheduler;
     }
@@ -71,6 +74,7 @@ public class CommandLine {
         if (answer.contains("y")){
             showTaxiEnrouteDisplay(booking);
             showTravellingDisplay(booking);
+            completeRide();
         } else {
             System.out.println("Route cancelled");
             scheduler.cancelBooking(booking);
@@ -117,9 +121,32 @@ public class CommandLine {
             if (rating > 5 || rating < 0){
                 throw new IllegalArgumentException("Womp Womp");
             }
+            Taxi assignedTaxi = scheduler.getBookings().get(0).getTaxi();
+            new Completion(assignedTaxi, rating);
+            System.out.println("Thank you for reviewing");
+            System.out.println("Just so you know the average rating for your taxi is: " + assignedTaxi.getRating());
+            endProgramme();
+            
         } catch (Exception e){
             System.out.println("Please enter a number between 1 and 5");
+            rateDriver();
         }
+    }
+
+    public void endProgramme() {
+        System.out.print("Do you want to make another booking? (y/n): ");
+        String choice = scanner.nextLine();
+
+        if (choice.equals("y")){
+            clearScreen();
+            userLocationInputScreen();
+        }
+
+        else {
+            System.out.println("Thank you for using our app. Hope to see you soon!");
+            System.exit(0);
+        }
+
     }
     public void showRectangularMap(GridMap map, int height, int width){
         for (int y = 0; y < height; y++) {
