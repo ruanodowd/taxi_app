@@ -191,32 +191,32 @@ public class CommandLine {
             }
         }
     }
-    public void showRouteMap(Map map, Location destination, Location start){
-        int height = map.getHeight();
-        int width = map.getWidth();
-        DoublyLinkedList<Location> route = destination.getPathway();
-        for (int y = 0; y < height; y++) {
-            for (int x = 0; x < width; x++) {
-                if (destination == map.getLocation(x,y)){
-                    System.out.print("\uD83D\uDCCD ");
-                }
-                else if(start == map.getLocation(x, y)){
-                    System.out.print("\uD83D\uDE95 ");
-                }
-                else if (route.contains(map.getLocation(x, y))){
-                    System.out.print(CommandLineColours.GREEN +
-                            map.getLocation(x, y)
-                                    .getContainedTaxis()
-                                    .size() + "  "
-                            + CommandLineColours.RESET);
-                } else{
-                    System.out.print(map.getLocation(x, y)
-                            .getContainedTaxis()
-                            .size() + "  ");
-                }
-            }
-            System.out.print("\n");
-        }
-    }
+//    public void showRouteMap(Map map, Location destination, Location start){
+//        int height = map.getHeight();
+//        int width = map.getWidth();
+//        DoublyLinkedList<Location> route = destination.getPathway();
+//        for (int y = 0; y < height; y++) {
+//            for (int x = 0; x < width; x++) {
+//                if (destination == map.getLocation(x,y)){
+//                    System.out.print("\uD83D\uDCCD ");
+//                }
+//                else if(start == map.getLocation(x, y)){
+//                    System.out.print("\uD83D\uDE95 ");
+//                }
+//                else if (route.contains(map.getLocation(x, y))){
+//                    System.out.print(CommandLineColours.GREEN +
+//                            map.getLocation(x, y)
+//                                    .getContainedTaxis()
+//                                    .size() + "  "
+//                            + CommandLineColours.RESET);
+//                } else{
+//                    System.out.print(map.getLocation(x, y)
+//                            .getContainedTaxis()
+//                            .size() + "  ");
+//                }
+//            }
+//            System.out.print("\n");
+//        }
+//    }
 
 }
