@@ -82,7 +82,9 @@ public class CommandLine {
         try {
             DoublyLinkedList<Location> route = booking.getTaxi()
                     .getLocation(scheduler.getMap())
-                    .getPathway().reverse();
+                    .getPathway();
+            route.add(booking.getTaxi().getLocation(booking.getMap()));
+            route = route.reverse();
             showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route);
             System.out.println("first iter route map done");
         } catch (InterruptedException e) {
