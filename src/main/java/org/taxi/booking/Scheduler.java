@@ -65,7 +65,7 @@ public class Scheduler {
     }
 
     private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation) {
-        new Dijkstra().calculateDistance(map,map.getLocation(0,0), customerLocation);
+        new Dijkstra().calculateRoute(map, customerLocation);
         return TaxiBank.getAllTaxisStream()
                 .filter(Taxi::isFree)
                 .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
