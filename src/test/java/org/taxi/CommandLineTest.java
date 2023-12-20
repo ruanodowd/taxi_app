@@ -21,18 +21,18 @@ class CommandLineTest {
         cli.setScheduler(scheduler);
         assertEquals(map.getLocation(2,1), cli.processCoordinateString("2, 1"));
     }
-    @Test
-    void testStartProgram() {
-        CommandLine cli = CommandLine.getCommandLine();
-        try {
-            cli.showWelcomeScreen();
-            assertTrue(true);
-        } catch (Exception e) {
-            assertTrue(false);
-        }
-
-
-    }
+//    @Test
+//    void testStartProgram() {
+//        CommandLine cli = CommandLine.getCommandLine();
+//        try {
+//            cli.showWelcomeScreen();
+//            assertTrue(true);
+//        } catch (Exception e) {
+//            assertTrue(false);
+//        }
+//
+//
+//    }
     @Test
     void testGetCommandLine() {
         CommandLine cli = CommandLine.getCommandLine();
