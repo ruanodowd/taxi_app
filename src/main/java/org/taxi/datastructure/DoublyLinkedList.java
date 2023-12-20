@@ -196,7 +196,20 @@ public class DoublyLinkedList<T> implements Collection<T> {
         tail = null;
         size = 0;
     }
-
+    public DoublyLinkedList<T> reverse() {
+        Node current = head;
+        Node temp = null;
+        while (current != null) {
+            temp = current.prev;
+            current.prev = current.next;
+            current.next = temp;
+            current = current.prev;
+        }
+        if (temp != null) {
+            head = temp.prev;
+        }
+        return this;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

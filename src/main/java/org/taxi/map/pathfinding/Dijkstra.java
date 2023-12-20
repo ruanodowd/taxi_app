@@ -3,7 +3,7 @@ package org.taxi.map.pathfinding;
 import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.datastructure.PriorityQueue;
 import org.taxi.map.Location;
-import org.taxi.map.GridMap;
+import org.taxi.map.Map;
 
 import java.util.Comparator;
 
@@ -14,7 +14,7 @@ public class Dijkstra implements PathfindingMethod {
     }
 
     @Override
-    public double calculateDistance(GridMap map, Location start, Location end) {
+    public double calculateDistance(Map map, Location start, Location end) {
         new Dijkstra().calculateRoute(map, start);
         return end.getDistance();
     }
@@ -31,12 +31,10 @@ public class Dijkstra implements PathfindingMethod {
     }
 
     @Override
-    public GridMap calculateRoute(GridMap map, Location start){
+    public Map calculateRoute(Map map, Location start){
         start.setDistance(0);
         PriorityQueue<Location> unvisitedNodes = new PriorityQueue<>(Comparator.comparingInt(Location::getDistance));
-
         unvisitedNodes.add(start);
-
         while (!unvisitedNodes.isEmpty()) {
             Location locationPointer = unvisitedNodes.poll();
             for (Location adjacent: locationPointer.getNeighbouringLocations()){

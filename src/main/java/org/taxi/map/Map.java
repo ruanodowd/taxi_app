@@ -8,4 +8,8 @@ public interface Map {
     Location getLocation(int x, int y);
 
     int countNodes();
+
+    int getHeight();
+
+    int getWidth();
 }

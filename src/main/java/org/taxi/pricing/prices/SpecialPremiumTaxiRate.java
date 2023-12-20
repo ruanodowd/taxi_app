@@ -15,11 +15,16 @@ public class SpecialPremiumTaxiRate implements TaxiRate {
         this.priceCalculator = priceCalculator;
     }
 
-    public double calculatePrice(int distance) {
-        double price = initialCharge;
-        if (distance > tariffRange){
-            price += (tariff * (distance-tariffRange));
+    public double calculatePrice(double distance) {
+        double price;
+        if (distance < tariffRange){
+            price = initialCharge;
         }
+
+        else {
+            price = initialCharge + ((distance - tariffRange) * tariff);
+        }
+        
         return price;
     }
 }

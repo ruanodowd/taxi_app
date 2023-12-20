@@ -1,12 +1,12 @@
 package org.taxi.map.pathfinding;
 
-import org.taxi.map.GridMap;
 import org.taxi.map.Location;
+import org.taxi.map.Map;
 
 public interface PathfindingMethod {
-    double calculateDistance(GridMap map, Location start, Location end);
+    double calculateDistance(Map map, Location start, Location end);
 
     void calculateMinimumDistance(Location finish, Integer weight, Location start);
 
-    GridMap calculateRoute(GridMap map, Location start);
+    Map calculateRoute(Map map, Location start);
 }
