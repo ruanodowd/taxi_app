@@ -3,7 +3,6 @@ package org.taxi.userinterface.commandline;
 
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.DoublyLinkedList;
-import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
 
