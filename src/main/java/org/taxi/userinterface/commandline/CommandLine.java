@@ -8,9 +8,12 @@ import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
+import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
 
+import java.util.Optional;
 import java.util.Scanner;
+import java.util.function.Predicate;
 
 public class CommandLine {
     public final static CommandLine commandLine = new CommandLine();
@@ -53,18 +56,32 @@ public class CommandLine {
         Location from = processCoordinateString(scanner.nextLine());
         System.out.println("Enter your destination in the form 'x, y'");
         Location destination = processCoordinateString(scanner.nextLine());
-
-        // asking what type of taxi you want 
         
+        // asking what type of taxi you want 
+        Predicate<Taxi> taxiType; 
         System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
         Integer type = scanner.nextInt();
-
-        if (type == 1) {
+        do {
+            if (type == 1) {
+                taxiType = taxi -> taxi instanceof NormalTaxi;
+            }
             
+            else if (type == 2) {
+                taxiType = taxi -> taxi instanceof UrgentTaxi;
+            }
+            
+            else if (type == 3) {
+                taxiType = taxi -> taxi instanceof PartyBusTaxi;
+            }
         }
 
+        while (type == 1 || type == 2 || type == 3); {
+            System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
+            type = scanner.nextInt();
+        }
+        
 
-        userBookingConfirmationScreen(from, destination, DEFAULT_TAXI);
+        userBookingConfirmationScreen(from, destination, taxiType);
     }
     public Location processCoordinateString(String unprocessedCoordinates){
         String[] split = unprocessedCoordinates.split("\\D");
@@ -72,12 +89,13 @@ public class CommandLine {
         int y = Integer.parseInt(split[split.length-1]);
         return scheduler.getMap().getLocation(x, y);
     }
-    public void userBookingConfirmationScreen(Location location,Location destination, int taxiType){
+    public void userBookingConfirmationScreen(Location location,Location destination, Predicate<Taxi> taxiType){
         Map map = scheduler.getMap();
 
         // need to add option and 
         Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
-        scheduler.addBooking(booking);
+
+        scheduler.addBooking(booking, taxiType);
         System.out.println("The destination is " + booking.getDistance() +"km away");
         System.out.println("the taxi will cost " + booking.getPrice());
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());

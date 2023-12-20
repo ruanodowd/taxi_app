@@ -8,12 +8,15 @@ import org.taxi.map.Location;
 import org.taxi.map.pathfinding.Dijkstra;
 
 import java.util.Optional;
+import java.util.function.Predicate;
 
 public class Scheduler {
     private Map map;
     private ArrayList<Booking> bookings;
     // to keep track of observers
     private ArrayList<Taxi> observers;
+
+    
 
     // constructor
     public Scheduler(Map map) {
@@ -40,9 +43,9 @@ public class Scheduler {
     }
 
     // to add a booking
-    public void addBooking(Booking booking) {
+    public void addBooking(Booking booking, Predicate<Taxi> taxiType) {
         bookings.add(booking);
-        assignTaxiToBooking(booking);
+        assignTaxiToBooking(booking, taxiType);
     }
 
     public void cancelBooking(Booking booking) {
@@ -50,11 +53,12 @@ public class Scheduler {
         endRide(booking);
     }
 
-    private void assignTaxiToBooking(Booking booking) {
+    private void assignTaxiToBooking(Booking booking, Predicate<Taxi> taxiTypePredicate) {
         // get customer location 
         Location customerLocation = booking.getCustomerLocation();
         // find nearest taxi
-        Optional<Taxi> assignedTaxi = findNearestAvailableTaxi(customerLocation);
+
+        Optional<Taxi> assignedTaxi = findNearestAvailableTaxi(customerLocation, taxiTypePredicate);
         
         // if assignedTaxi is present 
 
@@ -64,10 +68,11 @@ public class Scheduler {
         });
     }
 
-    private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation) {
+    private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation, Predicate<Taxi> taxiTypePredicate) {
         new Dijkstra().calculateRoute(map, customerLocation);
         return TaxiBank.getAllTaxisStream()
                 .filter(Taxi::isFree)
+                .filter(taxiTypePredicate) 
                 .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
     }
 
