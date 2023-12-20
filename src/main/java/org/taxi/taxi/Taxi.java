@@ -15,7 +15,7 @@ public class Taxi implements Observer {
     private boolean isFree;
     private double rating = 0;
     private int totalRatings = 0;
-    private int speed;
+    protected int speed;
     public int getSpeed() {
         return speed;
     }

@@ -10,6 +10,7 @@ public class PartyBusTaxi extends Taxi{
     public PartyBusTaxi(String registrationNumber) {
         super(registrationNumber);
         this.taxiRate = ActualMain.priceCalculator.getPartyBusRate();
+        speed = 1000;
     }
 
     @Override

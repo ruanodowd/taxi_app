@@ -113,7 +113,7 @@ public class CommandLine {
                     .getPathway();
             route.add(booking.getTaxi().getLocation(booking.getMap()));
             route = route.reverse();
-            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route);
+            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route, booking);
             System.out.println("first iter route map done");
         } catch (InterruptedException e) {
             System.out.println("ERROR ENROUTE");
@@ -127,7 +127,7 @@ public class CommandLine {
             Thread.sleep(1000);
             DoublyLinkedList<Location> route = booking.getDestination().getPathway();
             route.add(booking.getDestination());
-            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), route);
+            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), route, booking);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
@@ -182,7 +182,7 @@ public class CommandLine {
             System.out.print("\n");
         }
     }
-    public void showIterativeRouteMap(Map map, Location destination, DoublyLinkedList<Location> route) throws InterruptedException {
+    public void showIterativeRouteMap(Map map, Location destination, DoublyLinkedList<Location> route, Booking booking) throws InterruptedException {
         int height = map.getHeight();
         int width = map.getWidth();
         for (Location currentLocation : route){
@@ -190,7 +190,7 @@ public class CommandLine {
         }
         for (Location currentLocation : route
              ) {
-            Thread.sleep(1000);
+            Thread.sleep(booking.getTaxi().getSpeed());
             clearScreen();
             for (int y = 0; y < height; y++) {
                 for (int x = 0; x < width; x++) {
