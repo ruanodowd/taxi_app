@@ -19,7 +19,18 @@
             <artifactId>junit-jupiter-api</artifactId>
             <version>5.9.3</version>
             <scope>test</scope>
-
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-junit-jupiter</artifactId>
+            <version>5.8.0</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.13.1</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
@@ -41,6 +52,29 @@
                             <goal>report</goal>
                         </goals>
                     </execution>
+                  <execution>
+                      <id>jacoco-check</id>
+                      <goals>
+                          <goal>check</goal>
+                      </goals>
+                      <configuration>
+                          <rules>
+                             <rule>
+                               <element>CLASS</element>
+                               <excludes>
+                                 <exclude>*Test</exclude>
+                               </excludes>
+                               <limits>
+                                 <limit>
+                                   <counter>LINE</counter>
+                                   <value>COVEREDRATIO</value>
+                                   <minimum>0.8</minimum>
+                                 </limit>
+                               </limits>
+                             </rule>
+                          </rules>
+                      </configuration>
+                  </execution>
                 </executions>
             </plugin>
             <plugin>

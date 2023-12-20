@@ -2,7 +2,6 @@ package org.taxi.taxi;
 
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.Hashmap;
-import org.taxi.taxi.Taxi;
 
 import java.util.stream.Stream;
 
