@@ -8,10 +8,8 @@ import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
-import org.taxi.taxi.PartyBusTaxi;
-import org.taxi.taxi.Taxi;
+import org.taxi.taxi.*;
 
-import java.util.Optional;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -58,28 +56,23 @@ public class CommandLine {
         Location destination = processCoordinateString(scanner.nextLine());
         
         // asking what type of taxi you want 
-        Predicate<Taxi> taxiType; 
+        Predicate<Taxi> taxiType = null; 
         System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
-        Integer type = scanner.nextInt();
-        do {
+
+        while (taxiType == null) {
+            Integer type = scanner.nextInt(); 
+
             if (type == 1) {
                 taxiType = taxi -> taxi instanceof NormalTaxi;
-            }
-            
-            else if (type == 2) {
+            } else if (type == 2) {
                 taxiType = taxi -> taxi instanceof UrgentTaxi;
-            }
-            
-            else if (type == 3) {
+            } else if (type == 3) {
                 taxiType = taxi -> taxi instanceof PartyBusTaxi;
+            } else {
+                System.out.println("Invalid selection. Please select 1, 2, or 3.");
+                System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
             }
         }
-
-        while (type == 1 || type == 2 || type == 3); {
-            System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
-            type = scanner.nextInt();
-        }
-        
 
         userBookingConfirmationScreen(from, destination, taxiType);
     }

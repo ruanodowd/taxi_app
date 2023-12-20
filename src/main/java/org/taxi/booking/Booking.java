@@ -23,18 +23,8 @@ public class Booking {
         this.currentLocation = currentLocation;
         this.destination = destination;
         this.distance = new Dijkstra().calculateDistance(map, currentLocation, destination);
-        ActualMain.priceCalculator.setTaxiRateType(ActualMain.priceCalculator.getStandardTaxiRate());//revise:this needs to change
-        this.price = ActualMain.priceCalculator.calculatePrice(distance);
     }
-
-
-
-//    public Booking (Location currentLocation, Location destination) {
-//        this.currentLocation = currentLocation;
-//        this.destination = destination;
-//
-//    }
-
+    
     public Location getCustomerLocation() {
         return currentLocation;
     }
@@ -44,44 +34,49 @@ public class Booking {
     public void setTaxi(Taxi taxi) {
         allocatedTaxi = taxi;
     }
-
+    
     public Taxi getTaxi() {
         return allocatedTaxi;
     }
-
+    
     public Map getMap() {
         return map;
     }
-
+    
     public void setCurrentLocation(Location currentLocation) {
         this.currentLocation = currentLocation;
     }
-
+    
     public void setDestination(Location destination) {
         this.destination = destination;
     }
-
+    
     public Location[] getPath() {
         return path;
     }
-
+    
     public void setPath(Location[] path) {
         this.path = path;
     }
-
+    
     public double getPrice() {
         return price;
     }
-
+    
     public void setPrice(double price) {
         this.price = price;
     }
-
+    
     public double getDistance() {
         return distance;
     }
-
+    
     public void setDistance(double distance) {
         this.distance = distance;
+    }
+    
+    public void setPrice(rate) {
+        ActualMain.priceCalculator.setTaxiRateType(rate);//revise:this needs to change
+        this.price = ActualMain.priceCalculator.calculatePrice(distance);
     }
 }

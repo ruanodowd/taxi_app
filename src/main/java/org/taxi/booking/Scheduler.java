@@ -47,25 +47,30 @@ public class Scheduler {
         bookings.add(booking);
         assignTaxiToBooking(booking, taxiType);
     }
-
+    
     public void cancelBooking(Booking booking) {
         bookings.remove(booking);
         endRide(booking);
     }
-
+    
     private void assignTaxiToBooking(Booking booking, Predicate<Taxi> taxiTypePredicate) {
         // get customer location 
         Location customerLocation = booking.getCustomerLocation();
         // find nearest taxi
-
+        
         Optional<Taxi> assignedTaxi = findNearestAvailableTaxi(customerLocation, taxiTypePredicate);
         
         // if assignedTaxi is present 
-
+        
         assignedTaxi.ifPresent(taxi -> {
             booking.setTaxi(taxi);
             notifyObservers(booking);
+            calculatePriceForBooking(taxi);
         });
+    }
+
+    private void calculatePriceForBooking(Taxi taxi) {
+        TaxiRate rate = taxi.getRate();
     }
 
     private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation, Predicate<Taxi> taxiTypePredicate) {
