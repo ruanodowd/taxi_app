@@ -10,6 +10,7 @@ public class NormalTaxi extends Taxi{
     public NormalTaxi(String registrationNumber) {
         super(registrationNumber);
         this.taxiRate = ActualMain.priceCalculator.getPartyBusRate();
+        speed = 800;
     }
 
 }

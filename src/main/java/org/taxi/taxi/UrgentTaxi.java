@@ -15,6 +15,7 @@ public class UrgentTaxi extends Taxi {
     TaxiRate taxiRate;
     public UrgentTaxi(String registrationNumber) {
         super(registrationNumber);
+        speed = 400;
     }
 
 }
