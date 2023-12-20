@@ -145,10 +145,10 @@ public class ArrayListTest {
     }
 
     // test unsupported methods 
-    @Test
-    public void testUnsuported() {
-        assertThrows(I, null)
-    }
+//    @Test
+//    public void testUnsuported() {
+//        assertThrows(I, null);
+//    }
 
 
 
