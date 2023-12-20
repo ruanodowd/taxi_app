@@ -17,7 +17,7 @@ public class Booking {
     private double distance;
 
     public Booking(Map map, Location currentLocation,
-        Location destination, TaxiRate taxiRate) {
+        Location destination) {
         this.map = map;
         this.currentLocation = currentLocation;
         this.destination = destination;

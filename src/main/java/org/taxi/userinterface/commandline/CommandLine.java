@@ -1,6 +1,5 @@
 package org.taxi.userinterface.commandline;
 
-import org.taxi.ActualMain;
 import org.taxi.booking.Booking;
 import org.taxi.booking.Completion;
 import org.taxi.booking.Scheduler;
@@ -86,7 +85,7 @@ public class CommandLine {
         Map map = scheduler.getMap();
 
         // need to add option and 
-        Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
+        Booking booking = new Booking(map, location, destination);
 
         scheduler.addBooking(booking, taxiType);
         System.out.println("The destination is " + booking.getDistance() +"km away");
