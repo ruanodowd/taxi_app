@@ -7,10 +7,10 @@ public class PartyBusRate implements TaxiRate {
     double tariff = 5; //additional price per kilometer
 
     public String getTaxiRateType() {
-        return taxiRateType;
+        return taxiType;
     }
+    String taxiType = "Party Bus";
 
-    String taxiRateType = "Party Bus";
     PriceCalculator priceCalculator;
 
     public PartyBusRate(PriceCalculator priceCalculator) {

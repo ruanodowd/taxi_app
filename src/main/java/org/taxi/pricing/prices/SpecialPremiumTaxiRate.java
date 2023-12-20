@@ -8,12 +8,10 @@ public class SpecialPremiumTaxiRate implements TaxiRate {
     //tariff is the price per kilometer
     double tariff = 2.0;
     double tariffRange = 0.5;
-
+    String taxiType = "Special Premium Taxi";
     public String getTaxiRateType() {
-        return taxiRateType;
+        return taxiType;
     }
-
-    String taxiRateType = "Special Premium";
     PriceCalculator priceCalculator;
 
     public SpecialPremiumTaxiRate(PriceCalculator priceCalculator) {
