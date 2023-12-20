@@ -20,7 +20,7 @@ public class Taxi implements Observer {
         return speed;
     }
 
-    public Taxi(String registrationNumber, int speed){
+    public Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
         this.isFree = true;
         TaxiBank.addtoBank(this);
