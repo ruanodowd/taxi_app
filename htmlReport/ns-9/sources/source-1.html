@@ -1,0 +1,330 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > CommandLine</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.taxi.userinterface.commandline</a>
+</div>
+
+<h1>Coverage Summary for Class: CommandLine (org.taxi.userinterface.commandline)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">CommandLine</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    44.4%
+  </span>
+  <span class="absValue">
+    (8/18)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    26.5%
+  </span>
+  <span class="absValue">
+    (35/132)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.taxi.userinterface.commandline;
+&nbsp;
+&nbsp;import org.taxi.booking.Booking;
+&nbsp;import org.taxi.booking.Completion;
+&nbsp;import org.taxi.booking.Scheduler;
+&nbsp;import org.taxi.datastructure.DoublyLinkedList;
+&nbsp;import org.taxi.map.GridMap;
+&nbsp;import org.taxi.map.Location;
+&nbsp;import org.taxi.map.Map;
+&nbsp;import org.taxi.taxi.*;
+&nbsp;
+&nbsp;import java.util.Scanner;
+&nbsp;import java.util.function.Predicate;
+&nbsp;
+&nbsp;public class CommandLine {
+<b class="fc">&nbsp;    public final static CommandLine commandLine = new CommandLine();</b>
+&nbsp;
+&nbsp;    private Scanner scanner;
+&nbsp;
+<b class="fc">&nbsp;    int DEFAULT_TAXI = 1;</b>
+&nbsp;
+&nbsp;    private Scheduler scheduler;
+&nbsp;    
+&nbsp;    public Scheduler getScheduler() {
+<b class="fc">&nbsp;        return scheduler;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void setScheduler(Scheduler scheduler) {
+<b class="fc">&nbsp;        this.scheduler = scheduler;</b>
+&nbsp;    }
+<b class="fc">&nbsp;    private CommandLine(){</b>
+<b class="fc">&nbsp;        this.scanner = new Scanner(System.in);</b>
+&nbsp;    }
+&nbsp;    public void clearScreen() {
+<b class="nc">&nbsp;        System.out.print(CommandLineColours.FLUSH);</b>
+<b class="nc">&nbsp;        System.out.flush();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public static CommandLine getCommandLine(){
+<b class="fc">&nbsp;        return commandLine;</b>
+&nbsp;    }
+&nbsp;    public void showWelcomeScreen() {
+<b class="nc">&nbsp;        clearScreen();</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Welcome to the Taxi App&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Press any key to book&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;------------------------&quot;);</b>
+<b class="nc">&nbsp;        scanner.nextLine();</b>
+<b class="nc">&nbsp;        userLocationInputScreen();</b>
+&nbsp;    }
+&nbsp;    public void userLocationInputScreen(){
+<b class="nc">&nbsp;        clearScreen();</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Enter your location in the form &#39;x, y&#39;&quot;);</b>
+<b class="nc">&nbsp;        Location from = processCoordinateString(scanner.nextLine());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Enter your destination in the form &#39;x, y&#39;&quot;);</b>
+<b class="nc">&nbsp;        Location destination = processCoordinateString(scanner.nextLine());</b>
+&nbsp;        
+&nbsp;        // asking what type of taxi you want 
+<b class="nc">&nbsp;        Predicate&lt;Taxi&gt; taxiType = null; </b>
+<b class="nc">&nbsp;        System.out.println(&quot;We have three types of taxis! Please select 1, 2 or 3. \nNormal Taxi (1) \nUrgent Taxi (2) \nPartyBus (3)&quot;);</b>
+&nbsp;
+<b class="nc">&nbsp;        while (taxiType == null) {</b>
+<b class="nc">&nbsp;            Integer type = scanner.nextInt(); </b>
+&nbsp;
+<b class="nc">&nbsp;            if (type == 1) {</b>
+<b class="nc">&nbsp;                taxiType = taxi -&gt; taxi instanceof NormalTaxi;</b>
+<b class="nc">&nbsp;            } else if (type == 2) {</b>
+<b class="nc">&nbsp;                taxiType = taxi -&gt; taxi instanceof UrgentTaxi;</b>
+<b class="nc">&nbsp;            } else if (type == 3) {</b>
+<b class="nc">&nbsp;                taxiType = taxi -&gt; taxi instanceof PartyBusTaxi;</b>
+&nbsp;            } else {
+<b class="nc">&nbsp;                System.out.println(&quot;Invalid selection. Please select 1, 2, or 3.&quot;);</b>
+<b class="nc">&nbsp;                System.out.println(&quot;We have three types of taxis! Please select 1, 2 or 3. \nNormal Taxi (1) \nUrgent Taxi (2) \nParty Bus (3)&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+<b class="nc">&nbsp;        userBookingConfirmationScreen(from, destination, taxiType);</b>
+&nbsp;    }
+&nbsp;    public Location processCoordinateString(String unprocessedCoordinates){
+<b class="fc">&nbsp;        String[] split = unprocessedCoordinates.split(&quot;\\D&quot;);</b>
+<b class="fc">&nbsp;        int x = Integer.parseInt(split[0]);</b>
+<b class="fc">&nbsp;        int y = Integer.parseInt(split[split.length-1]);</b>
+<b class="fc">&nbsp;        return scheduler.getMap().getLocation(x, y);</b>
+&nbsp;    }
+&nbsp;    public void userBookingConfirmationScreen(Location location,Location destination, Predicate&lt;Taxi&gt; taxiType){
+<b class="nc">&nbsp;        Map map = scheduler.getMap();</b>
+&nbsp;
+&nbsp;        // need to add option and 
+<b class="nc">&nbsp;        Booking booking = new Booking(map, location, destination);</b>
+<b class="nc">&nbsp;        clearScreen();</b>
+<b class="nc">&nbsp;        scheduler.addBooking(booking, taxiType);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;The destination is &quot; + booking.getDistance() +&quot;km away&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;the taxi will be charged using the &quot; + booking.getTaxi().getRate().getTaxiRateType()</b>
+<b class="nc">&nbsp;                + &quot; rate and will cost &quot; + booking.getPrice());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;Your taxis reg is &quot; + booking.getTaxi().getRegistrationNumber());</b>
+<b class="nc">&nbsp;        System.out.println(&quot;It is &quot; + booking.getTaxi().getLocation(map).getDistance() + &quot;km away&quot;);</b>
+<b class="nc">&nbsp;        System.out.println(&quot;book taxi? (y/n)&quot;);</b>
+<b class="nc">&nbsp;        scanner.nextLine();</b>
+<b class="nc">&nbsp;        String answer = scanner.nextLine();</b>
+<b class="nc">&nbsp;        if (answer.contains(&quot;y&quot;)){</b>
+<b class="nc">&nbsp;            showTaxiEnrouteDisplay(booking);</b>
+<b class="nc">&nbsp;            showTravellingDisplay(booking);</b>
+<b class="nc">&nbsp;            completeRide();</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            System.out.println(&quot;Route cancelled&quot;);</b>
+<b class="nc">&nbsp;            scheduler.cancelBooking(booking);</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    public void showTaxiEnrouteDisplay(Booking booking){
+<b class="nc">&nbsp;        System.out.println(&quot;Taxi is enroute&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            DoublyLinkedList&lt;Location&gt; route = booking.getTaxi()</b>
+<b class="nc">&nbsp;                    .getLocation(scheduler.getMap())</b>
+<b class="nc">&nbsp;                    .getPathway();</b>
+<b class="nc">&nbsp;            route.add(booking.getTaxi().getLocation(booking.getMap()));</b>
+<b class="nc">&nbsp;            route = route.reverse();</b>
+<b class="nc">&nbsp;            showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route, booking);</b>
+<b class="nc">&nbsp;        } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;            System.out.println(&quot;ERROR ENROUTE&quot;);</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;
+&nbsp;    }
+&nbsp;    public void showTravellingDisplay(Booking booking){
+<b class="nc">&nbsp;        System.out.println(&quot;Your Taxi has arrived&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            Thread.sleep(1000);</b>
+<b class="nc">&nbsp;            DoublyLinkedList&lt;Location&gt; route = booking.getDestination().getPathway();</b>
+<b class="nc">&nbsp;            route.add(booking.getDestination());</b>
+<b class="nc">&nbsp;            showIterativeRouteMap(scheduler.getMap(), booking.getDestination(), route, booking);</b>
+<b class="nc">&nbsp;        } catch (InterruptedException e) {</b>
+<b class="nc">&nbsp;            throw new RuntimeException(e);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void completeRide(){
+<b class="nc">&nbsp;        System.out.println(&quot;Ride is completed&quot;);</b>
+<b class="nc">&nbsp;        rateDriver();</b>
+&nbsp;    }
+&nbsp;    public void rateDriver(){
+<b class="nc">&nbsp;        System.out.println(&quot;How many stars from 1-5 do you wish to rate your driver&quot;);</b>
+&nbsp;        try {
+<b class="nc">&nbsp;            Integer rating = scanner.nextInt();</b>
+<b class="nc">&nbsp;            if (rating &gt; 5 || rating &lt; 0){</b>
+<b class="nc">&nbsp;                throw new IllegalArgumentException(&quot;Womp Womp&quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            Taxi assignedTaxi = scheduler.getBookings().get(0).getTaxi();</b>
+<b class="nc">&nbsp;            new Completion(assignedTaxi, rating);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Thank you for reviewing&quot;);</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Just so you know the average rating for your taxi is: &quot; + assignedTaxi.getRating());</b>
+<b class="nc">&nbsp;            endProgramme();</b>
+&nbsp;            
+<b class="nc">&nbsp;        } catch (Exception e){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Please enter a number between 1 and 5&quot;);</b>
+<b class="nc">&nbsp;            rateDriver();</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void endProgramme() {
+<b class="nc">&nbsp;        clearScreen();</b>
+<b class="nc">&nbsp;        System.out.print(&quot;Do you want to make another booking? (y/n): &quot;);</b>
+<b class="nc">&nbsp;        scanner.nextLine();</b>
+<b class="nc">&nbsp;        String choice = scanner.nextLine();</b>
+&nbsp;
+<b class="nc">&nbsp;        if (choice.equals(&quot;y&quot;)){</b>
+<b class="nc">&nbsp;            clearScreen();</b>
+<b class="nc">&nbsp;            userLocationInputScreen();</b>
+<b class="nc">&nbsp;        } else if(choice.equals(&quot;n&quot;)){</b>
+<b class="nc">&nbsp;            System.out.println(&quot;Thank you for using our app. Hope to see you soon!&quot;);</b>
+<b class="nc">&nbsp;            System.exit(0);</b>
+&nbsp;        } else {
+<b class="nc">&nbsp;            endProgramme();</b>
+&nbsp;        }
+&nbsp;
+&nbsp;    }
+&nbsp;    public void showRectangularMap(GridMap map, int height, int width){
+<b class="nc">&nbsp;        for (int y = 0; y &lt; height; y++) {</b>
+<b class="nc">&nbsp;            for (int x = 0; x &lt; width; x++) {</b>
+<b class="nc">&nbsp;                System.out.print(map.getLocation(x, y)</b>
+<b class="nc">&nbsp;                        .getContainedTaxis()</b>
+<b class="nc">&nbsp;                        .size() + &quot; &quot;);</b>
+&nbsp;            }
+<b class="nc">&nbsp;            System.out.print(&quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;    public void showIterativeRouteMap(Map map, Location destination, DoublyLinkedList&lt;Location&gt; route, Booking booking) throws InterruptedException {
+<b class="fc">&nbsp;        int height = map.getHeight();</b>
+<b class="fc">&nbsp;        int width = map.getWidth();</b>
+<b class="fc">&nbsp;        for (Location currentLocation : route){</b>
+<b class="fc">&nbsp;            currentLocation.setCovered(false);</b>
+<b class="fc">&nbsp;        }</b>
+<b class="fc">&nbsp;        for (Location currentLocation : route</b>
+&nbsp;             ) {
+<b class="fc">&nbsp;            Thread.sleep(booking.getTaxi().getSpeed());</b>
+<b class="fc">&nbsp;            for (int i = 0; i &lt; 10; i++) {</b>
+<b class="fc">&nbsp;                System.out.println();</b>
+&nbsp;            }
+<b class="fc">&nbsp;            printRouteMap(map, destination, route, currentLocation, height, width);</b>
+<b class="fc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private static void printRouteMap(Map map, Location destination, DoublyLinkedList&lt;Location&gt; route, Location currentLocation, int height, int width) {
+<b class="fc">&nbsp;        for (int y = 0; y &lt; height; y++) {</b>
+<b class="fc">&nbsp;            for (int x = 0; x &lt; width; x++) {</b>
+<b class="fc">&nbsp;                Location location = map.getLocation(x, y);</b>
+<b class="fc">&nbsp;                if (currentLocation == map.getLocation(x, y)) {</b>
+<b class="fc">&nbsp;                    System.out.print(&quot;\uD83D\uDE95 &quot;);//taxi</b>
+<b class="fc">&nbsp;                    currentLocation.setCovered(true);</b>
+<b class="fc">&nbsp;                }else if (destination == map.getLocation(x, y) &amp;&amp; destination.getDistance() == 0) {</b>
+<b class="nc">&nbsp;                        System.out.print(&quot;\uD83D\uDC68\uD83C\uDFFC\u200D\uD83E\uDDB0 &quot;);//person</b>
+&nbsp;                    }
+<b class="fc">&nbsp;                else if (destination == map.getLocation(x, y)) {</b>
+<b class="fc">&nbsp;                    System.out.print(&quot;\uD83D\uDCCD &quot;);//location</b>
+&nbsp;                }
+<b class="fc">&nbsp;                 else if (route.contains(map.getLocation(x, y)) &amp;&amp; !map.getLocation(x,y).isCovered()) {</b>
+&nbsp;
+<b class="fc">&nbsp;                    System.out.print(&quot;\uD83D\uDFE9 &quot;);</b>
+&nbsp;                } else {
+<b class="fc">&nbsp;                    System.out.print(&quot;? &quot;);</b>
+&nbsp;                }
+&nbsp;            }
+<b class="fc">&nbsp;            System.out.print(&quot;\n&quot;);</b>
+&nbsp;        }
+&nbsp;    }
+&nbsp;
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-20 16:42</div>
+</div>
+</body>
+</html>

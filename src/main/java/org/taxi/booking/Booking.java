@@ -12,7 +12,6 @@ public class Booking {
     private Taxi allocatedTaxi;
     private Location currentLocation;
     private Location destination;
-    private Location[] path;
     private double price;
     private double distance;
 
@@ -42,9 +41,6 @@ public class Booking {
         return map;
     }
 
-    public Location[] getPath() {
-        return path;
-    }
     public double getPrice() {
         return price;
     }

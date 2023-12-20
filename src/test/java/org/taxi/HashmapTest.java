@@ -82,4 +82,53 @@ public class HashmapTest {
             assertEquals(i, map.get("key" + i));
         }
     }
+
+    @Test
+    public void testRemoveExistingKey() {
+        Hashmap<String, Integer> map = new Hashmap<>();
+        map.put("key1", 1);
+        map.put("key2", 2);
+        map.put("key3", 3);
+
+        // Remove an existing key
+        map.remove("key2");
+        assertNull(map.get("key2"), "Removing 'key2' should result in it not being found");
+        assertNotNull(map.get("key1"), "'key1' should still be present in the map");
+        assertNotNull(map.get("key3"), "'key3' should still be present in the map");
+    }
+
+    @Test
+    public void testRemoveNonExistingKey() {
+        Hashmap<String, Integer> map = new Hashmap<>();
+        map.put("key1", 1);
+
+        // Try to remove a key that does not exist
+        map.remove("key2");
+        assertNotNull(map.get("key1"), "Removing a non-existing key should not affect other entries");
+    }
+
+    @Test
+    public void testRemoveFromEmptyMap() {
+        Hashmap<String, Integer> map = new Hashmap<>();
+
+        // Attempt to remove a key from an empty map
+        map.remove("key1");
+        assertNull(map.get("key1"), "Removing a key from an empty map should not cause errors");
+    }
+
+    @Test
+    public void testRemoveCollision() {
+        Hashmap<MyKey, Integer> map = new Hashmap<>();
+        MyKey key1 = new MyKey("key", 1);
+        MyKey key2 = new MyKey("key", 2);
+
+        map.put(key1, 1);
+        map.put(key2, 2);
+
+        // Remove one of the colliding keys
+        map.remove(key1);
+        assertNull(map.get(key1), "key1 should be removed from the map");
+        assertEquals(2, map.get(key2), "key2 should still exist in the map");
+    }
+
 }

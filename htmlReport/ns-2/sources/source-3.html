@@ -1,0 +1,217 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=windows-1252"> 
+  <title>Coverage Report > Scheduler</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.taxi.booking</a>
+</div>
+
+<h1>Coverage Summary for Class: Scheduler (org.taxi.booking)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Scheduler</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    73.3%
+  </span>
+  <span class="absValue">
+    (11/15)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    66.7%
+  </span>
+  <span class="absValue">
+    (24/36)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.taxi.booking;
+&nbsp;
+&nbsp;import org.taxi.map.Map;
+&nbsp;import org.taxi.taxi.Taxi;
+&nbsp;import org.taxi.taxi.TaxiBank;
+&nbsp;import org.taxi.datastructure.ArrayList;
+&nbsp;import org.taxi.map.Location;
+&nbsp;import org.taxi.map.pathfinding.Dijkstra;
+&nbsp;import org.taxi.pricing.prices.TaxiRate;
+&nbsp;
+&nbsp;import java.util.Optional;
+&nbsp;import java.util.function.Predicate;
+&nbsp;
+&nbsp;public class Scheduler {
+&nbsp;    private Map map;
+&nbsp;    private ArrayList&lt;Booking&gt; bookings;
+&nbsp;    // to keep track of observers
+&nbsp;    private ArrayList&lt;Taxi&gt; observers;
+&nbsp;
+&nbsp;    
+&nbsp;
+&nbsp;    // constructor
+<b class="fc">&nbsp;    public Scheduler(Map map) {</b>
+<b class="fc">&nbsp;        this.map = map;</b>
+<b class="fc">&nbsp;        this.bookings = new ArrayList&lt;&gt;();</b>
+<b class="fc">&nbsp;        this.observers = new ArrayList&lt;&gt;();</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // attach taxi 
+&nbsp;    public void attach(Taxi taxi) {
+<b class="fc">&nbsp;        observers.add(taxi);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // detach a taxi 
+&nbsp;    public void detach(Taxi taxi) {
+<b class="fc">&nbsp;        observers.remove(taxi);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // notify observers for a change 
+&nbsp;    private void notifyObservers(Booking booking) {
+<b class="fc">&nbsp;        for (Taxi taxi : observers) {</b>
+<b class="nc">&nbsp;            taxi.update(booking);</b>
+<b class="nc">&nbsp;        }</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    // to add a booking
+&nbsp;    public void addBooking(Booking booking, Predicate&lt;Taxi&gt; taxiType) {
+<b class="fc">&nbsp;        bookings.add(booking);</b>
+<b class="fc">&nbsp;        assignTaxiToBooking(booking, taxiType);</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    public void cancelBooking(Booking booking) {
+<b class="nc">&nbsp;        bookings.remove(booking);</b>
+<b class="nc">&nbsp;        endRide(booking);</b>
+&nbsp;    }
+&nbsp;    
+&nbsp;    private void assignTaxiToBooking(Booking booking, Predicate&lt;Taxi&gt; taxiTypePredicate) {
+&nbsp;        // get customer location 
+<b class="fc">&nbsp;        Location customerLocation = booking.getCustomerLocation();</b>
+&nbsp;        // find nearest taxi
+&nbsp;        
+<b class="fc">&nbsp;        Optional&lt;Taxi&gt; assignedTaxi = findNearestAvailableTaxi(customerLocation, taxiTypePredicate);</b>
+&nbsp;        
+&nbsp;        // if assignedTaxi is present 
+&nbsp;        
+<b class="fc">&nbsp;        assignedTaxi.ifPresent(taxi -&gt; {</b>
+<b class="fc">&nbsp;            booking.setTaxi(taxi);</b>
+<b class="fc">&nbsp;            notifyObservers(booking);</b>
+<b class="fc">&nbsp;            calculatePriceForBooking(booking, taxi);</b>
+&nbsp;        });
+&nbsp;    }
+&nbsp;
+&nbsp;    private void calculatePriceForBooking(Booking booking, Taxi taxi) {
+<b class="fc">&nbsp;        TaxiRate rate = taxi.getRate();</b>
+<b class="fc">&nbsp;        booking.setPrice(rate);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private Optional&lt;Taxi&gt; findNearestAvailableTaxi(Location customerLocation, Predicate&lt;Taxi&gt; taxiTypePredicate) {
+<b class="fc">&nbsp;        new Dijkstra().calculateRoute(map, customerLocation);</b>
+<b class="fc">&nbsp;        return TaxiBank.getAllTaxisStream()</b>
+<b class="fc">&nbsp;                .filter(Taxi::isFree)</b>
+<b class="fc">&nbsp;                .filter(taxiTypePredicate) </b>
+<b class="fc">&nbsp;                .min((taxi1, taxi2) -&gt; compareDistance(taxi1, taxi2, customerLocation));</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    private int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
+<b class="nc">&nbsp;        double distance1 = taxi1.getLocation(map).getDistance();</b>
+<b class="nc">&nbsp;        double distance2 = taxi2.getLocation(map).getDistance();</b>
+<b class="nc">&nbsp;        return Double.compare(distance1, distance2);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public void endRide(Booking booking) {
+<b class="nc">&nbsp;        Taxi taxi = booking.getTaxi();</b>
+<b class="nc">&nbsp;        if (taxi != null) {</b>
+<b class="nc">&nbsp;            booking.setTaxi(null);</b>
+<b class="nc">&nbsp;            notifyObservers(booking);</b>
+&nbsp;        }
+&nbsp;        //remove completed booking from bookings
+&nbsp;    }
+&nbsp;
+&nbsp;    // getters
+&nbsp;    public Map getMap() {
+<b class="fc">&nbsp;        return map;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Booking&gt; getBookings() {
+<b class="nc">&nbsp;        return bookings;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    public ArrayList&lt;Taxi&gt; getObservers() {
+<b class="fc">&nbsp;        return observers;</b>
+&nbsp;    }   
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2023-12-20 16:42</div>
+</div>
+</body>
+</html>
