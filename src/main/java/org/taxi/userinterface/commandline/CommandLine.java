@@ -89,7 +89,7 @@ public class CommandLine {
 
         scheduler.addBooking(booking, taxiType);
         System.out.println("The destination is " + booking.getDistance() +"km away");
-        System.out.println("the taxi will cost " + booking.getPrice());
+        System.out.println("the taxi will cost €" + booking.getPrice());
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
         System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
