@@ -5,6 +5,7 @@ import org.taxi.booking.Observer;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
 import org.taxi.map.Map;
+import org.taxi.pricing.prices.TaxiRate;
 
 public class Taxi implements Observer {
     private String registrationNumber;
