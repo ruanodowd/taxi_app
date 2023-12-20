@@ -41,18 +41,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name">ArrayList</td>
 <td class="coverageStat">
   <span class="percent">
-    48.4%
+    58.1%
   </span>
   <span class="absValue">
-    (15/31)
+    (18/31)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    47%
+    56.6%
   </span>
   <span class="absValue">
-    (39/83)
+    (47/83)
   </span>
 </td>
 </tr>
@@ -79,18 +79,18 @@ Current scope:     <a href="../../index.html">all classes</a>
   <td class="name"><strong>Total</strong></td>
 <td class="coverageStat">
   <span class="percent">
-    52.9%
+    61.8%
   </span>
   <span class="absValue">
-    (18/34)
+    (21/34)
   </span>
 </td>
 <td class="coverageStat">
   <span class="percent">
-    49.4%
+    58.4%
   </span>
   <span class="absValue">
-    (44/89)
+    (52/89)
   </span>
 </td>
 </tr>
@@ -186,14 +186,14 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;    }
 &nbsp;
 &nbsp;    public void clear() {
-<b class="nc">&nbsp;        for (int i = 0; i &lt; size; i++) {</b>
-<b class="nc">&nbsp;            elementData[i] = null;</b>
+<b class="fc">&nbsp;        for (int i = 0; i &lt; size; i++) {</b>
+<b class="fc">&nbsp;            elementData[i] = null;</b>
 &nbsp;        }
-<b class="nc">&nbsp;        size = 0;</b>
+<b class="fc">&nbsp;        size = 0;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public boolean isEmpty() {
-<b class="nc">&nbsp;        return size == 0;</b>
+<b class="fc">&nbsp;        return size == 0;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    public int indexOf(Object o) {
@@ -207,10 +207,10 @@ Current scope:     <a href="../../index.html">all classes</a>
 &nbsp;
 &nbsp;    @SuppressWarnings(&quot;unchecked&quot;)
 &nbsp;    public T set(int index, T element) {
-<b class="nc">&nbsp;        rangeCheck(index);</b>
-<b class="nc">&nbsp;        T oldValue = (T) elementData[index];</b>
-<b class="nc">&nbsp;        elementData[index] = element;</b>
-<b class="nc">&nbsp;        return oldValue;</b>
+<b class="fc">&nbsp;        rangeCheck(index);</b>
+<b class="fc">&nbsp;        T oldValue = (T) elementData[index];</b>
+<b class="fc">&nbsp;        elementData[index] = element;</b>
+<b class="fc">&nbsp;        return oldValue;</b>
 &nbsp;    }
 &nbsp;
 &nbsp;    private void ensureCapacity() {
@@ -374,7 +374,7 @@ Current scope:     <a href="../../index.html">all classes</a>
 
 <div class="footer">
     
-    <div style="float:right;">generated on 2023-12-20 16:28</div>
+    <div style="float:right;">generated on 2023-12-20 16:42</div>
 </div>
 </body>
 </html>

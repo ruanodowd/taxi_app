@@ -44,8 +44,6 @@ public class Main implements VehicleHiringTest{
     }
     @Override
     public boolean testAddToMap(String reg, Location loc) {
-        // its more special than I thought
-        // the taxi bank will help with this - ushen
         loc.addTaxi(new Taxi(reg));
         return true;
     }
