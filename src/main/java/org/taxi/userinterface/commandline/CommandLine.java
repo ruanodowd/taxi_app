@@ -39,7 +39,7 @@ public class CommandLine {
     public static CommandLine getCommandLine(){
         return commandLine;
     }
-    public void startScreen() {
+    public void showWelcomeScreen() {
         clearScreen();
         System.out.println("Welcome to the Taxi App");
         System.out.println("Press any key to book");
@@ -192,55 +192,32 @@ public class CommandLine {
              ) {
             Thread.sleep(booking.getTaxi().getSpeed());
             clearScreen();
-            for (int y = 0; y < height; y++) {
-                for (int x = 0; x < width; x++) {
-                    Location location = map.getLocation(x, y);
-                    if (currentLocation == map.getLocation(x, y)) {
-                        System.out.print("\uD83D\uDE95 ");//taxi
-                        currentLocation.setCovered(true);
-                    }else if (destination == map.getLocation(x, y) && destination.getDistance() == 0) {
-                            System.out.print("\uD83D\uDC68\uD83C\uDFFC\u200D\uD83E\uDDB0 ");//person
-                        }
-                    else if (destination == map.getLocation(x, y)) {
-                        System.out.print("\uD83D\uDCCD ");//location
-                    }
-                     else if (route.contains(map.getLocation(x, y)) && !map.getLocation(x,y).isCovered()) {
-
-                        System.out.print("\uD83D\uDFE9 ");
-                    } else {
-                        System.out.print("⬛ ");
-                    }
-                }
-                System.out.print("\n");
-            }
+            printRouteMap(map, destination, route, currentLocation, height, width);
         }
     }
-//    public void showRouteMap(Map map, Location destination, Location start){
-//        int height = map.getHeight();
-//        int width = map.getWidth();
-//        DoublyLinkedList<Location> route = destination.getPathway();
-//        for (int y = 0; y < height; y++) {
-//            for (int x = 0; x < width; x++) {
-//                if (destination == map.getLocation(x,y)){
-//                    System.out.print("\uD83D\uDCCD ");
-//                }
-//                else if(start == map.getLocation(x, y)){
-//                    System.out.print("\uD83D\uDE95 ");
-//                }
-//                else if (route.contains(map.getLocation(x, y))){
-//                    System.out.print(CommandLineColours.GREEN +
-//                            map.getLocation(x, y)
-//                                    .getContainedTaxis()
-//                                    .size() + "  "
-//                            + CommandLineColours.RESET);
-//                } else{
-//                    System.out.print(map.getLocation(x, y)
-//                            .getContainedTaxis()
-//                            .size() + "  ");
-//                }
-//            }
-//            System.out.print("\n");
-//        }
-//    }
+
+    private static void printRouteMap(Map map, Location destination, DoublyLinkedList<Location> route, Location currentLocation, int height, int width) {
+        for (int y = 0; y < height; y++) {
+            for (int x = 0; x < width; x++) {
+                Location location = map.getLocation(x, y);
+                if (currentLocation == map.getLocation(x, y)) {
+                    System.out.print("\uD83D\uDE95 ");//taxi
+                    currentLocation.setCovered(true);
+                }else if (destination == map.getLocation(x, y) && destination.getDistance() == 0) {
+                        System.out.print("\uD83D\uDC68\uD83C\uDFFC\u200D\uD83E\uDDB0 ");//person
+                    }
+                else if (destination == map.getLocation(x, y)) {
+                    System.out.print("\uD83D\uDCCD ");//location
+                }
+                 else if (route.contains(map.getLocation(x, y)) && !map.getLocation(x,y).isCovered()) {
+
+                    System.out.print("\uD83D\uDFE9 ");
+                } else {
+                    System.out.print("⬛ ");
+                }
+            }
+            System.out.print("\n");
+        }
+    }
 
 }
