@@ -56,7 +56,7 @@ public class CommandLine {
         
         // asking what type of taxi you want 
         Predicate<Taxi> taxiType = null; 
-        System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
+        System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nNormal Taxi (1) \nUrgent Taxi (2) \nPartyBus (3)");
 
         while (taxiType == null) {
             Integer type = scanner.nextInt(); 
@@ -69,7 +69,7 @@ public class CommandLine {
                 taxiType = taxi -> taxi instanceof PartyBusTaxi;
             } else {
                 System.out.println("Invalid selection. Please select 1, 2, or 3.");
-                System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
+                System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nNormal Taxi (1) \nUrgent Taxi (2) \nParty Bus (3)");
             }
         }
 
@@ -86,11 +86,11 @@ public class CommandLine {
 
         // need to add option and 
         Booking booking = new Booking(map, location, destination);
-
+        clearScreen();
         scheduler.addBooking(booking, taxiType);
         System.out.println("The destination is " + booking.getDistance() +"km away");
         System.out.println("the taxi will be charged using the " + booking.getTaxi().getRate().getTaxiRateType()
-                + " and will cost " + booking.getPrice());
+                + " rate and will cost " + booking.getPrice());
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
         System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
