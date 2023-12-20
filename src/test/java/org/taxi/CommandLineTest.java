@@ -8,6 +8,8 @@ import org.taxi.map.Map;
 import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
 import org.taxi.userinterface.commandline.CommandLine;
+import org.taxi.userinterface.commandline.Controller;
+import org.taxi.userinterface.commandline.UserInterface;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -16,10 +18,8 @@ class CommandLineTest {
     @Test
     void processCoordinateString() {
         Map map = new GridMap(2, 2);
-        CommandLine cli = CommandLine.getCommandLine();
-        Scheduler scheduler = new Scheduler(map);
-        cli.setScheduler(scheduler);
-        assertEquals(map.getLocation(2,1), cli.processCoordinateString("2, 1"));
+        Controller.getInstance().setUp();
+        assertEquals(map.getLocation(2,1), Controller.getInstance().processCoordinateString("2, 1"));
     }
 //    @Test
 //    void testStartProgram() {
@@ -35,29 +35,23 @@ class CommandLineTest {
 //    }
     @Test
     void testGetCommandLine() {
-        CommandLine cli = CommandLine.getCommandLine();
-        assertEquals(cli, CommandLine.getCommandLine());
-    }
-    @Test
-    void testGetScheduler() {
-        Map map = new GridMap(2, 2);
-        CommandLine cli = CommandLine.getCommandLine();
-        Scheduler scheduler = new Scheduler(map);
-        cli.setScheduler(scheduler);
-        assertEquals(scheduler, cli.getScheduler());
+        CommandLine cli = UserInterface.getCommandLine();
+        assertEquals(cli, UserInterface.getCommandLine());
     }
     @Test
     void showIterativeRouteMap() {
         Map map = new GridMap(2, 2);
-        CommandLine cli = CommandLine.getCommandLine();
+        Controller ctlr = Controller.getInstance();
+        ctlr.setMap(map);
+        ctlr.setCli(UserInterface.getCommandLine());
         Taxi taxi = new PartyBusTaxi("HeySalahAndJosh!");
         Scheduler scheduler = new Scheduler(map);
-        cli.setScheduler(scheduler);
-        //creating a route
+        scheduler.attach(taxi);
+        ctlr.setScheduler(scheduler);
         Booking booking = new Booking(map, map.getLocation(0,0), map.getLocation(1,1));
         scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
         try {
-            cli.showIterativeRouteMap(map , booking.getDestination(), map.getLocation(1,1).getPathway(), booking);
+            ctlr.showIterativeRouteMap(map , booking.getDestination(), map.getLocation(1,1).getPathway(), booking);
             assertTrue(true);
         } catch (InterruptedException e) {
             fail();

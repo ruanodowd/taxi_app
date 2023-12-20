@@ -4,13 +4,13 @@ import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.ArrayList;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
-import org.taxi.map.Map;
+
 import org.taxi.pricing.PriceCalculator;
 import org.taxi.taxi.*;
 
 import java.util.List;
 
-import org.taxi.userinterface.commandline.CommandLine;
+import org.taxi.userinterface.commandline.Controller;
 
 public class Main implements VehicleHiringTest{
     public GridMap map;
@@ -20,23 +20,10 @@ public class Main implements VehicleHiringTest{
         this.map = map;
     }
     public static void main(String[] args) {
-        CommandLine cli = CommandLine.getCommandLine();
-        Map map = new GridMap(12,12);
-        Taxi taxi = new PartyBusTaxi("RAWR - P6");
-        map.getLocation(6,6).addTaxi(taxi);
-        Taxi partyBus = new PartyBusTaxi("P0");
-        map.getLocation(0,0).addTaxi(partyBus);
-        Taxi taxi2 = new NormalTaxi("N6");
-        map.getLocation(6,6).addTaxi(taxi2);
-        Taxi NormalTaxi = new NormalTaxi("N0");
-        map.getLocation(0,0).addTaxi(NormalTaxi);
-        Taxi taxi3 = new UrgentTaxi("U6");
-        map.getLocation(6,6).addTaxi(taxi3);
-        Taxi UrgentTaxi = new UrgentTaxi("U0");
-        map.getLocation(0,0).addTaxi(UrgentTaxi);
-        Scheduler scheduler = new Scheduler(map);
-        cli.setScheduler(scheduler);
-        cli.showWelcomeScreen();
+        Controller controller = Controller.getInstance();
+        controller.setUp();
+        controller.startProgram();
+//        cli.showWelcomeScreen();
     }
     public static void addTaxiToMap(String reg, Location loc) {
         // added the location parameter
