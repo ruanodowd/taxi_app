@@ -84,7 +84,7 @@ public class Taxi implements Observer {
             return ActualMain.priceCalculator.getSpecialPremiumTaxiRate();
         }
         else if (time.getHour() > 20 || time.getHour() < 8){
-            return ActualMain.priceCalculator.getStandardTaxiRate();
+            return ActualMain.priceCalculator.getPremiumTaxiRate();
         }
         else {
             return ActualMain.priceCalculator.getStandardTaxiRate();
