@@ -159,6 +159,7 @@ public class CommandLine {
     public void endProgramme() {
         clearScreen();
         System.out.print("Do you want to make another booking? (y/n): ");
+        scanner.nextLine();
         String choice = scanner.nextLine();
 
         if (choice.equals("y")){
@@ -191,7 +192,9 @@ public class CommandLine {
         for (Location currentLocation : route
              ) {
             Thread.sleep(booking.getTaxi().getSpeed());
-            clearScreen();
+            for (int i = 0; i < 10; i++) {
+                System.out.println();
+            }
             printRouteMap(map, destination, route, currentLocation, height, width);
         }
     }
