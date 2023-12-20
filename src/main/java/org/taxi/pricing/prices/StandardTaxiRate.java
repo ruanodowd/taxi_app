@@ -12,6 +12,10 @@ public class StandardTaxiRate implements TaxiRate {
 
     double tariffARange = 0.5;
     double tariffBRange = 15;
+    String taxiRateType = "Standard";
+    public String getTaxiRateType() {
+        return taxiRateType;
+    }
     PriceCalculator priceCalculator;
 
     public StandardTaxiRate(PriceCalculator priceCalculator) {

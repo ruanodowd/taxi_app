@@ -12,12 +12,16 @@ public class PremiumTaxiRate implements TaxiRate{
     double tariffARange = 0.5;
     double tariffBRange = 15;
     PriceCalculator priceCalculator;
-
+    String taxiRateType = "Premium";
+    public String getTaxiRateType() {
+        return taxiRateType;
+    }
     public PremiumTaxiRate(PriceCalculator priceCalculator) {
         this.priceCalculator = priceCalculator;
     }
 
     public double calculatePrice(double distance) {
+
         double price;
         if (distance < tariffARange) {
             price = initialCharge;

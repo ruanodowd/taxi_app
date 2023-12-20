@@ -9,6 +9,11 @@ public class SpecialPremiumTaxiRate implements TaxiRate {
     double tariff = 2.0;
     double tariffRange = 0.5;
 
+    public String getTaxiRateType() {
+        return taxiRateType;
+    }
+
+    String taxiRateType = "Special Premium";
     PriceCalculator priceCalculator;
 
     public SpecialPremiumTaxiRate(PriceCalculator priceCalculator) {

@@ -5,6 +5,7 @@ import org.taxi.pricing.prices.TaxiRate;
 
 public class PartyBusTaxi extends Taxi{
     TaxiRate taxiRate;
+    String taxiType = "Party Bus";
     public PartyBusTaxi(String registrationNumber) {
         super(registrationNumber);
         this.taxiRate = Main.priceCalculator.getPartyBusRate();

@@ -89,7 +89,8 @@ public class CommandLine {
 
         scheduler.addBooking(booking, taxiType);
         System.out.println("The destination is " + booking.getDistance() +"km away");
-        System.out.println("the taxi will cost €" + booking.getPrice());
+        System.out.println("the taxi will be charged using the " + booking.getTaxi().getRate().getTaxiRateType()
+                + " and will cost " + booking.getPrice());
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
         System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
@@ -106,7 +107,7 @@ public class CommandLine {
 
     }
     public void showTaxiEnrouteDisplay(Booking booking){
-        System.out.println("showing enroute display");
+        System.out.println("Taxi is enroute");
         try {
             DoublyLinkedList<Location> route = booking.getTaxi()
                     .getLocation(scheduler.getMap())
@@ -114,7 +115,6 @@ public class CommandLine {
             route.add(booking.getTaxi().getLocation(booking.getMap()));
             route = route.reverse();
             showIterativeRouteMap(scheduler.getMap(), booking.getCustomerLocation(), route, booking);
-            System.out.println("first iter route map done");
         } catch (InterruptedException e) {
             System.out.println("ERROR ENROUTE");
             throw new RuntimeException(e);
@@ -122,7 +122,7 @@ public class CommandLine {
 
     }
     public void showTravellingDisplay(Booking booking){
-        System.out.println("picked up driver");
+        System.out.println("Your Taxi has arrived");
         try {
             Thread.sleep(1000);
             DoublyLinkedList<Location> route = booking.getDestination().getPathway();
