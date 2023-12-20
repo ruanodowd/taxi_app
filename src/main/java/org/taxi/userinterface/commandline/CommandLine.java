@@ -40,7 +40,7 @@ public class CommandLine implements UserInterface {
         System.out.println("Welcome to the Taxi App");
         System.out.println("Press any key to book");
         System.out.println("------------------------");
-        scanner.nextLine();
+        bufferScanner();
     }
 
 
@@ -98,7 +98,7 @@ public class CommandLine implements UserInterface {
         System.out.println("Your taxis reg is " + registrationNumber);
         System.out.println("It is " + distanceToTaxi + "km away");
         System.out.println("book taxi? (y/n)");
-        scanner.nextLine();
+        bufferScanner();
     }
 
      @Override
@@ -136,6 +136,10 @@ public class CommandLine implements UserInterface {
     @Override
     public void promptAnotherBooking() {
         System.out.print("Do you want to make another booking? (y/n): ");
+        bufferScanner();
+    }
+
+    private void bufferScanner() {
         scanner.nextLine();
     }
 
@@ -146,7 +150,7 @@ public class CommandLine implements UserInterface {
     }
 
     @Override
-    public void showRectangularMap(GridMap map, int height, int width){
+    public void showRectangularMap(Map map, int height, int width){
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 System.out.print(map.getLocation(x, y)
@@ -182,5 +186,4 @@ public class CommandLine implements UserInterface {
             System.out.print("\n");
         }
     }
-
 }

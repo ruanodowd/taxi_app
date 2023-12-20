@@ -2,7 +2,6 @@ package org.taxi.userinterface.commandline;
 
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.DoublyLinkedList;
-import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
 
@@ -53,7 +52,7 @@ public interface UserInterface {
 
     void sayGoodbyeOnUserExit();
 
-    void showRectangularMap(GridMap map, int height, int width);
+    void showRectangularMap(Map map, int height, int width);
 
     void printRouteMap(Map map, Location destination, DoublyLinkedList<Location> route, Location currentLocation, int height, int width);
 }
