@@ -120,7 +120,6 @@ public class CommandLine {
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }
-
     }
 
     public void completeRide(){
@@ -147,17 +146,18 @@ public class CommandLine {
     }
 
     public void endProgramme() {
+        clearScreen();
         System.out.print("Do you want to make another booking? (y/n): ");
         String choice = scanner.nextLine();
 
         if (choice.equals("y")){
             clearScreen();
             userLocationInputScreen();
-        }
-
-        else {
+        } else if(choice.equals("n")){
             System.out.println("Thank you for using our app. Hope to see you soon!");
             System.exit(0);
+        } else {
+            endProgramme();
         }
 
     }
