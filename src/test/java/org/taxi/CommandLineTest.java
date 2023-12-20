@@ -57,4 +57,9 @@ class CommandLineTest {
             controller.processCoordinateString(input);
         }, "The processCoordinateString method should throw NumberFormatException for invalid input string.");
     }
+
+    @Test
+    void testShowMap(){
+
+    }
 }

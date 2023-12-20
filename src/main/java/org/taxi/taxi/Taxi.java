@@ -4,7 +4,6 @@ import org.taxi.Main;
 import org.taxi.booking.Booking;
 import org.taxi.booking.Observer;
 import org.taxi.map.Location;
-import org.taxi.map.GridMap;
 import org.taxi.map.Map;
 import org.taxi.pricing.prices.TaxiRate;
 
@@ -65,7 +64,7 @@ public class Taxi implements Observer {
         }
     }
 
-    public void setLocation(GridMap map, Location newLocation) {
+    public void setLocation(Map map, Location newLocation) {
         Location loc = getLocation(map);
         if (loc == null) {
             newLocation.addTaxi(this);
