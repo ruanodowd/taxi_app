@@ -53,6 +53,17 @@ public class CommandLine {
         Location from = processCoordinateString(scanner.nextLine());
         System.out.println("Enter your destination in the form 'x, y'");
         Location destination = processCoordinateString(scanner.nextLine());
+
+        // asking what type of taxi you want 
+        
+        System.out.println("We have three types of taxis! Please select 1, 2 or 3. \nStandardTaxi (1) \nUrgentTaxi (2) \nPartyBus (3)");
+        Integer type = scanner.nextInt();
+
+        if (type == 1) {
+            
+        }
+
+
         userBookingConfirmationScreen(from, destination, DEFAULT_TAXI);
     }
     public Location processCoordinateString(String unprocessedCoordinates){
@@ -63,6 +74,8 @@ public class CommandLine {
     }
     public void userBookingConfirmationScreen(Location location,Location destination, int taxiType){
         Map map = scheduler.getMap();
+
+        // need to add option and 
         Booking booking = new Booking(map, location, destination, ActualMain.priceCalculator.getStandardTaxiRate());
         scheduler.addBooking(booking);
         System.out.println("The destination is " + booking.getDistance() +"km away");
