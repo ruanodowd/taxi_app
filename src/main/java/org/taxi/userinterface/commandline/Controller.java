@@ -109,7 +109,7 @@ public class Controller {
         this.scheduler = scheduler;
     }
 
-    Predicate<Taxi> promptForTaxiType() {//move to controller
+    public Predicate<Taxi> promptForTaxiType() {//move to controller
         // asking what type of taxi you want
         Predicate<Taxi> taxiType = null;
         cli.showTaxiTypeChoice();
