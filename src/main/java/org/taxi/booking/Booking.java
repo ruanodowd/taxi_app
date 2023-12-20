@@ -75,8 +75,8 @@ public class Booking {
         this.distance = distance;
     }
     
-    public void setPrice(rate) {
-        ActualMain.priceCalculator.setTaxiRateType(rate);//revise:this needs to change
+    public void setPrice(TaxiRate rate) {
+        ActualMain.priceCalculator.setTaxiRateType(rate);
         this.price = ActualMain.priceCalculator.calculatePrice(distance);
     }
 }

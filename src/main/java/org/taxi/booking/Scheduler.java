@@ -6,6 +6,7 @@ import org.taxi.taxi.TaxiBank;
 import org.taxi.datastructure.ArrayList;
 import org.taxi.map.Location;
 import org.taxi.map.pathfinding.Dijkstra;
+import org.taxi.pricing.prices.TaxiRate;
 
 import java.util.Optional;
 import java.util.function.Predicate;
@@ -65,12 +66,13 @@ public class Scheduler {
         assignedTaxi.ifPresent(taxi -> {
             booking.setTaxi(taxi);
             notifyObservers(booking);
-            calculatePriceForBooking(taxi);
+            calculatePriceForBooking(booking, taxi);
         });
     }
 
-    private void calculatePriceForBooking(Taxi taxi) {
+    private void calculatePriceForBooking(Booking booking, Taxi taxi) {
         TaxiRate rate = taxi.getRate();
+        booking.setPrice(rate);
     }
 
     private Optional<Taxi> findNearestAvailableTaxi(Location customerLocation, Predicate<Taxi> taxiTypePredicate) {
