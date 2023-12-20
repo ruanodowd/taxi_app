@@ -1,5 +1,7 @@
 package org.taxi;
 
+import org.taxi.map.Location;
+
 import java.util.List;
 
 public interface VehicleHiringTest {

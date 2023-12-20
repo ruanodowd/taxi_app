@@ -5,17 +5,20 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeAll;
-import org.taxi.*;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.taxi.Taxi;
+import org.taxi.taxi.TaxiBank;
 
 import java.util.List;
 
 class MainTest {
     static Main main;
-    static Map map;
+    static GridMap map;
     static int countTaxis;
     @BeforeAll
     static void setup() {
-        map = new Map(3,3);
+        map = new GridMap(3,3);
         main = new Main(map);
 
         main.testAddToMap("RAWR", map.getLocation(2,2));

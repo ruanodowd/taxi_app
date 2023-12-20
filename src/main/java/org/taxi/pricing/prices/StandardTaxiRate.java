@@ -18,14 +18,20 @@ public class StandardTaxiRate implements TaxiRate {
         this.priceCalculator = priceCalculator;
     }
 
-    public double calculatePrice(int distance) {
-        double price = initialCharge;
-        if (distance > tariffBRange){
-            price += (tariffB * (distance - tariffBRange));
+    public double calculatePrice(double distance) {
+        double price;
+        if (distance < tariffARange) {
+            price = initialCharge;
         }
-        if (distance > tariffARange){
-            price += (tariffA * (tariffBRange-tariffARange));
+
+        else if (distance < tariffBRange) {
+            price = initialCharge + (distance - tariffARange) * tariffA; 
         }
+
+        else {
+            price = initialCharge + ((tariffBRange - tariffARange) * tariffA) + ((distance - tariffBRange) * tariffB);  
+        }
+
         return price;
     }
 }

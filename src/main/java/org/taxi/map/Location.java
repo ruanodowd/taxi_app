@@ -1,19 +1,30 @@
-package org.taxi;
-import java.util.ArrayList;
-import java.util.List;
+package org.taxi.map;
 
+import org.taxi.datastructure.ArrayList;
+import org.taxi.datastructure.DoublyLinkedList;
+import org.taxi.taxi.Taxi;
 
-public class Location {
+public class Location implements Comparable<Location>{
     // attributes
     private int x;
     private int y;
-    private List<Location> neighbouringLocations = new ArrayList<>();
-    private List<Taxi> containedTaxis = new ArrayList<>();
+    private boolean visited = false;
+    private ArrayList<Location> neighbouringLocations = new ArrayList<>();
+    private ArrayList<Taxi> containedTaxis = new ArrayList<>();
+    private DoublyLinkedList<Location> pathway = new DoublyLinkedList<>();
 
+    public boolean isCovered() {
+        return covered;
+    }
+
+    public void setCovered(boolean covered) {
+        this.covered = covered;
+    }
+
+    private boolean covered;
     private Integer distance = Integer.MAX_VALUE;
 
 
-    private List<Location> pathway = new ArrayList<>();
     public Integer getDistance() {
         return distance;
     }
@@ -21,11 +32,11 @@ public class Location {
     public void setDistance(Integer distance) {
         this.distance = distance;
     }
-    public List<Location> getPathway() {
+    public DoublyLinkedList<Location> getPathway() {
         return pathway;
     }
 
-    public void setPathway(List<Location> pathway) {
+    public void setPathway(DoublyLinkedList<Location> pathway) {
         this.pathway = pathway;
     }
 
@@ -46,12 +57,20 @@ public class Location {
         return y;
     }    
     
-    public List<Location> getNeighbouringLocations() {
+    public ArrayList<Location> getNeighbouringLocations() {
         return neighbouringLocations;
     }
 
-    public List<Taxi> getContainedTaxis() {
+    public ArrayList<Taxi> getContainedTaxis() {
         return containedTaxis;
+    }
+
+    public boolean isVisited() {
+        return visited;
+    }
+
+    public void setVisited(boolean visited) {
+        this.visited = visited;
     }
     
     // method to add to list
@@ -60,21 +79,10 @@ public class Location {
     }
     
     public void removeTaxi (Taxi taxi){
-        // hopefully this works for the remove functionality, need to test this - U
         containedTaxis.remove(taxi);
     }
 
     public void locationLink(Location neighbour){
-        // my understanding
-        // if neighbouringlocations dont contain neighbour
-            // add neighbour to the neighbouring locations 
-            // add this location to the neighbouring location 
-
-        // concerns - what if this one doesn't have the neighbouring location but another one has it. Then you are adding the this location to the other locations list again - U
-        // solution - do a check first before adding it in, I have added that in. - U 
-        // Note - might not be essential just a thought. 
-
-        // another change I just call the function (checklocationLink) to check if a location exists in the location's own neighbouringlocation list.
         if (!checklocationLink(neighbour)){
             neighbouringLocations.add(neighbour);
             neighbour.linkNeighbourLocation(this);
@@ -91,8 +99,13 @@ public class Location {
     }
 
 
-    public void linkNeighbourLocation(List<Location> locations) {
+    public void linkNeighbourLocation(ArrayList<Location> locations) {
         locations.forEach(location -> locationLink(location));
+    }
+
+    @Override
+    public int compareTo(Location other) {
+        return this.distance.compareTo(other.distance);
     }
 
 }

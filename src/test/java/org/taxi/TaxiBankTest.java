@@ -4,8 +4,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.taxi.Taxi;
-import org.taxi.TaxiBank;
+import org.taxi.taxi.Taxi;
+import org.taxi.taxi.TaxiBank;
 
 public class TaxiBankTest {
     @BeforeEach
@@ -15,8 +15,8 @@ public class TaxiBankTest {
 
     @Test
     void checkForOne() {
-        Taxi t1 = new Taxi("22/34/54");
-        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("22/34/54");
+        Taxi t1 = new Taxi("14223123/WW/299");
+        Taxi firstTaxi = TaxiBank.returnSpecificTaxi("14223123/WW/299");
 
         assertEquals(t1, firstTaxi);
     }

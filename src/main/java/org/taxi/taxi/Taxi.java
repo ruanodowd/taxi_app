@@ -1,10 +1,24 @@
-package org.taxi;
+package org.taxi.taxi;
 
-public class Taxi implements Observer{
+import org.taxi.Main;
+import org.taxi.booking.Booking;
+import org.taxi.booking.Observer;
+import org.taxi.map.Location;
+import org.taxi.map.GridMap;
+import org.taxi.map.Map;
+import org.taxi.pricing.prices.TaxiRate;
+
+import java.time.LocalDateTime;
+
+public class Taxi implements Observer {
     private String registrationNumber;
     private boolean isFree;
     private double rating = 0;
     private int totalRatings = 0;
+    protected int speed;
+    public int getSpeed() {
+        return speed;
+    }
 
     public Taxi(String registrationNumber){
         this. registrationNumber = registrationNumber;
@@ -51,7 +65,7 @@ public class Taxi implements Observer{
         }
     }
 
-    public void setLocation(Map map, Location newLocation) {
+    public void setLocation(GridMap map, Location newLocation) {
         Location loc = getLocation(map);
         if (loc == null) {
             newLocation.addTaxi(this);
@@ -61,6 +75,19 @@ public class Taxi implements Observer{
         else {
             loc.getContainedTaxis().remove(this);
             newLocation.addTaxi(this);
+        }
+    }
+
+    public TaxiRate getRate() {
+        LocalDateTime time = LocalDateTime.now();
+        if (time.getDayOfYear() == 360 || time.getDayOfYear() == 1){
+            return Main.priceCalculator.getSpecialPremiumTaxiRate();
+        }
+        else if (time.getHour() > 20 || time.getHour() < 8){
+            return Main.priceCalculator.getPremiumTaxiRate();
+        }
+        else {
+            return Main.priceCalculator.getStandardTaxiRate();
         }
     }
 
