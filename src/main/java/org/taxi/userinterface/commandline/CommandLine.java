@@ -163,16 +163,16 @@ public class CommandLine implements UserInterface {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 Location location = map.getLocation(x, y);
-                if (currentLocation == map.getLocation(x, y)) {
+                if (currentLocation == location) {
                     System.out.print("\uD83D\uDE95 ");//taxi
                     currentLocation.setCovered(true);
-                }else if (destination == map.getLocation(x, y) && destination.getDistance() == 0) {
+                }else if (destination == location && destination.getDistance() == 0) {
                         System.out.print("\uD83D\uDC68\uD83C\uDFFC\u200D\uD83E\uDDB0 ");//person
                     }
-                else if (destination == map.getLocation(x, y)) {
+                else if (destination == location) {
                     System.out.print("\uD83D\uDCCD ");//location
                 }
-                 else if (route.contains(map.getLocation(x, y)) && !map.getLocation(x,y).isCovered()) {
+                 else if (route.contains(location) && !map.getLocation(x,y).isCovered()) {
 
                     System.out.print("\uD83D\uDFE9 ");
                 } else {
