@@ -12,7 +12,7 @@ import java.util.Scanner;
 public class CommandLine implements UserInterface {
     public final static CommandLine commandLine = new CommandLine();
 
-    private Scanner scanner;
+    private final Scanner scanner;
 
     private Scheduler scheduler;
     

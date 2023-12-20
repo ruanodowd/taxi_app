@@ -3,13 +3,10 @@ package org.taxi.pricing.prices;
 import org.junit.jupiter.api.Test;
 import org.taxi.Main;
 import org.taxi.pricing.PriceCalculator;
-import org.taxi.pricing.prices.TaxiRate;
 import org.taxi.taxi.UrgentTaxi;
 
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 
 class UrgentTaxiTest {
 
@@ -23,7 +20,7 @@ class UrgentTaxiTest {
         Main.priceCalculator = new MockPriceCalculator(newYears);
         
         TaxiRate rate = taxi.getRate();
-        assertTrue(rate instanceof SpecialPremiumTaxiRate, "Should return SpecialPremiumTaxiRate on New Year's");
+        assertInstanceOf(SpecialPremiumTaxiRate.class, rate, "Should return SpecialPremiumTaxiRate on New Year's");
     }
 
     @Test
@@ -36,7 +33,7 @@ class UrgentTaxiTest {
         Main.priceCalculator = new MockPriceCalculator(nightTime);
         
         TaxiRate rate = taxi.getRate();
-        assertTrue(rate instanceof SpecialPremiumTaxiRate, "Should return SpecialPremiumTaxiRate during night time");
+        assertInstanceOf(SpecialPremiumTaxiRate.class, rate, "Should return SpecialPremiumTaxiRate during night time");
     }
 
     @Test
@@ -49,7 +46,7 @@ class UrgentTaxiTest {
         Main.priceCalculator = new MockPriceCalculator(dayTime);
         
         TaxiRate rate = taxi.getRate();
-        assertTrue(rate instanceof SpecialPremiumTaxiRate, "Should return PremiumTaxiRate during day time");
+        assertInstanceOf(SpecialPremiumTaxiRate.class, rate, "Should return PremiumTaxiRate during day time");
     }
     
     // A mock price calculator class would be needed to control the returned rate based on the time provided

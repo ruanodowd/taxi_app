@@ -2,12 +2,10 @@ package org.taxi.datastructure;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.taxi.datastructure.ArrayList;
 import org.taxi.taxi.Taxi;
 import org.junit.jupiter.api.Test;
 
@@ -61,11 +59,11 @@ public class ArrayListTest {
     @Test
     public void removeObject() {
         // non existing elements
-        assertEquals(false, arrayList.remove(t1), "Returns false when removing an element that doesn't exist");
+        assertFalse(arrayList.remove(t1), "Returns false when removing an element that doesn't exist");
 
         // existing elements 
         arrayList.add(t1);
-        assertEquals(true, arrayList.remove(t1), "Returns true when removing an existing element");
+        assertTrue(arrayList.remove(t1), "Returns true when removing an existing element");
         assertEquals(0, arrayList.size());
     }
 
@@ -108,7 +106,7 @@ public class ArrayListTest {
 
         arrayList.clear();
         assertEquals(0, arrayList.size());
-        assertEquals(true, arrayList.isEmpty());
+        assertTrue(arrayList.isEmpty());
     }
 
     // test set 

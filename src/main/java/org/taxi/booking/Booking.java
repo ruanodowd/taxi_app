@@ -10,10 +10,10 @@ import org.taxi.map.Location;
 public class Booking {
     private final Map map;
     private Taxi allocatedTaxi;
-    private Location currentLocation;
-    private Location destination;
+    private final Location currentLocation;
+    private final Location destination;
     private double price;
-    private double distance;
+    private final double distance;
 
     public Booking(Map map, Location currentLocation,
         Location destination) {

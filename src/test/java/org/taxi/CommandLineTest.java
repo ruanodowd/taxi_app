@@ -1,19 +1,12 @@
 package org.taxi;
 
 import org.junit.jupiter.api.Test;
-import org.taxi.booking.Booking;
-import org.taxi.booking.Scheduler;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
-import org.taxi.map.Map;
 import org.taxi.taxi.NormalTaxi;
-import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
 import org.taxi.taxi.UrgentTaxi;
-import org.taxi.userinterface.commandline.CommandLine;
 import org.taxi.userinterface.commandline.Controller;
-import org.taxi.userinterface.commandline.UserInterface;
-
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 

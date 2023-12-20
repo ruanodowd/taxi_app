@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Scheduler {
-    private Map map;
-    private ArrayList<Booking> bookings;
+    private final Map map;
+    private final ArrayList<Booking> bookings;
     // to keep track of observers
-    private ArrayList<Taxi> observers;
+    private final ArrayList<Taxi> observers;
 
     
 

@@ -232,19 +232,16 @@ public class ArrayList<T> implements List<T> {
 
     @Override
     public Object[] toArray() {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
 
     @Override
     public <K> K[] toArray(K[] a) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'toArray'");
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        // TODO Auto-generated method stub
         throw new UnsupportedOperationException("Unimplemented method 'lastIndexOf'");
     }
 }

@@ -1,6 +1,7 @@
 package org.taxi;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -44,7 +45,7 @@ public class TaxiBankTest {
         assertEquals(t1, TaxiBank.returnSpecificTaxi("1"));
         assertEquals(t2, TaxiBank.returnSpecificTaxi("2"));
         assertEquals(t3, TaxiBank.returnSpecificTaxi("3"));
-        assertEquals(null, TaxiBank.returnSpecificTaxi("43"));
+        assertNull(TaxiBank.returnSpecificTaxi("43"));
     }
 
 

@@ -1,6 +1,5 @@
 package org.taxi;
 
-import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.ArrayList;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;

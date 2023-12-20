@@ -4,17 +4,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.taxi.booking.Booking;
 import org.taxi.booking.Scheduler;
 import org.taxi.map.GridMap;
-import org.taxi.map.Location;
 import org.taxi.map.Map;
-import org.taxi.taxi.NormalTaxi;
-import org.taxi.taxi.Taxi;
 import org.taxi.userinterface.commandline.CommandLine;
 import org.taxi.userinterface.commandline.Controller;
-
-import java.util.function.Predicate;
 
 import static org.mockito.Mockito.*;
 

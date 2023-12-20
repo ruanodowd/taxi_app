@@ -16,7 +16,7 @@ import java.util.function.Predicate;
 
 public class Controller {
     //singleton pattern
-    private static Controller instance = new Controller();
+    private static final Controller instance = new Controller();
     private CommandLine cli;
     private Controller() {
     }
