@@ -12,7 +12,4 @@ public class NormalTaxi extends Taxi{
         this.taxiRate = ActualMain.priceCalculator.getPartyBusRate();
     }
 
-    public TaxiRate getRate(){
-        return taxiRate;
-    }
 }

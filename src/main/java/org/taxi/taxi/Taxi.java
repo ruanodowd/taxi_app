@@ -1,5 +1,6 @@
 package org.taxi.taxi;
 
+import org.taxi.ActualMain;
 import org.taxi.booking.Booking;
 import org.taxi.booking.Observer;
 import org.taxi.map.Location;
@@ -7,13 +8,19 @@ import org.taxi.map.GridMap;
 import org.taxi.map.Map;
 import org.taxi.pricing.prices.TaxiRate;
 
+import java.time.LocalDateTime;
+
 public class Taxi implements Observer {
     private String registrationNumber;
     private boolean isFree;
     private double rating = 0;
     private int totalRatings = 0;
+    private int speed;
+    public int getSpeed() {
+        return speed;
+    }
 
-    public Taxi(String registrationNumber){
+    public Taxi(String registrationNumber, int speed){
         this. registrationNumber = registrationNumber;
         this.isFree = true;
         TaxiBank.addtoBank(this);
@@ -68,6 +75,19 @@ public class Taxi implements Observer {
         else {
             loc.getContainedTaxis().remove(this);
             newLocation.addTaxi(this);
+        }
+    }
+
+    public TaxiRate getRate() {
+        LocalDateTime time = LocalDateTime.now();
+        if (time.getDayOfYear() == 360 || time.getDayOfYear() == 1){
+            return ActualMain.priceCalculator.getSpecialPremiumTaxiRate();
+        }
+        else if (time.getHour() > 20 || time.getHour() < 8){
+            return ActualMain.priceCalculator.getStandardTaxiRate();
+        }
+        else {
+            return ActualMain.priceCalculator.getStandardTaxiRate();
         }
     }
 
