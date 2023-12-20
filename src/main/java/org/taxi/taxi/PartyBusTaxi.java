@@ -11,6 +11,7 @@ public class PartyBusTaxi extends Taxi{
         super(registrationNumber);
         this.taxiRate = ActualMain.priceCalculator.getPartyBusRate();
     }
+
     @Override
     public TaxiRate getRate(){
         return taxiRate;
