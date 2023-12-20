@@ -3,7 +3,6 @@ package org.taxi.booking;
 import org.taxi.ActualMain;
 import org.taxi.map.Map;
 import org.taxi.map.pathfinding.Dijkstra;
-import org.taxi.pricing.PriceCalculator;
 import org.taxi.pricing.prices.TaxiRate;
 import org.taxi.taxi.Taxi;
 import org.taxi.map.Location;
