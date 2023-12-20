@@ -17,6 +17,7 @@ public class GridMap implements Map {
         GridMap.nodes = nodes;
     }
 
+    // Overloads the 
     @Override
     public ArrayList<Location> getLocationNodes() {
         return nodes;
@@ -34,26 +35,6 @@ public class GridMap implements Map {
             return null;
         }
     }
-
-    // public Map(){ //creates a basic 2x2 map which we know is correct(could be used for testing the better function)
-    //     Map.nodes = new ArrayList<>();
-    //     Location Loc0a = new Location(0, 0);
-    //     Location Loc1a = new Location(1, 0);
-    //     Location Loc0b = new Location(0, 1);
-    //     Location Loc1b = new Location(1, 1);
-    //     Location[] list = {Loc1a, Loc0b};
-    //     Loc0a.linkNeighbourLocation(Arrays.stream(list).toList());
-    //     list = new Location[]{Loc0a, Loc1b};
-    //     Loc1a.linkNeighbourLocation(Arrays.stream(list).toList());
-    //     list = new Location[]{Loc0a, Loc1b};
-    //     Loc0b.linkNeighbourLocation(Arrays.stream(list).toList());
-    //     list = new Location[]{Loc1a, Loc0b};
-    //     Loc1b.linkNeighbourLocation(Arrays.stream(list).toList());
-
-    //     for (Location location : Arrays.asList(Loc0a, Loc1a, Loc0b, Loc1b)) {
-    //         nodes.add(location);
-    //     }
-    // }
 
     public GridMap(int height, int width){
         this.height = height;

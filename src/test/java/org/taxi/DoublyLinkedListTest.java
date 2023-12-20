@@ -57,7 +57,7 @@ public class DoublyLinkedListTest {
     @Test
     public void testRemoveNonExistingElement() {
         list.add(1);
-        assertFalse(list.remove(2)); // The remove method now returns a boolean
+        assertFalse(list.remove(2)); 
     }
 
     @Test
