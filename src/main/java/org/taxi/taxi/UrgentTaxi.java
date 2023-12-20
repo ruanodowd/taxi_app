@@ -17,5 +17,17 @@ public class UrgentTaxi extends Taxi {
         super(registrationNumber);
         speed = 400;
     }
-
+    @Override
+    public TaxiRate getRate() {
+        LocalDateTime time = LocalDateTime.now();
+        if (time.getDayOfYear() == 360 || time.getDayOfYear() == 1){
+            return ActualMain.priceCalculator.getSpecialPremiumTaxiRate();
+        }
+        else if (time.getHour() > 20 || time.getHour() < 8){
+            return ActualMain.priceCalculator.getSpecialPremiumTaxiRate();
+        }
+        else {
+            return ActualMain.priceCalculator.getPremiumTaxiRate();
+        }
+    }
 }
