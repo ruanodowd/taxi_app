@@ -32,7 +32,7 @@ class CommandLineTest {
 //        }
 //
 //
-//    }
+//    
     @Test
     void testGetCommandLine() {
         CommandLine cli = UserInterface.getCommandLine();
@@ -45,14 +45,15 @@ class CommandLineTest {
         ctlr.setMap(map);
         ctlr.setCli(UserInterface.getCommandLine());
         Taxi taxi = new PartyBusTaxi("HeySalahAndJosh!");
+        map.getLocation(0,0).addTaxi(taxi);
         Scheduler scheduler = new Scheduler(map);
         scheduler.attach(taxi);
         ctlr.setScheduler(scheduler);
         Booking booking = new Booking(map, map.getLocation(0,0), map.getLocation(1,1));
         scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
         try {
-            ctlr.showIterativeRouteMap(map , booking.getDestination(), map.getLocation(1,1).getPathway(), booking);
             assertTrue(true);
+            ctlr.showIterativeRouteMap(map , booking.getDestination(), map.getLocation(1,1).getPathway(), booking);
         } catch (InterruptedException e) {
             fail();
         }

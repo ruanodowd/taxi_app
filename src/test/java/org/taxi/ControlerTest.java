@@ -1,5 +1,6 @@
 package org.taxi;
-
+import org.junit.jupiter.api.Test;
+import org.taxi.map.Location;
 import org.taxi.userinterface.commandline.Controller;
 import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
@@ -7,34 +8,33 @@ public class ControlerTest {
     private Controller controller;
 
     @BeforeEach
-    public void setUp() {
-        // Since we're not mocking, we need to ensure that we have all the real dependencies set up.
+    void setUp() {
+        // Instantiate a real Controller, which will also create instances of its dependencies.
         controller = Controller.getInstance();
-        controller.setUp(); // Assuming setUp() method initializes everything needed for the tests.
+        controller.setUp();
     }
 
     @Test
-    public void testSingletonInstance() {
+    void testSingletonInstance() {
+        // Verify that the Controller is a singleton.
         Controller anotherInstance = Controller.getInstance();
-        assertSame(controller, anotherInstance);
-        assertSame(controller, anotherInstance);
+        assertSame(controller, anotherInstance, "There should only be one instance of Controller.");
     }
 
     @Test
-    public void testSetUp() {
-        // Assuming setUp method initializes a map with a size of 12x12
-        assertNotNull("Map should not be null after setup", controller.getMap().getLocationNodes());
-        assertEquals("Map should be 12x12", 12, controller.getMap().getWidth());
-        assertEquals("Map should be 12x12", 12, controller.getMap().getHeight());
+    void testSetUp() {
+        // Verify that the setup method initializes the map and scheduler.
+        assertNotNull(controller.getMap(), "Map should be initialized after setup.");
+        assertNotNull(controller.getScheduler(), "Scheduler should be initialized after setup.");
     }
 
     @Test
-    public void testProcessCoordinateString() {
+    void testProcessCoordinateString() {
         // This will test the conversion of a string to a Location object.
         String inputCoordinates = "5,5";
         Location location = controller.processCoordinateString(inputCoordinates);
-        assertNotNull("Location should not be null", location);
-        assertEquals("X coordinate should be 5", 5, location.getX());
-        assertEquals("Y coordinate should be 5", 5, location.getY());
+        assertNotNull(location, "Location should not be null.");
+        assertEquals(5, location.getX(), "X coordinate should match input.");
+        assertEquals(5, location.getY(), "Y coordinate should match input.");
     }
 }

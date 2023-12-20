@@ -17,8 +17,6 @@ public class CommandLine implements UserInterface {
 
     private Scanner scanner;
 
-    int DEFAULT_TAXI = 1;
-
     private Scheduler scheduler;
     
     @Override

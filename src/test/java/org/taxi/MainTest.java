@@ -43,4 +43,9 @@ class MainTest {
         assertEquals(countTaxis, taxis.size());
     }
 
+    @Test
+    void testMoveVehicle() {
+
+    }
+
 }

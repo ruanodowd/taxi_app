@@ -83,7 +83,7 @@ public class Scheduler {
                 .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
     }
 
-    private int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
+    public int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
         double distance1 = taxi1.getLocation(map).getDistance();
         double distance2 = taxi2.getLocation(map).getDistance();
         return Double.compare(distance1, distance2);

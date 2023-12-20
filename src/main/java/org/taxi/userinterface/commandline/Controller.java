@@ -45,9 +45,6 @@ public class Controller {
         map.getLocation(0,0).addTaxi(UrgentTaxi);
 
     }
-    public CommandLine getCli() {
-        return cli;
-    }
 
     public void setCli(CommandLine cli) {
         this.cli = cli;
