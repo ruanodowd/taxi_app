@@ -1,6 +1,7 @@
 package org.taxi;
 
 import org.junit.jupiter.api.Test;
+import org.taxi.map.GridMap;
 
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -23,14 +24,14 @@ class MapTest {
     // }
     @Test
     void testDynamicMap() {
-        Map testMap = new Map(3, 3);
+        GridMap testMap = new GridMap(3, 3);
         assertEquals(9,testMap.countNodes());
-        testMap = new Map(5,5);
+        testMap = new GridMap(5,5);
         assertEquals(25, testMap.countNodes());
     }
     @Test
     void testNodeLinkage(){
-        Map testMap = new Map(3,3);
+        GridMap testMap = new GridMap(3,3);
         AtomicInteger count = new AtomicInteger();
         testMap.getLocationNodes().stream()
                 .forEach(l -> count.addAndGet(l.getNeighbouringLocations().size()));
