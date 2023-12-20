@@ -94,6 +94,7 @@ public class CommandLine {
         System.out.println("Your taxis reg is " + booking.getTaxi().getRegistrationNumber());
         System.out.println("It is " + booking.getTaxi().getLocation(map).getDistance() + "km away");
         System.out.println("book taxi? (y/n)");
+        scanner.nextLine();
         String answer = scanner.nextLine();
         if (answer.contains("y")){
             showTaxiEnrouteDisplay(booking);
