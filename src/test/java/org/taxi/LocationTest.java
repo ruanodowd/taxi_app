@@ -1,6 +1,6 @@
 package org.taxi;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -20,7 +20,7 @@ public class LocationTest {
     void testRemoveTaxi() {
         Taxi taxi = TaxiBank.returnSpecificTaxi("RAWR");
         loc22.removeTaxi(taxi);
-        
-        assertEquals(false, loc22.getContainedTaxis().contains(taxi));
+
+        assertFalse(loc22.getContainedTaxis().contains(taxi));
     }
 }

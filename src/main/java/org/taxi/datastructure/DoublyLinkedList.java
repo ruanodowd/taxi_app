@@ -19,14 +19,16 @@ public class DoublyLinkedList<T> implements Collection<T> {
         }
     }
 
+    // constructor if no list provided
     public DoublyLinkedList() {
         head = null;
         tail = null;
         size = 0;
     }
 
+    // constructor if a list is provided
     public DoublyLinkedList(Collection<T> collection) {
-        this(); // Call the default constructor to initialize the list
+        this();
         for (T item : collection) {
             this.add(item);
         }

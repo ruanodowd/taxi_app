@@ -3,8 +3,8 @@ package org.taxi.booking;
 import org.taxi.taxi.Taxi;
 
 public class Completion {
-    private Taxi taxi;
-    private int rating;
+    private final Taxi taxi;
+    private final int rating;
 
     public Completion(Taxi taxi, int rating) {
         this.taxi = taxi;

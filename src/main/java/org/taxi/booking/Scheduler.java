@@ -12,10 +12,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 
 public class Scheduler {
-    private Map map;
-    private ArrayList<Booking> bookings;
+    private final Map map;
+    private final ArrayList<Booking> bookings;
     // to keep track of observers
-    private ArrayList<Taxi> observers;
+    private final ArrayList<Taxi> observers;
 
     
 
@@ -70,7 +70,7 @@ public class Scheduler {
         });
     }
 
-    private void calculatePriceForBooking(Booking booking, Taxi taxi) {
+    public void calculatePriceForBooking(Booking booking, Taxi taxi) {
         TaxiRate rate = taxi.getRate();
         booking.setPrice(rate);
     }
@@ -83,7 +83,7 @@ public class Scheduler {
                 .min((taxi1, taxi2) -> compareDistance(taxi1, taxi2, customerLocation));
     }
 
-    private int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
+    public int compareDistance(Taxi taxi1, Taxi taxi2, Location customerLocation) {
         double distance1 = taxi1.getLocation(map).getDistance();
         double distance2 = taxi2.getLocation(map).getDistance();
         return Double.compare(distance1, distance2);
@@ -92,8 +92,8 @@ public class Scheduler {
     public void endRide(Booking booking) {
         Taxi taxi = booking.getTaxi();
         if (taxi != null) {
-            booking.setTaxi(null);
             notifyObservers(booking);
+            booking.setTaxi(null);
         }
         //remove completed booking from bookings
     }

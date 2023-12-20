@@ -9,8 +9,8 @@ public class Location implements Comparable<Location>{
     private int x;
     private int y;
     private boolean visited = false;
-    private ArrayList<Location> neighbouringLocations = new ArrayList<>();
-    private ArrayList<Taxi> containedTaxis = new ArrayList<>();
+    private final ArrayList<Location> neighbouringLocations = new ArrayList<>();
+    private final ArrayList<Taxi> containedTaxis = new ArrayList<>();
     private DoublyLinkedList<Location> pathway = new DoublyLinkedList<>();
 
     public boolean isCovered() {

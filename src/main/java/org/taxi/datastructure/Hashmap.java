@@ -34,7 +34,7 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
 
     // create the array element
     private final int SIZE = 5;
-    private Entry<K,V> table[];
+    private final Entry<K, V>[] table;
 
     // create constructor 
     @SuppressWarnings("unchecked")
@@ -123,7 +123,6 @@ public class Hashmap<K, V> implements Iterable<Hashmap.Entry<K, V>>{
             e = e.next;
         }
 
-        return;
     }
 
     // Implementing an iterator

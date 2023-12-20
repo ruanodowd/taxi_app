@@ -1,51 +1,33 @@
 package org.taxi;
 
-import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.ArrayList;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
-import org.taxi.map.Map;
+
 import org.taxi.pricing.PriceCalculator;
 import org.taxi.taxi.*;
 
 import java.util.List;
 
-import org.taxi.userinterface.commandline.CommandLine;
+import org.taxi.userinterface.commandline.Controller;
 
-public class Main implements VehicleHiringTest{
+public class Main implements VehicleHiringTest {
     public GridMap map;
     public static PriceCalculator priceCalculator = new PriceCalculator();
 
     public Main(GridMap map) {
         this.map = map;
     }
+
     public static void main(String[] args) {
-        CommandLine cli = CommandLine.getCommandLine();
-        Map map = new GridMap(12,12);
-        Taxi taxi = new PartyBusTaxi("RAWR - P6");
-        map.getLocation(6,6).addTaxi(taxi);
-        Taxi partyBus = new PartyBusTaxi("P0");
-        map.getLocation(0,0).addTaxi(partyBus);
-        Taxi taxi2 = new NormalTaxi("N6");
-        map.getLocation(6,6).addTaxi(taxi2);
-        Taxi NormalTaxi = new NormalTaxi("N0");
-        map.getLocation(0,0).addTaxi(NormalTaxi);
-        Taxi taxi3 = new UrgentTaxi("U6");
-        map.getLocation(6,6).addTaxi(taxi3);
-        Taxi UrgentTaxi = new UrgentTaxi("U0");
-        map.getLocation(0,0).addTaxi(UrgentTaxi);
-        Scheduler scheduler = new Scheduler(map);
-        cli.setScheduler(scheduler);
-        cli.showWelcomeScreen();
+        Controller controller = Controller.getInstance();
+        controller.setUp();
+        controller.startProgram();
+//        cli.showWelcomeScreen();
     }
-    public static void addTaxiToMap(String reg, Location loc) {
-        // added the location parameter
-        loc.addTaxi(new Taxi(reg));
-    }
+
     @Override
     public boolean testAddToMap(String reg, Location loc) {
-        // its more special than I thought
-        // the taxi bank will help with this - ushen
         loc.addTaxi(new Taxi(reg));
         return true;
     }
@@ -55,13 +37,16 @@ public class Main implements VehicleHiringTest{
         // what I need to do. When put the reg and location.
         // take the taxi from current location move it to the final location
 
-        // find location
+        // find taxi
         Taxi taxi = TaxiBank.returnSpecificTaxi(reg);
         if (taxi == null) {
             return false;
         }
 
-        taxi.getLocation(map);
+
+        if (taxi.getLocation(map) == null) {
+            return false;
+        }
 
         // remove from location
         testRemoveVehicle(reg);
@@ -69,30 +54,34 @@ public class Main implements VehicleHiringTest{
         // add the taxi to the location
         loc.addTaxi(taxi);
 
-        return true;
+        return true;   
     }
 
     @Override
     public boolean testRemoveVehicle(String reg) {
-        // return the taxi associated with the registration
-        Taxi taxi = TaxiBank.returnSpecificTaxi(reg);
-
-
-        // check if null
-        if (taxi.equals(null)) {
+        try {
+            // return the taxi associated with the registration
+            Taxi taxi = TaxiBank.returnSpecificTaxi(reg);
+    
+    
+            // check if null
+            if (taxi.equals(null)) {
+                return false;
+            }
+    
+            // removes taxi from the location where it is.
+            Location loc = testGetVehicleLoc(reg);
+            if (loc == null) {
+                return false;
+            }
+    
+    
+            loc.removeTaxi(taxi);
+            return true;
+        } catch (NullPointerException e) {
             return false;
         }
-
-        // removes taxi from the location where it is.
-        Location loc = testGetVehicleLoc(reg);
-        if (loc == null) {
-            return false;
-        }
-
-
-        loc.removeTaxi(taxi);
-        return true;
-    }
+    } 
 
     @Override
     public Location testGetVehicleLoc(String reg) {
@@ -109,23 +98,23 @@ public class Main implements VehicleHiringTest{
         // getting a list of registrations (ideally taxi objects however, return type suggests it's a string)
         ArrayList<String> taxis = new ArrayList<>();
 
-        for (Taxi taxi: loc.getContainedTaxis()) {
+        for (Taxi taxi : loc.getContainedTaxis()) {
             taxis.add(taxi.getRegistrationNumber());
         }
 
         // figuring out the neighbouring locations, I wouldn't worry about calling locations that aren't in the bounds for now.
         // because I've edited the getLocation class to return null. I won't add those to the array.
-        int upperXBound = loc.getX() + 2*r;
-        int lowerXBound = loc.getX() - 2*r;
+        int upperXBound = loc.getX() + 2 * r;
+        int lowerXBound = loc.getX() - 2 * r;
 
-        int upperYBound = loc.getY() + 2*r;
-        int lowerYBound = loc.getY() - 2*r;
+        int upperYBound = loc.getY() + 2 * r;
+        int lowerYBound = loc.getY() - 2 * r;
 
         for (int i = lowerXBound; i <= upperXBound; i++) {
-            for (int j = lowerYBound; j<= upperYBound; j++) {
-                Location location = map.getLocation(i,j);
+            for (int j = lowerYBound; j <= upperYBound; j++) {
+                Location location = map.getLocation(i, j);
                 if (!(location == null)) {
-                    for (Taxi taxi: location.getContainedTaxis()) {
+                    for (Taxi taxi : location.getContainedTaxis()) {
                         String reg = taxi.getRegistrationNumber();
                         if (!reg.equals(null)) {
                             taxis.add(reg);
@@ -136,25 +125,4 @@ public class Main implements VehicleHiringTest{
         }
         return taxis;
     }
-//    public static void main(String[] args) {
-//        CommandLine cli = CommandLine.getCommandLine();
-//        Map map = new GridMap(12,12);
-//        Scheduler scheduler = new Scheduler(map);
-//        Location currentLocation = map.getLocation(2, 7);
-//        Location currentDestination = map.getLocation(10,10);
-//        Booking booking = new Booking(map, currentLocation, currentDestination, 1);
-//
-//        Location loc = map.getLocation(0, 0);
-//        Taxi taxi1 = new Taxi("RAWR");
-//        loc.addTaxi(taxi1);
-//
-//        Location loc2 = map.getLocation(4, 3);
-//        Taxi taxi2 = new Taxi("BREE");
-//        loc2.addTaxi(taxi2);
-//
-//        scheduler.addBooking(booking);
-//        System.out.println(booking.getTaxi().getRegistrationNumber());
-//        cli.displayMap();
-//        cli.showRouteMap(map, 12, 12, currentDestination);
-//    }
 }
