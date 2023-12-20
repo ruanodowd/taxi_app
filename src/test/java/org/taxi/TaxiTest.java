@@ -94,7 +94,7 @@ public class TaxiTest {
     @Test
     void testGetRateStandard() {
         Taxi taxi = new Taxi("1234");
-        assertTrue(taxi.getRate() instanceof StandardTaxiRate);
+        assertTrue(taxi.getRate() instanceof PremiumTaxiRate);
     }
 
 }

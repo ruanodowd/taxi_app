@@ -1,16 +1,13 @@
 package org.taxi.userinterface.commandline;
 
-import org.taxi.booking.Booking;
-import org.taxi.booking.Completion;
+
 import org.taxi.booking.Scheduler;
 import org.taxi.datastructure.DoublyLinkedList;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
-import org.taxi.taxi.*;
 
 import java.util.Scanner;
-import java.util.function.Predicate;
 
 public class CommandLine implements UserInterface {
     public final static CommandLine commandLine = new CommandLine();

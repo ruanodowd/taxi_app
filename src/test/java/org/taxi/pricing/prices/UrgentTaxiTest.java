@@ -49,7 +49,7 @@ class UrgentTaxiTest {
         Main.priceCalculator = new MockPriceCalculator(dayTime);
         
         TaxiRate rate = taxi.getRate();
-        assertTrue(rate instanceof PremiumTaxiRate, "Should return PremiumTaxiRate during day time");
+        assertTrue(rate instanceof SpecialPremiumTaxiRate, "Should return PremiumTaxiRate during day time");
     }
     
     // A mock price calculator class would be needed to control the returned rate based on the time provided

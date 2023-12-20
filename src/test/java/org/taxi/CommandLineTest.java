@@ -4,58 +4,64 @@ import org.junit.jupiter.api.Test;
 import org.taxi.booking.Booking;
 import org.taxi.booking.Scheduler;
 import org.taxi.map.GridMap;
+import org.taxi.map.Location;
 import org.taxi.map.Map;
+import org.taxi.taxi.NormalTaxi;
 import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
+import org.taxi.taxi.UrgentTaxi;
 import org.taxi.userinterface.commandline.CommandLine;
 import org.taxi.userinterface.commandline.Controller;
 import org.taxi.userinterface.commandline.UserInterface;
 
+import org.junit.jupiter.api.BeforeEach;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CommandLineTest {
+    private Controller controller;
+    private GridMap map;
+    
+    @BeforeEach
+    void setUp() {
+        controller = Controller.getInstance();
+        map = new GridMap(12,12); // Assuming this is a valid size for your map.
+        controller.setMap(map);
+        controller.setUp(); // This should initialise the system and add taxis to the map.
+    }
 
     @Test
-    void processCoordinateString() {
-        Map map = new GridMap(2, 2);
-        Controller.getInstance().setUp();
-        assertEquals(map.getLocation(2,1), Controller.getInstance().processCoordinateString("2, 1"));
-    }
-//    @Test
-//    void testStartProgram() {
-//        CommandLine cli = CommandLine.getCommandLine();
-//        try {
-//            cli.showWelcomeScreen();
-//            assertTrue(true);
-//        } catch (Exception e) {
-//            assertTrue(false);
-//        }
-//
-//
-//    
-    @Test
-    void testGetCommandLine() {
-        CommandLine cli = UserInterface.getCommandLine();
-        assertEquals(cli, UserInterface.getCommandLine());
-    }
-    @Test
-    void showIterativeRouteMap() {
-        Map map = new GridMap(2, 2);
-        Controller ctlr = Controller.getInstance();
-        ctlr.setMap(map);
-        ctlr.setCli(UserInterface.getCommandLine());
-        Taxi taxi = new PartyBusTaxi("HeySalahAndJosh!");
+    void taxiShouldBeAtLocationAfterSetup() {
+        Taxi taxi = new NormalTaxi("N0");
         map.getLocation(0,0).addTaxi(taxi);
-        Scheduler scheduler = new Scheduler(map);
-        scheduler.attach(taxi);
-        ctlr.setScheduler(scheduler);
-        Booking booking = new Booking(map, map.getLocation(0,0), map.getLocation(1,1));
-        scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
-        try {
-            assertTrue(true);
-            ctlr.showIterativeRouteMap(map , booking.getDestination(), map.getLocation(1,1).getPathway(), booking);
-        } catch (InterruptedException e) {
-            fail();
-        }
+        Location taxiLocation = taxi.getLocation(map);
+
+        assertNotNull(taxiLocation, "Taxi should have a location after being added to the map.");
+        assertEquals(0, taxiLocation.getX());
+        assertEquals(0, taxiLocation.getY());
+    }
+
+    @Test
+    void taxiShouldNotHaveLocationIfNotAdded() {
+        Taxi taxi = new UrgentTaxi("U10"); // Taxi not added to any location
+        Location taxiLocation = taxi.getLocation(map);
+
+        assertNull(taxiLocation, "Taxi should not have a location if it hasn't been added to the map.");
+    }
+
+    @Test
+    void testProcessCoordinateStringValidInput() {
+        String input = "5,5";
+        Location expectedLocation = map.getLocation(5,5);
+        Location resultLocation = controller.processCoordinateString(input);
+
+        assertEquals(expectedLocation, resultLocation, "The processCoordinateString method should return the correct location for a valid input string.");
+    }
+
+    @Test
+    void testProcessCoordinateStringInvalidInput() {
+        String input = "not a valid input";
+        assertThrows(ArrayIndexOutOfBoundsException.class, () -> {
+            controller.processCoordinateString(input);
+        }, "The processCoordinateString method should throw NumberFormatException for invalid input string.");
     }
 }

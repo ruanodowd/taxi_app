@@ -8,20 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.junit.jupiter.api.Assertions.*;
 
 class MapTest {
-
-    @Test
-    void getLocationNodes() {
-    }
-
-    @Test
-    void getLocation() {
-    }
-
-    // @Test
-    // void countNodes() {
-    //     Map testMap = new Map();
-    //     assertEquals(4, testMap.countNodes());
-    // }
     @Test
     void testDynamicMap() {
         GridMap testMap = new GridMap(3, 3);

@@ -70,7 +70,7 @@ public class Scheduler {
         });
     }
 
-    private void calculatePriceForBooking(Booking booking, Taxi taxi) {
+    public void calculatePriceForBooking(Booking booking, Taxi taxi) {
         TaxiRate rate = taxi.getRate();
         booking.setPrice(rate);
     }
@@ -92,8 +92,8 @@ public class Scheduler {
     public void endRide(Booking booking) {
         Taxi taxi = booking.getTaxi();
         if (taxi != null) {
-            booking.setTaxi(null);
             notifyObservers(booking);
+            booking.setTaxi(null);
         }
         //remove completed booking from bookings
     }

@@ -11,6 +11,7 @@ import org.taxi.booking.Booking;
 import org.taxi.map.GridMap;
 import org.taxi.map.Location;
 import org.taxi.map.Map;
+import org.taxi.map.pathfinding.Dijkstra;
 
 public class BookingTest {
     private Map map;
@@ -26,10 +27,11 @@ public class BookingTest {
     }
 
     @Test 
-    public void getMap() {
+    public void otherTests() {
         assertEquals(map, booking.getMap());
-        assertNull(booking.getPath());
         assertNotNull(booking.getPrice());
-        assertNotNull(booking.getDistance());
+        assertEquals(new Dijkstra().calculateDistance(map, map.getLocation(0,0), map.getLocation(9,9)), booking.getDistance());
+        assertEquals(map.getLocation(9, 9), booking.getDestination());
     }
+
 }

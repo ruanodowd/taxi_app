@@ -2,7 +2,7 @@ package org.taxi.pricing.prices;
 
 import org.taxi.pricing.PriceCalculator;
 
-public class SpecialPremiumTaxiRate implements TaxiRate {
+public class    SpecialPremiumTaxiRate implements TaxiRate {
     //the initial charge is added at the start of a ride and covers the first 0.5 kilometers of a ride
     double initialCharge = 4.8;
     //tariff is the price per kilometer

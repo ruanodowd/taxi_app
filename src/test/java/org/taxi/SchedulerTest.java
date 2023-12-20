@@ -11,6 +11,8 @@ import org.taxi.booking.Booking;
 import org.taxi.booking.Scheduler;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
+import org.taxi.taxi.NormalTaxi;
+import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
 import org.taxi.taxi.TaxiBank;
 
@@ -93,5 +95,24 @@ public class SchedulerTest {
         scheduler.attach(taxi);
         scheduler.detach(taxi);
         assertFalse(scheduler.getObservers().contains(taxi));
+    }
+
+    @Test
+    void testNotifyObservers() {
+        TaxiBank taxiBank = new TaxiBank();
+        Taxi taxi1 = new NormalTaxi("TAXI1");
+        Taxi taxi2 = new PartyBusTaxi("TAXI2");
+        taxiBank.attachAll(scheduler);
+        Location location = map.getLocation(1, 1);
+        location.addTaxi(taxi1);
+        Booking booking = new Booking(map, location, location);
+        
+        scheduler.addBooking(booking, taxi -> taxi instanceof NormalTaxi);
+        assertFalse(taxi1.isFree(), "Taxi1 should be notified after adding booking");
+        assertTrue(taxi2.isFree(), "Taxi2 should be notified after adding booking");
+
+        scheduler.cancelBooking(booking);
+        assertFalse(taxi1.isFree(), "Taxi1 should be notified after canceling booking");
+        assertTrue(taxi2.isFree(), "Taxi2 should be notified after canceling booking");
     }
 }
