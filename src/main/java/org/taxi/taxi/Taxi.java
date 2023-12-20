@@ -1,6 +1,6 @@
 package org.taxi.taxi;
 
-import org.taxi.ActualMain;
+import org.taxi.Main;
 import org.taxi.booking.Booking;
 import org.taxi.booking.Observer;
 import org.taxi.map.Location;
@@ -81,13 +81,13 @@ public class Taxi implements Observer {
     public TaxiRate getRate() {
         LocalDateTime time = LocalDateTime.now();
         if (time.getDayOfYear() == 360 || time.getDayOfYear() == 1){
-            return ActualMain.priceCalculator.getSpecialPremiumTaxiRate();
+            return Main.priceCalculator.getSpecialPremiumTaxiRate();
         }
         else if (time.getHour() > 20 || time.getHour() < 8){
-            return ActualMain.priceCalculator.getPremiumTaxiRate();
+            return Main.priceCalculator.getPremiumTaxiRate();
         }
         else {
-            return ActualMain.priceCalculator.getStandardTaxiRate();
+            return Main.priceCalculator.getStandardTaxiRate();
         }
     }
 

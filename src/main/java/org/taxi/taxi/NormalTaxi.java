@@ -1,8 +1,6 @@
 package org.taxi.taxi;
 
-import org.taxi.ActualMain;
-import org.taxi.pricing.PriceCalculator;
-import org.taxi.pricing.prices.PartyBusRate;
+import org.taxi.Main;
 import org.taxi.pricing.prices.TaxiRate;
 
 public class NormalTaxi extends Taxi{
@@ -11,7 +9,7 @@ public class NormalTaxi extends Taxi{
     // constructor for normal taxi
     public NormalTaxi(String registrationNumber) {
         super(registrationNumber);
-        this.taxiRate = ActualMain.priceCalculator.getPartyBusRate();
+        this.taxiRate = Main.priceCalculator.getPartyBusRate();
         speed = 800;
     }
 

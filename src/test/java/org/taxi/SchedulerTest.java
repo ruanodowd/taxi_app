@@ -11,8 +11,12 @@ import org.taxi.booking.Booking;
 import org.taxi.booking.Scheduler;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
+import org.taxi.pricing.prices.PartyBusRate;
+import org.taxi.taxi.PartyBusTaxi;
 import org.taxi.taxi.Taxi;
 import org.taxi.taxi.TaxiBank;
+
+import java.util.function.Predicate;
 
 public class SchedulerTest {
     private GridMap map;
@@ -30,13 +34,13 @@ public class SchedulerTest {
 //    void testAddNewBooking() {
 //        // what I want to do?
 //        // test addbooking
-//        Booking booking = new Booking(map.getLocation(1, 1));
-//        scheduler.addBooking(booking);
+//        Booking booking = new Booking(map, map.getLocation(1, 1), map.getLocation(9,9));
+//        scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
 //
 //        // test to see if this adds booking to the list
 //        assertTrue( scheduler.getBookings().contains(booking), "Booking should be added to the List");
 //    }
-//
+
 //    @Test
 //    void testAssignTaxi() {
 //        Location loc = map.getLocation(0, 0);
@@ -47,12 +51,12 @@ public class SchedulerTest {
 //        Taxi taxi1 = new Taxi("BREE");
 //        loc1.addTaxi(taxi1);
 //
-//        Booking booking = new Booking(map.getLocation(1, 1));
-//        scheduler.addBooking(booking);
+//        Booking booking = new Booking(map, map.getLocation(1, 1),map.getLocation(6,6));
+//        scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
 //
 //        assertEquals(taxi1, booking.getTaxi(), "A taxi should be assigned to the booking");
 //    }
-//
+
 //    @Test
 //    void testNoAvailableTaxi() {
 //        Booking booking = new Booking(map.getLocation(1, 1));
@@ -60,7 +64,7 @@ public class SchedulerTest {
 //
 //        assertNull(booking.getTaxi(), "No taxi should be assigned if none are available");
 //    }
-//
+
 //    @Test
 //    void testFreeTaxi() {
 //        Location loc = map.getLocation(0, 0);
@@ -74,20 +78,20 @@ public class SchedulerTest {
 //
 //        assertTrue(taxi.isFree(), "Taxi should be free after booking is complete");
 //    }
-//
-//    @Test
-//    void testUpdateTaxiLocation() {
-//        Taxi taxi = new Taxi("RAWR");
-//        Location originalLocation = map.getLocation(0, 0);
-//        Location newLocation = map.getLocation(1, 1);
-//
-//        originalLocation.addTaxi(taxi);
-//
-//        taxi.setLocation(map, newLocation);
-//
-//        assertEquals(newLocation, taxi.getLocation(map), "Taxi location should be updated");
-//    }
-//
+
+    @Test
+    void testUpdateTaxiLocation() {
+        Taxi taxi = new Taxi("RAWR");
+        Location originalLocation = map.getLocation(0, 0);
+        Location newLocation = map.getLocation(1, 1);
+
+        originalLocation.addTaxi(taxi);
+
+        taxi.setLocation(map, newLocation);
+
+        assertEquals(newLocation, taxi.getLocation(map), "Taxi location should be updated");
+    }
+
 //    @Test
 //    void testCancelBooking() {
 //        Location loc = map.getLocation(0, 0);
@@ -102,15 +106,15 @@ public class SchedulerTest {
 //        assertFalse(scheduler.getBookings().contains(booking), "Booking should be removed from the scheduler");
 //        assertTrue(taxi.isFree(), "Taxi should be free after booking cancellation");
 //    }
-//
-//    @Test
-//    void testDetachTaxi() {
-//        Taxi taxi = new Taxi("TEST");
-//        scheduler.attach(taxi);
-//        scheduler.detach(taxi);
-//        assertFalse(scheduler.getObservers().contains(taxi));
-//    }
-//
+
+    @Test
+    void testDetachTaxi() {
+        Taxi taxi = new Taxi("TEST");
+        scheduler.attach(taxi);
+        scheduler.detach(taxi);
+        assertFalse(scheduler.getObservers().contains(taxi));
+    }
+
 //    @Test
 //    void testObserverNotification() {
 //        Taxi taxi1 = new Taxi("RAWR");
@@ -124,8 +128,8 @@ public class SchedulerTest {
 //
 //        scheduler.attach(taxi1);
 //        scheduler.attach(taxi2);
-//        Booking booking = new Booking(map.getLocation(1, 1));
-//        scheduler.addBooking(booking);
+//        Booking booking = new Booking(map, map.getLocation(1, 1), map.getLocation(9, 9));
+//        scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
 //        assertFalse(taxi1.isFree());
 //        assertTrue(taxi2.isFree());
 //    }
@@ -138,8 +142,8 @@ public class SchedulerTest {
 //        map.getLocation(4, 4).addTaxi(farTaxi);
 //        TaxiBank.addtoBank(closeTaxi);
 //        TaxiBank.addtoBank(farTaxi);
-//        Booking booking = new Booking(map.getLocation(1, 1));
-//        scheduler.addBooking(booking);
+//        Booking booking = new Booking(map, map.getLocation(1, 1), map.getLocation(9, 9));
+//        scheduler.addBooking(booking, taxiType -> taxiType instanceof PartyBusTaxi);
 //        assertEquals(closeTaxi, booking.getTaxi());
 //    }
 }

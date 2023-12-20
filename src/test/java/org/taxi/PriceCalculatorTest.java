@@ -1,4 +1,4 @@
-package org.taxi.pricing;
+package org.taxi;
 
 import org.junit.jupiter.api.Test;
 

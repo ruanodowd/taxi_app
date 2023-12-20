@@ -1,6 +1,6 @@
 package org.taxi.booking;
 
-import org.taxi.ActualMain;
+import org.taxi.Main;
 import org.taxi.map.Map;
 import org.taxi.map.pathfinding.Dijkstra;
 import org.taxi.pricing.prices.TaxiRate;
@@ -17,7 +17,7 @@ public class Booking {
     private double distance;
 
     public Booking(Map map, Location currentLocation,
-        Location destination, TaxiRate taxiRate) {
+        Location destination) {
         this.map = map;
         this.currentLocation = currentLocation;
         this.destination = destination;
@@ -41,41 +41,21 @@ public class Booking {
     public Map getMap() {
         return map;
     }
-    
-    public void setCurrentLocation(Location currentLocation) {
-        this.currentLocation = currentLocation;
-    }
-    
-    public void setDestination(Location destination) {
-        this.destination = destination;
-    }
-    
+
     public Location[] getPath() {
         return path;
     }
-    
-    public void setPath(Location[] path) {
-        this.path = path;
-    }
-    
     public double getPrice() {
         return price;
     }
-    
-    public void setPrice(double price) {
-        this.price = price;
-    }
-    
+
     public double getDistance() {
         return distance;
     }
-    
-    public void setDistance(double distance) {
-        this.distance = distance;
-    }
+
     
     public void setPrice(TaxiRate rate) {
-        ActualMain.priceCalculator.setTaxiRateType(rate);
-        this.price = ActualMain.priceCalculator.calculatePrice(distance);
+        Main.priceCalculator.setTaxiRateType(rate);
+        this.price = Main.priceCalculator.calculatePrice(distance);
     }
 }

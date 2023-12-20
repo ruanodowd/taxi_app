@@ -7,6 +7,18 @@ import org.junit.jupiter.api.Test;
 import org.taxi.map.Location;
 import org.taxi.map.GridMap;
 import org.taxi.taxi.Taxi;
+import org.junit.jupiter.api.Test;
+import org.taxi.booking.Booking;
+import org.taxi.map.GridMap;
+import org.taxi.map.Location;
+import org.taxi.pricing.prices.StandardTaxiRate;
+import org.taxi.pricing.prices.PremiumTaxiRate;
+import org.taxi.pricing.prices.SpecialPremiumTaxiRate;
+
+import java.time.LocalDateTime;
+
+import static org.junit.jupiter.api.Assertions.*;
+
 
 public class TaxiTest {
     private Taxi taxi;
@@ -39,8 +51,51 @@ public class TaxiTest {
     }
 
     @Test
-    void testSetFree() {
+    void testsetTaxiFree() {
         taxi.setFree(false);
         assertFalse(taxi.isFree());
     }
+    @Test
+    void testIsFree() {
+        Taxi taxi = new Taxi("1234");
+        assertTrue(taxi.isFree());
+    }
+
+    @Test
+    void testSetFree() {
+        Taxi taxi = new Taxi("1234");
+        taxi.setFree(false);
+        assertFalse(taxi.isFree());
+    }
+
+    @Test
+    void testGetRegistrationNumber() {
+        Taxi taxi = new Taxi("1234");
+        assertEquals("1234", taxi.getRegistrationNumber());
+    }
+
+    @Test
+    void testSetRegistrationNumber() {
+        Taxi taxi = new Taxi("1234");
+        taxi.setRegistrationNumber("5678");
+        assertEquals("5678", taxi.getRegistrationNumber());
+    }
+
+
+    @Test
+    void testSetLocation() {
+        Taxi taxi = new Taxi("1234");
+        GridMap map = new GridMap(10, 10);
+        Location location = new Location(5, 5);
+        taxi.setLocation(map, location);
+        assertTrue(location.getContainedTaxis().contains(taxi));
+    }
+
+    @Test
+    void testGetRateStandard() {
+        Taxi taxi = new Taxi("1234");
+        assertTrue(taxi.getRate() instanceof StandardTaxiRate);
+    }
+
 }
+

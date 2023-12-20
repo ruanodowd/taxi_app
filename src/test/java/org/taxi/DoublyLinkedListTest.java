@@ -92,4 +92,35 @@ public class DoublyLinkedListTest {
         String expected = "1 2 3";
         assertEquals(expected, list.toString());
     }
+    @Test
+    void testAdd() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        assertTrue(list.add(1));
+        assertEquals(1, list.size());
+    }
+
+
+    @Test
+    void testContainsOne() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.add(1);
+        assertTrue(list.contains(1));
+    }
+
+    @Test
+    void testClear() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.add(1);
+        list.clear();
+        assertEquals(0, list.size());
+    }
+
+    @Test
+    void testReverse() {
+        DoublyLinkedList<Integer> list = new DoublyLinkedList<>();
+        list.add(1);
+        list.add(2);
+        list.reverse();
+        assertEquals(2, list.iterator().next());
+    }
 }
